@@ -7,7 +7,20 @@ public class Customer {
     private String address;
     private String password;
     private String userName;
+    private BookingList bookingList;
 
+    public Customer() {
+        bookingList = new BookingList();
+    }
+
+    public BookingList getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(BookingList bookingList) {
+        this.bookingList = bookingList;
+    }
+    
     public String getPassword() {
         return password;
     }
