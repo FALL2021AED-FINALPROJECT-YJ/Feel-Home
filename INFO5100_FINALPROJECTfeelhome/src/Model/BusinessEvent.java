@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessEvent {
-    private String name;
-    private String id;
-    private String contact;
+     private String username;
+    private String password;
     private List<Manager> listOfManager;
-    private OrganizationDirectoryForEvents orgDirecForEvents;
-    
-    public BusinessEvent(){
-      listOfManager = new ArrayList<>(); 
+    private OraganisationdirectoryForEvents orgDirecForEvents;
+
+    public BusinessEvent(String name, String contact, String username, String password) {
+        super(name, contact);
+        this.username = username;
+        this.password = password;
+        listOfManager = new ArrayList<>();
     }
 
     public List<Manager> getListOfManager() {
@@ -23,8 +25,7 @@ public class BusinessEvent {
         this.listOfManager = listOfManager;
     }
 
-    public OrganizationDirectoryForEvents getOrgDirecForEvents() {
+    public OraganisationdirectoryForEvents getOrgDirecForEvents() {
         return orgDirecForEvents;
     }
-
 }
