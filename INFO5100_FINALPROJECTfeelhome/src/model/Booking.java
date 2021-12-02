@@ -1,18 +1,21 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Booking {
     private Date checkin;
     private Date checkout;
     private String status;
+    private int  price;
     private Room room;
     private Services services;
-    private HotelDirectory hotelDirec;
+    private List<Hotel> listOfHotel;
     
     public Booking() {
         services = new Services();
-        hotelDirec = new HotelDirectory();
+      listOfHotel = new ArrayList<>();
     }
 
     public Services getServices() {
@@ -23,13 +26,22 @@ public class Booking {
         this.services = services;
     }
 
-    public HotelDirectory getHotelDirec() {
-        return hotelDirec;
+    public List<Hotel> getListOfHotel() {
+        return listOfHotel;
     }
 
-    public void setHotelDirec(HotelDirectory hotelDirec) {
-        this.hotelDirec = hotelDirec;
+    public void setListOfHotel(List<Hotel> listOfHotel) {
+        this.listOfHotel = listOfHotel;
     }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
    
     public Date getCheckin() {
         return checkin;

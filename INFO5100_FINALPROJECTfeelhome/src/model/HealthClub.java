@@ -3,46 +3,37 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthClub {
-
-    private String name;
-    private String id;
-    private String contact;
+public class HealthClub extends Enterprise{
+    private String username;
+    private String password;
     List<Manager> listOfManager;
     private PhysicianDirectory pd;
     private TrainerDirectory td;
     private TherapistDirectory tpd;
-   
-    public HealthClub() {
-        listOfManager = new ArrayList<>(); 
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
+    HealthClub(String name, String contact, String userName, String password) {
+        super(name, contact,userName,password);
+        listOfManager = new ArrayList<>();
     }
 
     public List<Manager> getListOfManager() {
         return listOfManager;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setListOfManager(List<Manager> listOfManager) {
@@ -72,7 +63,6 @@ public class HealthClub {
     public void setTpd(TherapistDirectory tpd) {
         this.tpd = tpd;
     }
-    
 
     public Manager addManager(String id) {
         Manager manager = new Manager(id);

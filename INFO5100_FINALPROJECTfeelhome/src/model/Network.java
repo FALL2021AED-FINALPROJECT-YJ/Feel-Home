@@ -5,7 +5,8 @@ public class Network {
     private String name;
     private EnterpriseDirectory enterpriseDirectory;
 
-    public Network() {
+    public Network(String name) {
+        this.name = name;
         enterpriseDirectory = new EnterpriseDirectory();
     }
 
@@ -24,6 +25,7 @@ public class Network {
     public void setEnterpriseDirectory(EnterpriseDirectory enterpriseDirectory) {
         this.enterpriseDirectory = enterpriseDirectory;
     }
+   
 
     public String toString()
 
