@@ -3,75 +3,82 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthClub extends Enterprise{
-    private String username;
-    private String password;
-    List<Manager> listOfManager;
-    private PhysicianDirectory pd;
-    private TrainerDirectory td;
-    private TherapistDirectory tpd;
+public class HealthClub extends Enterprise {
 
-    HealthClub(String name, String contact, String userName, String password) {
+    List<Manager> listOfManager;
+    List<PhysicianOrg> listOfPhysicianOrg;
+    List<TrainerOrg> listOfTrainerOrg;
+    List<TherapistOrg> listOfTherapistOrg;
+
+    HealthClub(String name, String contact) {
         super(name, contact);
-//this.name = name;
-//this.contact =contact;
-        this.username = userName;
-        this.password = password;
         listOfManager = new ArrayList<>();
+        listOfPhysicianOrg = new ArrayList<>();
+        listOfTrainerOrg = new ArrayList<>();
+        listOfTherapistOrg = new ArrayList<>();
+    }
+
+    public List<TherapistOrg> getListOfTherapistOrg() {
+        return listOfTherapistOrg;
+    }
+
+    public void setListOfTherapistOrg(List<TherapistOrg> listOfTherapistOrg) {
+        this.listOfTherapistOrg = listOfTherapistOrg;
+    }
+
+    public List<PhysicianOrg> getListOfPhysicianOrg() {
+        return listOfPhysicianOrg;
+    }
+
+    public void setListOfPhysicianOrg(List<PhysicianOrg> listOfPhysicianOrg) {
+        this.listOfPhysicianOrg = listOfPhysicianOrg;
+    }
+
+    public List<TrainerOrg> getListOfTrainerOrg() {
+        return listOfTrainerOrg;
+    }
+
+    public void setListOfTrainerOrg(List<TrainerOrg> listOfTrainerOrg) {
+        this.listOfTrainerOrg = listOfTrainerOrg;
     }
 
     public List<Manager> getListOfManager() {
         return listOfManager;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void setListOfManager(List<Manager> listOfManager) {
         this.listOfManager = listOfManager;
     }
 
-    public PhysicianDirectory getPd() {
-        return pd;
-    }
-
-    public void setPd(PhysicianDirectory pd) {
-        this.pd = pd;
-    }
-
-    public TrainerDirectory getTd() {
-        return td;
-    }
-
-    public void setTd(TrainerDirectory td) {
-        this.td = td;
-    }
-
-    public TherapistDirectory getTpd() {
-        return tpd;
-    }
-
-    public void setTpd(TherapistDirectory tpd) {
-        this.tpd = tpd;
-    }
-
-    public Manager addManager(String id) {
-        Manager manager = new Manager(id);
+    public Manager addManager(String name, String username, String password) {
+        Manager manager = new Manager(name, username, password);
         listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
         return manager;
+    }
+
+    public Manager findManager(String username) {
+        for (Manager man : listOfManager) {
+            if (man.getUserName().equals(username)) {
+                return man;
+            }
+        }
+        return null;
+    }
+
+    public void addPhysicianOrg(String name, String contact, String city) {
+        PhysicianOrg physicianOrg = new PhysicianOrg(name, contact, city);
+        listOfPhysicianOrg.add(physicianOrg);
+    }
+
+    public void addTherapistOrg(String name, String contact, String city) {
+        TherapistOrg therapistOrg = new TherapistOrg(name, contact, city);
+        listOfTherapistOrg.add(therapistOrg);
+    }
+
+    public void addTraineOrg(String name, String contact, String networkName) {
+        TrainerOrg trainerOrg = new TrainerOrg(name, contact, networkName);
+        listOfTrainerOrg.add(trainerOrg);
     }
 
 }
