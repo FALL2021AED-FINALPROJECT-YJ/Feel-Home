@@ -31,8 +31,6 @@ public class LaundryManagerJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 153, 153));
-
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
@@ -57,30 +55,31 @@ public class LaundryManagerJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addComponent(jButton2)
-                .addGap(354, 1162, Short.MAX_VALUE))
+                .addGap(354, 874, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblsysadmin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblsysadmin)
+                        .addGap(330, 330, 330))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton3)
                             .addComponent(jButton1))
-                        .addGap(82, 82, 82)))
-                .addGap(426, 426, 426))
+                        .addGap(412, 412, 412))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButton2)
-                .addGap(129, 129, 129)
+                .addGap(38, 38, 38)
                 .addComponent(lblsysadmin)
                 .addGap(60, 60, 60)
                 .addComponent(jButton1)
                 .addGap(43, 43, 43)
                 .addComponent(jButton3)
-                .addContainerGap(413, Short.MAX_VALUE))
+                .addContainerGap(496, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

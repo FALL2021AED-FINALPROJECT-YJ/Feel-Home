@@ -8,9 +8,6 @@ public class RoomList {
     
     public RoomList(){
       listOfRooms = new ArrayList<>(); 
-      listOfRooms.add(new Room(1));
-      listOfRooms.add(new Room(2));
-      listOfRooms.add(new Room(3));   
     }
     
     public List<Room> getListOfRooms() {
@@ -21,7 +18,7 @@ public class RoomList {
         this.listOfRooms = listOfRooms;
     }
     public void createRoom(){
-        Room room = new Room(listOfRooms.size()+1);
+        Room room = new Room();
         listOfRooms.add(room);
     }
     

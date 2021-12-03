@@ -1,18 +1,16 @@
-
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusinessEvent {
-    private String name;
-    private String id;
-    private String contact;
+public class BusinessEvent extends Enterprise {
+
     private List<Manager> listOfManager;
-    private OrganizationDirectoryForEvents orgDirecForEvents;
-    
-    public BusinessEvent(){
-      listOfManager = new ArrayList<>(); 
+    private OraganisationdirectoryForEvents orgDirecForEvents;
+
+    public BusinessEvent(String name, String contact) {
+        super(name, contact);
+        listOfManager = new ArrayList<>();
     }
 
     public List<Manager> getListOfManager() {
@@ -23,8 +21,14 @@ public class BusinessEvent {
         this.listOfManager = listOfManager;
     }
 
-    public OrganizationDirectoryForEvents getOrgDirecForEvents() {
+    public OraganisationdirectoryForEvents getOrgDirecForEvents() {
         return orgDirecForEvents;
+    }
+
+    public Manager addManager(String name, String username, String password) {
+        Manager manager = new Manager(name, username, password);
+        listOfManager.add(manager);
+        return manager;
     }
 
 }

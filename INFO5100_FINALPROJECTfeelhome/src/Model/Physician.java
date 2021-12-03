@@ -4,9 +4,17 @@ package model;
 import java.util.Date;
 
 public class Physician {
-    private String name;
-    private boolean status;
-    private Date date;
+       private String name;
+    private String city;
+    private String username;
+    private String password;
+
+    public Physician(String name, String city, String username, String password) {
+           this.name = name;
+           this.city = city;
+           this.username = username;
+           this.password = password;
+    }
 
     public String getName() {
         return name;
@@ -16,21 +24,30 @@ public class Physician {
         this.name = name;
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getCity() {
+        return city;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public String getUsername() {
+        return username;
     }
 
-    public Date getDate() {
-        return date;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public String getPassword() {
+        return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     
     
 }

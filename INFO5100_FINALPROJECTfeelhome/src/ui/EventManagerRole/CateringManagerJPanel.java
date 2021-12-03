@@ -31,8 +31,6 @@ public class CateringManagerJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 153, 153));
-
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("CONFIRM AND ASSIGN");
         jButton3.addActionListener(new java.awt.event.ActionListener() {

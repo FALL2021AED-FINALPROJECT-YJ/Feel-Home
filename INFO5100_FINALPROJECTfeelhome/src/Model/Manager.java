@@ -2,21 +2,23 @@ package model;
 
 public class Manager {
 
-    private String id;
+    private String name;
     private String password;
     private String contact;
     private String userName;
-    
-    public Manager(){
-        
+
+
+    public Manager(String name, String username, String password) {
+        this.name = name;
+        this.password = password;
+        this.userName = username;
+    }
+     public String getName() {
+        return name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserName() {
@@ -26,11 +28,7 @@ public class Manager {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public Manager(String id, String password,String contact) {
-        this.id = id;
-        this.password = password;
-        this.contact = contact;
-    }
+
 
     public String getContact() {
         return contact;
@@ -40,24 +38,12 @@ public class Manager {
         this.contact = contact;
     }
 
-    public Manager(String id) {
-        this.id = id;
-    }
-    
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getManagerId() {
-        return id;
-    }
-
-    public void setManagerId(String id) {
-        this.id = id;
     }
 
 }

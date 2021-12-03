@@ -3,39 +3,43 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthClub {
+public class HealthClub extends Enterprise {
 
-    private String name;
-    private String id;
-    private String contact;
     List<Manager> listOfManager;
+    List<PhysicianOrg> listOfPhysicianOrg;
+    List<TrainerOrg> listOfTrainerOrg;
+    List<TherapistOrg> listOfTherapistOrg;
 
-    public HealthClub() {
+    HealthClub(String name, String contact) {
+        super(name, contact);
         listOfManager = new ArrayList<>();
+        listOfPhysicianOrg = new ArrayList<>();
+        listOfTrainerOrg = new ArrayList<>();
+        listOfTherapistOrg = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public List<TherapistOrg> getListOfTherapistOrg() {
+        return listOfTherapistOrg;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setListOfTherapistOrg(List<TherapistOrg> listOfTherapistOrg) {
+        this.listOfTherapistOrg = listOfTherapistOrg;
     }
 
-    public String getId() {
-        return id;
+    public List<PhysicianOrg> getListOfPhysicianOrg() {
+        return listOfPhysicianOrg;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setListOfPhysicianOrg(List<PhysicianOrg> listOfPhysicianOrg) {
+        this.listOfPhysicianOrg = listOfPhysicianOrg;
     }
 
-    public String getContact() {
-        return contact;
+    public List<TrainerOrg> getListOfTrainerOrg() {
+        return listOfTrainerOrg;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setListOfTrainerOrg(List<TrainerOrg> listOfTrainerOrg) {
+        this.listOfTrainerOrg = listOfTrainerOrg;
     }
 
     public List<Manager> getListOfManager() {
@@ -46,10 +50,35 @@ public class HealthClub {
         this.listOfManager = listOfManager;
     }
 
-    public Manager addManager(String id) {
-        Manager manager = new Manager(id);
+    public Manager addManager(String name, String username, String password) {
+        Manager manager = new Manager(name, username, password);
         listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
         return manager;
+    }
+
+    public Manager findManager(String username) {
+        for (Manager man : listOfManager) {
+            if (man.getUserName().equals(username)) {
+                return man;
+            }
+        }
+        return null;
+    }
+
+    public void addPhysicianOrg(String name, String contact, String city) {
+        PhysicianOrg physicianOrg = new PhysicianOrg(name, contact, city);
+        listOfPhysicianOrg.add(physicianOrg);
+    }
+
+    public void addTherapistOrg(String name, String contact, String city) {
+        TherapistOrg therapistOrg = new TherapistOrg(name, contact, city);
+        listOfTherapistOrg.add(therapistOrg);
+    }
+
+    public void addTraineOrg(String name, String contact, String networkName) {
+        TrainerOrg trainerOrg = new TrainerOrg(name, contact, networkName);
+        listOfTrainerOrg.add(trainerOrg);
     }
 
 }

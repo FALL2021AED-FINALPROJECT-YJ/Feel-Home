@@ -55,8 +55,8 @@ public class CateringService {
         this.id = id;
     }
     
-    public Manager addManager(){
-        Manager manager = new Manager();
+    public Manager addManager(String name,String username,String password){
+        Manager manager = new Manager(name,username,password);
         listOfManager.add(manager);
         return manager;
     }

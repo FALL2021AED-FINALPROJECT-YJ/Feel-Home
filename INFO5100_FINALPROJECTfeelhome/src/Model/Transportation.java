@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Transportation {
-
     private String name;
     private Date pickup;
     private Date drop;
@@ -56,8 +55,8 @@ public class Transportation {
         this.drop = drop;
     }
 
-    public Manager addManager(String id) {
-        Manager manager = new Manager(id);
+    public Manager addManager(String name,String username,String password) {
+        Manager manager = new Manager(name,username,password);
         listOfManager.add(manager);
         return manager;
     }

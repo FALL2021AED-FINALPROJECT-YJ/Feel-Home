@@ -37,8 +37,6 @@ public class HotelAssignJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 153, 153));
-
         lblbookservices.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblbookservices.setText("HOTEL MANAGER");
 
@@ -55,17 +53,17 @@ public class HotelAssignJPanel extends javax.swing.JPanel {
 
         tblviewdetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "CUSTOMER NAME", "CUSTOMER ID", "CHECK-IN", "CHECK-OUT", "NO OF ROOMS", "BREAKFAST", "LAUNDRY TYPE", "PICK-UP TIME", "DROP TIME", "MASSAGE&SPA", "YOGA", "ZUMBA", "GYM", "PRICE"
+                "CUSTOMER NAME", "CHECK-IN", "CHECK-OUT", "NO OF ROOMS", "BREAKFAST", "LAUNDRY TYPE", "PICK-UP TIME", "DROP TIME", "MASSAGE&SPA", "YOGA", "ZUMBA", "GYM", "PRICE"
             }
         ));
         jScrollPane1.setViewportView(tblviewdetails);
