@@ -62,6 +62,6 @@ public class DeliverymanOrg {
     public void addDeliveryman(String name, String city, String user, String password1) {
         DeliveryMan del = new DeliveryMan(name, city, user, password1);
         listOfDeliveryMan.add(del);
-        System.out.println("Physisicna manager added is " + listOfDeliveryMan.size());
+        System.out.println("Deliveryman manager added is " + listOfDeliveryMan.size());
     }
 }

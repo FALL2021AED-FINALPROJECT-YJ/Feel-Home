@@ -7,13 +7,23 @@ public class Restaurant extends Enterprise {
 
     private List<Manager> listOfManager;
     private List<Order> listOfOrder;
+    private List<MenuItem> listOfItem;
     private List<DeliverymanOrg> listOfDeliveryManOrg;
 
     public Restaurant(String name, String contact) {
         super(name, contact);
         listOfManager = new ArrayList<>();
         listOfOrder = new ArrayList<>();
+        listOfItem = new ArrayList<>();
         listOfDeliveryManOrg = new ArrayList<>();
+    }
+
+    public List<MenuItem> getListOfItem() {
+        return listOfItem;
+    }
+
+    public void setListOfItem(List<MenuItem> ListOfItem) {
+        this.listOfItem = ListOfItem;
     }
 
     public List<Manager> getListOfManager() {
@@ -54,9 +64,14 @@ public class Restaurant extends Enterprise {
         }
         return null;
     }
-       public void addDeliverymanOrg(String name, String contact, String networkName) {
+
+    public void addDeliverymanOrg(String name, String contact, String networkName) {
         DeliverymanOrg del = new DeliverymanOrg(name, contact, networkName);
-       listOfDeliveryManOrg.add(del);
+        listOfDeliveryManOrg.add(del);
+    }
+
+    public void addItem(String item) {
+        listOfItem.add(new MenuItem(item));
     }
 
 }
