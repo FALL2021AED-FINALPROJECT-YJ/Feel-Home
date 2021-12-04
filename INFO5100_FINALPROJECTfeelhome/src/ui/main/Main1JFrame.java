@@ -171,7 +171,13 @@ public class Main1JFrame extends javax.swing.JFrame {
         } else if (type.equals("Health Club")) {     //if its a healthclub manager
             renderHealthClubManager(username);
             return;
-        } else if (type.equals("Restaurant")) {
+        }  else if (type.equals("Hotel")) {     //if its a healthclub manager
+            renderHotelManager(username);
+            return;  
+        } else if (type.equals("Business Event")) {
+           renderBusiinessEventManager(username);
+           return;
+        }else if (type.equals("Restaurant")) {
             renderRestaurantManager(username);
             return;
         } else if (type.equals("Physician")) {
@@ -362,6 +368,66 @@ public class Main1JFrame extends javax.swing.JFrame {
        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type
         );
         jSplitPane.setRightComponent(org);
+        
+        
+        
+          private void renderHotelManager(String username) {
+        List<Network> network = systemAdmin.getListOfNetwork();
+        for (int i = 0; i < network.size(); i++) {
+            List<Hotel> hotel = network.get(i).getEnterpriseDirectory().getListOfHotel();
+            for (int j = 0; j < hotel.size(); j++) {
+                List<Manager> manager = hotel.get(j).getListOfManager();
+                for (int k = 0; k < manager.size(); k++) {
+                    if (manager.get(k).getUserName().equals(username)) {
+                        HotelManagerJPanel hotelManagerPanel = new HotelManagerJPanel(systemAdmin, this::viewTaskJPanel, this::createOrganization,
+                                this::organizationAdminJPanel);
+                        jSplitPane.setRightComponent(hotelManagerPanel);
+
+                    }
+                }
+            }
+        }
+    }
+
+ 
+
+    private void hotelManagerPanel() {
+        jSplitPane.setRightComponent(new HotelManagerJPanel(systemAdmin, this::viewTaskjPanel, this::createOrganization, this::organizationAdminjPanel));
+    }
+
+    
+
+        
+
+    private void viewTaskjPanel() {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+    }
+     
+
+    private void viewTaskJPanel() {
+         String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        ViewTaskJPanel viewTask = new ViewTaskJPanel(systemAdmin, this::hotelManagerPanel, user, type
+        );
+        jSplitPane.setRightComponent(viewTask);
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void organizationAdminjPanel() {
+          String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        OrganizationAdminJPanel orgAdmin = new OrganizationAdminJPanel(systemAdmin, this::healthClubManagerPanel, user, type);
+        jSplitPane.setRightComponent(orgAdmin);
+    }
+
+    private void organizationAdminJPanel() {
+         String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        OrganizationAdminJPanel orgAdmin = new OrganizationAdminJPanel(systemAdmin, this::healthClubManagerPanel, user, type);
+        jSplitPane.setRightComponent(orgAdmin);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     }
 
     private void renderRestaurantAdmin() {
