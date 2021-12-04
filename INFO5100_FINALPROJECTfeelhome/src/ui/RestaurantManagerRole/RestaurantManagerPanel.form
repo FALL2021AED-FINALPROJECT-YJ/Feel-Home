@@ -16,80 +16,90 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="242" max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="427" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="285" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="orgAdminBtn" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="viewTask" min="-2" pref="301" max="-2" attributes="0"/>
-                      <Component id="orgBtn" alignment="1" min="-2" pref="301" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="viewTask" max="32767" attributes="0"/>
+                      <Component id="orgButton" max="32767" attributes="0"/>
+                      <Component id="orgAdminBtn" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jLabel1" min="-2" pref="341" max="-2" attributes="0"/>
+                  <Component id="addMenu" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="238" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
               <Component id="viewTask" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-              <Component id="orgBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <Component id="orgButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Component id="orgAdminBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="345" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+              <Component id="addMenu" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="304" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="24" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="HEALTH CLUB MANAGER PANEL "/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="viewTask">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="0"/>
+          <Font name="Lucida Grande" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="VIEW TASK"/>
+        <Property name="text" type="java.lang.String" value="VIEW ORDERS"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewTaskActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="orgBtn">
+    <Component class="javax.swing.JButton" name="orgButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="0"/>
+          <Font name="Lucida Grande" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="MANAGE ORGANIZATION"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="orgBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="orgButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="orgAdminBtn">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="0"/>
+          <Font name="Lucida Grande" size="14" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="MANAGE ORGANISATION ADMIN"/>
+        <Property name="text" type="java.lang.String" value="MANAGE ORGANIZATION ADMIN"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="orgAdminBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Grande" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="RESTAURANT MANAGER PANEL"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="addMenu">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Grande" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="ADD MENU "/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMenuActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

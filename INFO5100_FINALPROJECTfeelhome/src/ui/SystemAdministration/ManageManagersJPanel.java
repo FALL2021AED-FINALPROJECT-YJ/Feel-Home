@@ -215,8 +215,8 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(usernameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -279,6 +279,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         } else if (enterpriseType1.equals("Restaurant")) {
             Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
             res1.addManager(userName, userName, password);
+            System.out.println(res1.getListOfManager().size()+ " manager in restaurant");
             row[0] = networkName;
             row[1] = enterpriseType1;
             row[2] = enterpriseName1;

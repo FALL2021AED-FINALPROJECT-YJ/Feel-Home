@@ -31,7 +31,7 @@ public class ConfirmWorkRequestsJPanel extends javax.swing.JPanel {
         lblbookservices.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblbookservices.setText("CONFIRM WORKREQUESTS");
 
-        confirmBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        confirmBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         confirmBtn.setText("CONFIRM");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -39,7 +39,7 @@ public class ConfirmWorkRequestsJPanel extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -62,30 +62,29 @@ public class ConfirmWorkRequestsJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(293, Short.MAX_VALUE)
-                .addComponent(lblbookservices)
-                .addGap(268, 268, 268))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(236, 236, 236)
+                        .addComponent(lblbookservices))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(376, 376, 376)
+                        .addGap(104, 104, 104)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(378, 378, 378)
                         .addComponent(confirmBtn)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(lblbookservices)
-                .addGap(81, 81, 81)
+                .addGap(88, 88, 88)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addGap(43, 43, 43)
                 .addComponent(confirmBtn)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addContainerGap(372, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -19,14 +19,17 @@ import ui.HealthClubManagerRole.HealthClubManagerPanel;
 import ui.HealthClubManagerRole.ManageOrganisationPanelForRestaurant;
 import ui.HealthClubManagerRole.OrganizationAdminPanel;
 import ui.HealthClubManagerRole.ManageOrganizationPanel;
-import ui.RestaurantManagerRole.RestaurantAssignJPanel;
-import ui.RestaurantManagerRole.RestaurantManagerJPanel;
+import ui.RestaurantManagerRole.AddOrderPanel;
+import ui.RestaurantManagerRole.ManageOrgAdminForRestauarant;
+import ui.RestaurantManagerRole.RestaurantManagerPanel;
+import ui.RestaurantManagerRole.ViewTaskPanelRestaurant;
 import ui.SystemAdministration.ManageCustomersJPanel;
 import ui.SystemAdministration.ManageEnterpriseJPanel;
 import ui.SystemAdministration.ManageManagersJPanel;
 import ui.SystemAdministration.ManageNetworkJPanel;
 import ui.SystemAdministration.SystemAdministrationJPanel;
 import ui.confirm.ConfirmWorkRequestsJPanel;
+import ui.confirm.ConfirmWorkrequestForDeliveryman;
 
 public class Main1JFrame extends javax.swing.JFrame {
 
@@ -156,7 +159,6 @@ public class Main1JFrame extends javax.swing.JFrame {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String type = systemAdmin.findUser(username);  //find type of user
-        System.out.println("username entered is of type" + type);
 //        if (type == null) {
 //            JOptionPane.showMessageDialog(this, " Username doesnot exist");
 //            return;
@@ -175,13 +177,16 @@ public class Main1JFrame extends javax.swing.JFrame {
             renderRestaurantManager(username);
             return;
         } else if (type.equals("Physician")) {
-            renderconfirmWorkRequest(username);
+            renderconfirmWorkRequest();
             return;
         } else if (type.equals("Trainer")) {
-            renderconfirmWorkRequest(username);
+            renderconfirmWorkRequest();
             return;
         } else if (type.equals("Therapist")) {
-            renderconfirmWorkRequest(username);
+            renderconfirmWorkRequest();
+            return;
+        } else if (type.equals("Deliveryman")) {
+            renderDeliverymanPanel();
             return;
         }
 
@@ -299,7 +304,7 @@ public class Main1JFrame extends javax.swing.JFrame {
         }
     }
 
-    private void viewTaskPanel() {
+    private void viewTaskPanel() {   //view task for 
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
         ViewTaskPanel viewTask = new ViewTaskPanel(systemAdmin, this::healthClubManagerPanel, user, type
@@ -326,7 +331,7 @@ public class Main1JFrame extends javax.swing.JFrame {
         jSplitPane.setRightComponent(new HealthClubManagerPanel(systemAdmin, this::viewTaskPanel, this::createOrganization, this::organizationAdminPanel));
     }
 
-    private void renderconfirmWorkRequest(String username) {
+    private void renderconfirmWorkRequest() {
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
         ConfirmWorkRequestsJPanel workRequest1 = new ConfirmWorkRequestsJPanel(systemAdmin, this::enableLogin, user, type);
@@ -342,7 +347,7 @@ public class Main1JFrame extends javax.swing.JFrame {
                 List<Manager> manager = restaurants.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(k).getUserName().equals(username)) {
-                        RestaurantAssignJPanel restaurantAssign = new RestaurantAssignJPanel(systemAdmin, this::renderViewTask, this::renderRestaurantOrg, this::renderRestaurantAdmin);
+                        RestaurantManagerPanel restaurantAssign = new RestaurantManagerPanel(systemAdmin, this::renderViewTask, this::renderRestaurantOrg, this::renderRestaurantAdmin,this::addOrderPanel);
                         jSplitPane.setRightComponent(restaurantAssign);
                     }
                 }
@@ -350,26 +355,43 @@ public class Main1JFrame extends javax.swing.JFrame {
         }
     }
 
-    private void renderViewTask() {
+    private void renderViewTask() {     // view task for restaurant manager
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        RestaurantManagerJPanel resMan = new RestaurantManagerJPanel(systemAdmin, this::restaurantManagerPanel, user, type);
+       ViewTaskPanelRestaurant resMan = new ViewTaskPanelRestaurant(systemAdmin, this::restaurantManagerPanel, user, type);
     }
 
-    private void renderRestaurantOrg() {   //create organisation panel
+    private void renderRestaurantOrg() {   //create organisation panel for restaurant
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-       ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type
+        System.out.println("user enterd for org is " + user);
+        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type
         );
         jSplitPane.setRightComponent(org);
     }
 
-    private void renderRestaurantAdmin() {
-
+    private void renderRestaurantAdmin() { //create organisation admin under restauarant
+        String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, user, type);
+        jSplitPane.setRightComponent(orgAdmin);
     }
 
-    private void restaurantManagerPanel() {
-        jSplitPane.setRightComponent(new RestaurantAssignJPanel(systemAdmin, this::renderViewTask, this::renderRestaurantOrg, this::renderRestaurantAdmin));
+    private void renderDeliverymanPanel() {
+        String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        ConfirmWorkrequestForDeliveryman deliveryPanel = new ConfirmWorkrequestForDeliveryman(systemAdmin, this::enableLogin,user,type);
+        jSplitPane.setRightComponent(deliveryPanel);
+    }
+    private void addOrderPanel() {
+         String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        AddOrderPanel order = new AddOrderPanel(systemAdmin, this::restaurantManagerPanel, user, type);
+        jSplitPane.setRightComponent(order);
+    }
+
+    private void restaurantManagerPanel() {    //go back to restauarnt manager panel
+        jSplitPane.setRightComponent(new RestaurantManagerPanel(systemAdmin, this::renderViewTask, this::renderRestaurantOrg, this::renderRestaurantAdmin,this::addOrderPanel));
     }
 
 }
