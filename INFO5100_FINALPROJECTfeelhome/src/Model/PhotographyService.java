@@ -5,35 +5,42 @@ import java.util.List;
 
 public class PhotographyService {
 
-    private List<Manager> listOfManager;
-    private String orgName;
+    private String name;
+    private String city;
     private String contact;
-    private List<Photographer> listOfPhotgrapher;
+    private List<Manager> listOfManager;
     private PackgeDirectoryForPhotography photography;
 
-    public PhotographyService() {
-        listOfPhotgrapher = new ArrayList<>();
+    public PhotographyService(String name, String contact, String city) {
+        this.name = name;
+        this.contact = contact;
+        this.city = city;
         listOfManager = new ArrayList<>();
+        photography = new PackgeDirectoryForPhotography();
     }
 
-    public List<Photographer> getListOfPhotgrapher() {
-        return listOfPhotgrapher;
+    public String getName() {
+        return name;
     }
 
-    public void setListOfPhotgrapher(List<Photographer> listOfPhotgrapher) {
-        this.listOfPhotgrapher = listOfPhotgrapher;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getOrgName() {
-        return orgName;
+    public String getCity() {
+        return city;
     }
 
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getContact() {
-        return contact;
+    public PackgeDirectoryForPhotography getPhotography() {
+        return photography;
+    }
+
+    public void setPhotography(PackgeDirectoryForPhotography photography) {
+        this.photography = photography;
     }
 
     public void setContact(String contact) {
@@ -48,24 +55,10 @@ public class PhotographyService {
         this.listOfManager = listOfManager;
     }
 
-    public PackgeDirectoryForPhotography getPhotography() {
-        return photography;
-    }
-
-    public void setPhotography(PackgeDirectoryForPhotography photography) {
-        this.photography = photography;
-    }
-
-    public Photographer addPhotographer(String id) {
-        Photographer photographer = new Photographer(id);
-        listOfPhotgrapher.add(photographer);
-        return photographer;
-    }
-
-    public Manager addManager(String name,String username,String password) {
-        Manager manager = new Manager(name,username,password);
+    public Manager addManager(String name, String city, String user, String password1) {
+        Manager manager = new Manager(name, city, user, password1);
         listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
         return manager;
     }
-
 }

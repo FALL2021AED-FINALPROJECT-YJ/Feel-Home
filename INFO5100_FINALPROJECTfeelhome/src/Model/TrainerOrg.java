@@ -55,4 +55,10 @@ public class TrainerOrg {
         Trainer trainer = new Trainer(name, city, user, password1);
         listOfTrainer.add(trainer);
     }
+    public Manager addManager(String name, String city, String user, String password1) {
+        Manager manager = new Manager(name,city, user, password1);
+        listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
+        return manager;
+    }
 }

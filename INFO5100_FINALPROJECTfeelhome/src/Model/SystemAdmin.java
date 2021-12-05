@@ -67,5 +67,12 @@ public class SystemAdmin {
         }
         return null;
     }
+    public boolean userExistsInSystem(String username){
+           if (map.containsKey(username)) {
+            return true;
+        }
+        return false;
+    }
+    
 
 }

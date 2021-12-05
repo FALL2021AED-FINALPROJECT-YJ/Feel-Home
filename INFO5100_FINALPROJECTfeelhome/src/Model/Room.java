@@ -28,15 +28,58 @@ public class Room {
         }
     }
 
+    public enum RoomType {
+        REGULAR(50, "Regular"),
+        DELUXE(100, "Deluxe"),
+        SUPER_DELUXE(200, "Super Deluxe");
+
+        private int rate;
+        private String name;
+
+        private RoomType(int rate, String name) {
+            this.rate = rate;
+            this.name = name;
+        }
+
+        public int getRate() {
+            return rate;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String toString() {
+            return getName();
+        }
+    }
+
     private List<BookingDate> bookings = new ArrayList<>();
     private String price;
+    private RoomType roomType;
     private String roomNo;
     private static int count;
     private String status;
 
-    public Room() {
-        this.roomNo = "RoomNo" + String.valueOf(count + 1);
-        count++;
+    public Room(RoomType roomType) {
+
+        this.roomType = roomType;
+    }
+
+    public List<BookingDate> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingDate> bookings) {
+        this.bookings = bookings;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 
     public String getStatus() {

@@ -5,22 +5,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LaundaryService {
+
     private String name;
-    private int id;
-    List<Manager> listOfManager;
-    private boolean status;
-    
-   public LaundaryService(){
-       listOfManager = new ArrayList<>();
-   }
-    public List<Manager> getListOfManager() {
-        return listOfManager;
+    private String city;
+    private String password;
+    private String username;
+
+    List<Order> list = new ArrayList<>();
+
+    public LaundaryService(String name, String city, String username, String password) {
+        this.name = name;
+        this.password = password;
+        this.username = username;
     }
 
-    public void setListOfManager(List<Manager> listOfManager) {
-        this.listOfManager = listOfManager;
+    public String getPassword() {
+        return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+ 
     public String getName() {
         return name;
     }
@@ -29,25 +51,8 @@ public class LaundaryService {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return name;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-    public Manager addManager(String name,String username,String password){
-        Manager manager = new Manager(name,username,password);
-        listOfManager.add(manager);
-        return manager;
-    }
-    
 }

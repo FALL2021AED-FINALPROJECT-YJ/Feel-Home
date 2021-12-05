@@ -1,15 +1,51 @@
-
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CateringService {
-    private String nameOfOrg;  //name of organisation
+
+    private String name;
+    private String city;
     private String contact;
-    private String id;
     private List<Manager> listOfManager;
-    private PackageDirectoryForCatering pd;
+    private PackageDirectoryForCatering packageForCatering;
+
+    public CateringService(String name, String contact, String city) {
+        this.name = name;
+        this.contact = contact;
+        this.city = city;
+        listOfManager = new ArrayList<>();
+        packageForCatering = new PackageDirectoryForCatering();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public PackageDirectoryForCatering getPackageForCatering() {
+        return packageForCatering;
+    }
+
+    public void setPackageForCatering(PackageDirectoryForCatering packageForCatering) {
+        this.packageForCatering = packageForCatering;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
     public List<Manager> getListOfManager() {
         return listOfManager;
@@ -19,46 +55,10 @@ public class CateringService {
         this.listOfManager = listOfManager;
     }
 
-    public PackageDirectoryForCatering getPd() {
-        return pd;
-    }
-
-    public void setPd(PackageDirectoryForCatering pd) {
-        this.pd = pd;
-    }
-    
-    public CateringService(){
-        listOfManager = new ArrayList<>();
-    }
-   
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public String getNameOfOrg() {
-        return nameOfOrg;
-    }
-
-    public void setNameOfOrg(String nameOfOrg) {
-        this.nameOfOrg = nameOfOrg;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    public Manager addManager(String name,String username,String password){
-        Manager manager = new Manager(name,username,password);
+    public Manager addManager(String name, String city, String user, String password1) {
+        Manager manager = new Manager(name,city, user, password1);
         listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
         return manager;
     }
-      
 }

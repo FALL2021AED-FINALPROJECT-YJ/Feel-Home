@@ -57,8 +57,8 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             }
         });
 
-        lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lblsysadmin.setText("MANAGE MANAGERS");
+        lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblsysadmin.setText("MANAGE ENTERPRISE MANAGERS");
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setText("DELETE");
@@ -143,65 +143,65 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 85, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(backButton)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(280, 280, 280)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton4)
+                                    .addGap(22, 22, 22))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(130, 130, 130)
+                                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(73, 73, 73)
+                                            .addComponent(jButton3))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(34, 34, 34)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(enterpriseType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(nameField)
+                                                .addComponent(usernameField)
+                                                .addComponent(passwordField)
+                                                .addComponent(networkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(enterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(223, 223, 223)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(backButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(324, 324, 324)
-                        .addComponent(lblsysadmin))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(280, 280, 280)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(enterpriseType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(nameField)
-                                    .addComponent(usernameField)
-                                    .addComponent(passwordField)
-                                    .addComponent(networkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(enterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(328, Short.MAX_VALUE))
+                        .addGap(255, 255, 255)
+                        .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(23, 23, 23)
                 .addComponent(backButton)
-                .addGap(21, 21, 21)
-                .addComponent(lblsysadmin)
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(78, 78, 78))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(27, 27, 27)))
+                .addComponent(lblsysadmin)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -222,7 +222,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(jButton3))
@@ -248,61 +248,66 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         String networkName = networkType.getSelectedItem().toString();
         String enterpriseType1 = enterpriseType.getSelectedItem().toString();   //type of enterprises eg:healthclub
         String enterpriseName1 = enterpriseName.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkName);  //finiding network
-        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-        if (enterpriseType1.equals("Health Club")) {
-            HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
-            healthclubName1.addManager(ManagerName, userName, password);
-            row[0] = networkName;
-            row[1] = enterpriseType1;
-            row[2] = enterpriseName1;
-            row[3] = ManagerName;
-            row[4] = userName;
-            row[5] = password;
-            model.addRow(row);
-            systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
-            JOptionPane.showMessageDialog(this, " Manager added successfully");
-            return;
-        } else if (enterpriseType1.equals("Business Event")) {
-            BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
-            event1.addManager(ManagerName, userName, password);
-            row[0] = networkName;
-            row[1] = enterpriseType1;
-            row[2] = enterpriseName1;
-            row[3] = ManagerName;
-            row[4] = userName;
-            row[5] = password;
-            model.addRow(row);
-            systemAdmin.addUser(userName, "Business Event");
-            JOptionPane.showMessageDialog(this, " Manager added successfully");
-            return;
-        } else if (enterpriseType1.equals("Restaurant")) {
-            Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
-            res1.addManager(userName, userName, password);
-            System.out.println(res1.getListOfManager().size()+ " manager in restaurant");
-            row[0] = networkName;
-            row[1] = enterpriseType1;
-            row[2] = enterpriseName1;
-            row[3] = ManagerName;
-            row[4] = userName;
-            row[5] = password;
-            model.addRow(row);
-            systemAdmin.addUser(userName, "Restaurant");
-            JOptionPane.showMessageDialog(this, " Manager added successfully");
-            return;
-        } else {
-            Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
-            hotel1.addManager(ManagerName, userName, password);
-            row[0] = networkName;
-            row[1] = enterpriseType1;
-            row[2] = enterpriseName1;
-            row[3] = ManagerName;
-            row[4] = userName;
-            row[5] = password;
-            model.addRow(row);
-            systemAdmin.addUser(userName, "Hotel");
-            JOptionPane.showMessageDialog(this, " Manager added successfully");
-            return;
+        if (systemAdmin.userExistsInSystem(userName) == false) {
+            Network network = systemAdmin.findNetwork(networkName);  //finiding network
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            if (enterpriseType1.equals("Health Club")) {
+                HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
+                healthclubName1.addManager(ManagerName, userName, password);
+                row[0] = networkName;
+                row[1] = enterpriseType1;
+                row[2] = enterpriseName1;
+                row[3] = ManagerName;
+                row[4] = userName;
+                row[5] = password;
+                model.addRow(row);
+                systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
+                return;
+            } else if (enterpriseType1.equals("Business Event")) {
+                BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
+                event1.addManager(ManagerName, userName, password);
+                row[0] = networkName;
+                row[1] = enterpriseType1;
+                row[2] = enterpriseName1;
+                row[3] = ManagerName;
+                row[4] = userName;
+                row[5] = password;
+                model.addRow(row);
+                systemAdmin.addUser(userName, "Business Event");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
+                return;
+            } else if (enterpriseType1.equals("Restaurant")) {
+                Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
+                res1.addManager(userName, userName, password);
+                System.out.println(res1.getListOfManager().size() + " manager in restaurant");
+                row[0] = networkName;
+                row[1] = enterpriseType1;
+                row[2] = enterpriseName1;
+                row[3] = ManagerName;
+                row[4] = userName;
+                row[5] = password;
+                model.addRow(row);
+                systemAdmin.addUser(userName, "Restaurant");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
+                return;
+            } else {
+                Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
+                hotel1.addManager(ManagerName, userName, password);
+                row[0] = networkName;
+                row[1] = enterpriseType1;
+                row[2] = enterpriseName1;
+                row[3] = ManagerName;
+                row[4] = userName;
+                row[5] = password;
+                model.addRow(row);
+                systemAdmin.addUser(userName, "Hotel");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
+                return;
+            }
+        } else 
+        {
+              JOptionPane.showMessageDialog(this, " This username already exists ");
         }
 
     }//GEN-LAST:event_addButtonActionPerformed

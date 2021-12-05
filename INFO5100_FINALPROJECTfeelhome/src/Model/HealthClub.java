@@ -5,10 +5,10 @@ import java.util.List;
 
 public class HealthClub extends Enterprise {
 
-    List<Manager> listOfManager;
-    List<PhysicianOrg> listOfPhysicianOrg;
-    List<TrainerOrg> listOfTrainerOrg;
-    List<TherapistOrg> listOfTherapistOrg;
+    private List<Manager> listOfManager;
+    private List<PhysicianOrg> listOfPhysicianOrg;
+    private List<TrainerOrg> listOfTrainerOrg;
+    private List<TherapistOrg> listOfTherapistOrg;
 
     HealthClub(String name, String contact) {
         super(name, contact);
