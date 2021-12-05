@@ -221,26 +221,28 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
-        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-        List<Restaurant> list = enterpriseDirec.getListOfRestaurants();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).findManager(user) != null) {    //if manager found 
-                if (orgType.equals("Deliveryman")) {
-                    List<DeliverymanOrg> org1 = list.get(i).getListOfDeliveryManOrg();
-                    for (int j = 0; j < org1.size(); j++) {
-                        if (org1.get(j).getName().equals(orgName1)) {
-                            org1.get(j).addDeliveryman(name, network.getName(), username, password);
-                            row[0] = network.getName();
-                            row[1] = orgType;
-                            row[2] = orgName1;
-                            row[3] = name;
-                            row[4] = username;
-                            row[5] = password;
-                            model.addRow(row);
-                            systemAdmin.addUser(username, "Deliveryman");
-                            JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
-                            return;
+        if (systemAdmin.userExistsInSystem(username) == false) {
+            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            List<Restaurant> list = enterpriseDirec.getListOfRestaurants();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).findManager(user) != null) {    //if manager found 
+                    if (orgType.equals("Deliveryman")) {
+                        List<DeliverymanOrg> org1 = list.get(i).getListOfDeliveryManOrg();
+                        for (int j = 0; j < org1.size(); j++) {
+                            if (org1.get(j).getName().equals(orgName1)) {
+                                org1.get(j).addManager(name, network.getName(), username, password);  // add manager for deliveryman org
+                                row[0] = network.getName();
+                                row[1] = orgType;
+                                row[2] = orgName1;
+                                row[3] = name;
+                                row[4] = username;
+                                row[5] = password;
+                                model.addRow(row);
+                                systemAdmin.addUser(username, "Deliveryman");
+                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                return;
+                            }
                         }
                     }
                 }
@@ -254,15 +256,16 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<Restaurant> list = enterpriseDirec.getListOfRestaurants();
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).findManager(user);
-            if (orgType.equals("Deliveryman")) {
-                List<DeliverymanOrg> org1 = list.get(i).getListOfDeliveryManOrg();
-                for (int j = 0; j < org1.size(); j++) {
-                    orgName.addItem(org1.get(j).getName());
-                    return;
-                }
-            }
+            if (list.get(i).findManager(user) != null) {
+                if (orgType.equals("Deliveryman")) {
+                    List<DeliverymanOrg> org1 = list.get(i).getListOfDeliveryManOrg();
+                    for (int j = 0; j < org1.size(); j++) {
+                        orgName.addItem(org1.get(j).getName());
+                    }
 
+                }
+                return;
+            }
         }
     }//GEN-LAST:event_orgComboActionPerformed
 

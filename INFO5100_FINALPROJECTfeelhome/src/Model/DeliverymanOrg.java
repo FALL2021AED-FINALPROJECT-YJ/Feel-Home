@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeliverymanOrg {
-
-    String name;
-    String city;
-    String contact;
-    List<Manager> listOfManager;
-    List<DeliveryMan> listOfDeliveryMan;
+    private String name;
+    private String city;
+    private String contact;
+    private List<Manager> listOfManager;
+    private List<DeliveryMan> listOfDeliveryMan;
 
     public DeliverymanOrg(String name, String contact, String city) {
         this.name = name;
@@ -64,4 +63,11 @@ public class DeliverymanOrg {
         listOfDeliveryMan.add(del);
         System.out.println("Deliveryman manager added is " + listOfDeliveryMan.size());
     }
+      public Manager addManager(String name, String city, String user, String password1) {
+        Manager manager = new Manager(name,city, user, password1);
+        listOfManager.add(manager);
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
+        return manager;
+    }
+
 }

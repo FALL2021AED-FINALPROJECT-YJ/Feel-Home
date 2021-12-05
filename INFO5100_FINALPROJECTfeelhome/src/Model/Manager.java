@@ -6,13 +6,27 @@ public class Manager {
     private String password;
     private String contact;
     private String userName;
-
+    private String city;
 
     public Manager(String name, String username, String password) {
         this.name = name;
         this.password = password;
         this.userName = username;
     }
+     public Manager(String name, String city,String username, String password) {
+        this.name = name;
+        this.password = password;
+        this.userName = username;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+     
      public String getName() {
         return name;
     }

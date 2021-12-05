@@ -5,10 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Hotel extends Enterprise {
+
     private List<Room> listOfRoom;
     private List<Manager> listOfManager;
-    private List<LaundaryService> laundaryList;
-    private List<Transportation> transportationList;
+    private List<LaundaryOrg> laundaryOrg;
+    private List<TransportationOrg> transportationOrgList;
     private Services serviceDirec;
 
     public Hotel(String name, String contact) {
@@ -16,27 +17,24 @@ public class Hotel extends Enterprise {
         listOfManager = new ArrayList<>();
         serviceDirec = new Services();
         listOfRoom = new ArrayList<>();
-        listOfRoom.add(new Room());
-        listOfRoom.add(new Room());
-        listOfRoom.add(new Room());
-        transportationList = new ArrayList<>();
-        laundaryList = new ArrayList<>();
+        transportationOrgList = new ArrayList<>();
+        laundaryOrg = new ArrayList<>();
     }
 
-    public List<LaundaryService> getLaundaryList() {
-        return laundaryList;
+    public List<LaundaryOrg> getLaundaryOrg() {
+        return laundaryOrg;
     }
 
-    public void setLaundaryList(List<LaundaryService> laundaryList) {
-        this.laundaryList = laundaryList;
+    public void setLaundaryOrg(List<LaundaryOrg> laundaryList) {
+        this.laundaryOrg = laundaryList;
     }
 
-    public List<Transportation> getTransportationList() {
-        return transportationList;
+    public List<TransportationOrg> getTransportationOrgList() {
+        return transportationOrgList;
     }
 
-    public void setTransportationList(List<Transportation> transportationList) {
-        this.transportationList = transportationList;
+    public void setTransportationOrgList(List<TransportationOrg> transportationList) {
+        this.transportationOrgList = transportationList;
     }
 
     public List<Room> getListOfRoom() {
@@ -62,7 +60,7 @@ public class Hotel extends Enterprise {
         for (int i = 0; i < count; i++) {
             availableRooms.get(i).book(startDate, endDate);
         }
-        
+
         // return booked room list
         return availableRooms.subList(0, count);
     }
@@ -92,7 +90,26 @@ public class Hotel extends Enterprise {
         listOfManager.add(manager);
         return manager;
     }
-    
+
+    public Manager findManager(String username) {
+        for (Manager man : listOfManager) {
+            if (man.getUserName().equals(username)) {
+                return man;
+            }
+        }
+        return null;
+    }
+
+    public void addLaundaryOrg(String name, String contact, String city) {
+        LaundaryOrg laundaryOrg1 = new LaundaryOrg(name, contact, city);
+        laundaryOrg.add(laundaryOrg1);
+    }
+
+    public void addTransportationOrg(String name, String contact, String networkName) {
+        TransportationOrg to = new TransportationOrg(name, contact, networkName);
+        transportationOrgList.add(to);
+    }
+
     public String toString() {
         return "Hotel:" + name + ", Rooms:" + listOfRoom;
     }
