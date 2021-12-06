@@ -29,7 +29,7 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
@@ -251,13 +251,13 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void btnviewdetailsActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void btnviewdetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnviewdetailsActionPerformed
 
-    }                                              
+    }//GEN-LAST:event_btnviewdetailsActionPerformed
 
-    private void bookroomBtnActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void bookroomBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookroomBtnActionPerformed
         System.out.println(username + " username ");
         Date checkinDate = checkin.getDate();
         Date checkoutdate = checkout.getDate();
@@ -307,29 +307,29 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
             }
         }
 
-    }                                           
+    }//GEN-LAST:event_bookroomBtnActionPerformed
 
-    private void serviceBtnActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void serviceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceBtnActionPerformed
         callOnCreateMethod1.run();
-    }                                          
+    }//GEN-LAST:event_serviceBtnActionPerformed
 
-    private void priceBtnActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void priceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceBtnActionPerformed
         int peopleCount = Integer.parseInt(peopleField.getText());
         int roomCount = Integer.parseInt(roomField.getText());
         int price = roomCount * 3;
         priceField.setText(String.valueOf(price));  //calaculate price of room
-    }                                        
+    }//GEN-LAST:event_priceBtnActionPerformed
 
-    private void cityComboActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void cityComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityComboActionPerformed
         String city = cityCombo.getSelectedItem().toString();
         Network network = systems.findNetwork(city);
         for (Hotel hotel : network.getEnterpriseDirectory().getListOfHotel()) {  //populate all hotel in that city
             hotelCombo.addItem(hotel.getName());
         }
-    }                                         
+    }//GEN-LAST:event_cityComboActionPerformed
 
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookroomBtn;
     private javax.swing.JLabel btnnoofpeople;
     private javax.swing.JButton btnviewdetails;
@@ -353,5 +353,5 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField roomField;
     private javax.swing.JComboBox<String> roomtype;
     private javax.swing.JButton serviceBtn;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
