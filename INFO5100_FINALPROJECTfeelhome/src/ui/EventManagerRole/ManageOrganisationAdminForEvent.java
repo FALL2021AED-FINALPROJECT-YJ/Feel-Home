@@ -5,11 +5,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
 import model.CateringService;
-import model.DecorService;
+import model.DecorOrg;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Network;
-import model.PhotographyService;
+import model.PhotographyOrg;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -280,7 +280,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else if (orgType.equals("Decor")) {
-                        List<DecorService> org2 = list.get(i).getListOfDecors();
+                        List<DecorOrg> org2 = list.get(i).getListOfDecors();
 
                         for (int j = 0; j < org2.size(); j++) {
                             System.out.println(org2.get(i).getName() + "name of decor org");
@@ -299,7 +299,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else {
-                        List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
+                        List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
                         for (int j = 0; j < org3.size(); j++) {
                             if (org3.get(j).getName().equals(orgName1)) {
                                 org3.get(j).addManager(name, network.getName(), username, password);
@@ -336,12 +336,12 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         orgName.addItem(org1.get(j).getName());
                     }
                 } else if (orgType.equals("Decor")) {
-                    List<DecorService> org2 = list.get(i).getListOfDecors();
+                    List<DecorOrg> org2 = list.get(i).getListOfDecors();
                     for (int j = 0; j < org2.size(); j++) {
                         orgName.addItem(org2.get(j).getName());
                     }
                 } else {
-                    List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
+                    List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
                     for (int j = 0; j < org3.size(); j++) {
                         orgName.addItem(org3.get(j).getName());
                     }
