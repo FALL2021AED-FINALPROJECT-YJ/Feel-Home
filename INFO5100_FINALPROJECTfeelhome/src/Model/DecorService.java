@@ -9,45 +9,14 @@ public class DecorService {
     private String city;
     private String contact;
     private List<Manager> listOfManager;
+    private PackageDirectoryForDecor packageForDecor;
 
     public DecorService(String name, String contact, String city) {
         this.name = name;
         this.contact = contact;
         this.city = city;
         listOfManager = new ArrayList<>();
-    }
-
-    public enum DecorType {
-        STANDARD(50, "Standard", "Includes ballon decoration"),
-        GOLD(100, "Gold", "Includes flower decoration and fire-works"),
-        PLATINUM(200, "Premiume", "Includes flower decoration,fire-works and customised cake");
-
-        private final int rate;
-        private final String name;
-        private final String description;
-
-        private DecorType(int rate, String name, String description) {
-            this.rate = rate;
-            this.name = name;
-            this.description = description;
-        }
-
-        public int getRate() {
-            return rate;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-        
-
-        public String toString() {
-            return name + "(" + description + ")";
-        }
+        packageForDecor = new PackageDirectoryForDecor();
     }
 
     public String getName() {
@@ -65,6 +34,15 @@ public class DecorService {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public PackageDirectoryForDecor getPackageForDecor() {
+        return packageForDecor;
+    }
+
+    public void setPackageForDecor(PackageDirectoryForDecor packageForDecor) {
+        this.packageForDecor = packageForDecor;
+    }
+
     public void setContact(String contact) {
         this.contact = contact;
     }
