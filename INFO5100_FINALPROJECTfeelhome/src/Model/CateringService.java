@@ -9,15 +9,41 @@ public class CateringService {
     private String city;
     private String contact;
     private List<Manager> listOfManager;
-    private PackageDirectoryForCatering packageForCatering;
 
     public CateringService(String name, String contact, String city) {
         this.name = name;
         this.contact = contact;
         this.city = city;
         listOfManager = new ArrayList<>();
-        packageForCatering = new PackageDirectoryForCatering();
     }
+      public enum CateringType {
+        STANDARD(50, "Standard","Includes 1 starter and 1 main course"),
+        GOLD(100, "Gold","Includes 1 starter and 2 entrée"),
+        PLATINUM(200, "Platinum");
+
+        private final int rate;
+        private final String name;
+        private String description;
+
+        private CateringType(int rate, String name,String description) {
+            this.rate = rate;
+            this.name = name;
+            this.decription = description;
+        }
+
+        public int getRate() {
+            return rate;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String toString() {
+            return getName() + " (" + rate + "$ per night)";
+        }
+    }
+
 
     public String getName() {
         return name;
@@ -33,14 +59,6 @@ public class CateringService {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public PackageDirectoryForCatering getPackageForCatering() {
-        return packageForCatering;
-    }
-
-    public void setPackageForCatering(PackageDirectoryForCatering packageForCatering) {
-        this.packageForCatering = packageForCatering;
     }
 
     public void setContact(String contact) {

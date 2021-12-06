@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Services {
-    List<BusinessEvent> listOfEvents;
-    List<HealthClub> listOfHealthClub;
-    List<Restaurant> listOfRestaurants;
+    private List<BusinessEvent> listOfEvents;
+    private List<HealthClub> listOfHealthClub;
+    private List<Restaurant> listOfRestaurants;
+    
 
     public Services() {
         listOfEvents = new ArrayList<>();

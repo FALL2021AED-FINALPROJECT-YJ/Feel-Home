@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Booking {
 
@@ -11,27 +12,34 @@ public class Booking {
     private String status;
     private int price;
     private Services services;
+    
     private Hotel hotel;
-    private List<Room> rooms;
+    private RoomList roomlist;
+    private String id;
 
     public Booking(Hotel hotel) {
         services = new Services();
         this.hotel = hotel;
+        roomlist = new RoomList();
+        id = UUID.randomUUID().toString();
     }
 
     public Hotel getHotel() {
         return hotel;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public RoomList getRoomlist() {
+        return roomlist;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoomlist(RoomList roomlist) {
+        this.roomlist = roomlist;
     }
 
-    
+    public String getId() {
+        return id;
+    }
+
     public Services getServices() {
         return services;
     }

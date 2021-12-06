@@ -321,6 +321,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkTypeActionPerformed
 
     private void enterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeActionPerformed
+      enterpriseName.removeAllItems();
         String networkName = networkType.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkName);
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
