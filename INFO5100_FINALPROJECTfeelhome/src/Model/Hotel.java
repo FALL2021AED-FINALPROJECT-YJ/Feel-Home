@@ -3,10 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.Room.RoomType;
 
 public class Hotel extends Enterprise {
 
-    private List<Room> listOfRoom;
+    private RoomList roomListDirec;
     private List<Manager> listOfManager;
     private List<LaundaryOrg> laundaryOrg;
     private List<TransportationOrg> transportationOrgList;
@@ -16,7 +17,7 @@ public class Hotel extends Enterprise {
         super(name, contact);
         listOfManager = new ArrayList<>();
         serviceDirec = new Services();
-        listOfRoom = new ArrayList<>();
+        roomListDirec = new RoomList();
         transportationOrgList = new ArrayList<>();
         laundaryOrg = new ArrayList<>();
     }
@@ -37,22 +38,28 @@ public class Hotel extends Enterprise {
         this.transportationOrgList = transportationList;
     }
 
-    public List<Room> getListOfRoom() {
-        return listOfRoom;
+    public RoomList getRoomListDirec() {
+        return roomListDirec;
     }
 
-    public List<Room> availableRooms(Date startDate, Date endDate) {
+    public void setRoomListDirec(RoomList roomList) {
+        this.roomListDirec = roomList;
+    }
+
+    public List<Room> availableRooms(Date startDate, Date endDate, RoomType roomType) {
         List<Room> availableRooms = new ArrayList<>();
-        for (Room room : listOfRoom) {
-            if (room.isAvailable(startDate, endDate)) {
+        for (Room room : roomListDirec.getListOfRooms()) {
+            if (room.getRoomType().equals(roomType) && room.isAvailable(startDate, endDate)) {
                 availableRooms.add(room);
             }
         }
+        
+        System.out.println("Available rooms : " + availableRooms + ", start : " + startDate + ", end : " + endDate);
         return availableRooms;
     }
 
-    public List<Room> bookRooms(Date startDate, Date endDate, int count) {
-        List<Room> availableRooms = availableRooms(startDate, endDate);
+    public List<Room> bookRooms(Date startDate, Date endDate, int count, RoomType roomType) {
+        List<Room> availableRooms = availableRooms(startDate, endDate, roomType);
         if (availableRooms.size() < count) {
             throw new IllegalArgumentException("Rooms not available for the specified date.");
         }
@@ -61,12 +68,9 @@ public class Hotel extends Enterprise {
             availableRooms.get(i).book(startDate, endDate);
         }
 
+        System.out.println("Booked rooms : " + availableRooms.subList(0, count) + ", start : " + startDate + ", end : " + endDate);
         // return booked room list
         return availableRooms.subList(0, count);
-    }
-
-    public void setListOfRoom(List<Room> listOfRoom) {
-        this.listOfRoom = listOfRoom;
     }
 
     public Services getServiceDirec() {
@@ -111,7 +115,7 @@ public class Hotel extends Enterprise {
     }
 
     public String toString() {
-        return "Hotel:" + name + ", Rooms:" + listOfRoom;
+        return "Hotel:" + name + ", Rooms:" + roomListDirec;
     }
 
 }

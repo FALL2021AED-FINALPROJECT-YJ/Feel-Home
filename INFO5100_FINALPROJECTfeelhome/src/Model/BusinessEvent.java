@@ -1,10 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BusinessEvent extends Enterprise {
 
+    private Date date;
     private List<Manager> listOfManager;
     private List<CateringService> listOfCatering;
     private List<PhotographyService> listOfPhotographyServices;
@@ -18,6 +20,16 @@ public class BusinessEvent extends Enterprise {
         listOfDecors = new ArrayList<>();
 
     }
+  
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
 
     public List<Manager> getListOfManager() {
         return listOfManager;
@@ -70,7 +82,7 @@ public class BusinessEvent extends Enterprise {
         CateringService cat = new CateringService(name, contact, city);
         System.out.println(name);
         listOfCatering.add(cat);
-            System.out.println("catering size is " +listOfCatering.size()+ " name is " +listOfCatering.get(0).getName());
+        System.out.println("catering size is " + listOfCatering.size() + " name is " + listOfCatering.get(0).getName());
 
     }
 

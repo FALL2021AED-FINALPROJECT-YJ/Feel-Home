@@ -1,21 +1,20 @@
 package ui.main;
 
-import static java.time.Clock.system;
 import java.util.List;
-import javax.swing.JOptionPane;
+import model.Booking;
 import model.BusinessEvent;
 import model.Customer;
-import model.CustomerDirectory;
 import model.HealthClub;
 import model.Hotel;
 import model.Manager;
 import model.Network;
 import model.Restaurant;
 import model.SystemAdmin;
+import ui.CustomerRole.AddServicePanel;
 import ui.CustomerRole.BookEventsJPanel;
 import ui.CustomerRole.BookRoomServicesJPanel;
 import ui.CustomerRole.CustomerStartingJPanel;
-import ui.CustomerRole.StatusJPanel;
+import ui.CustomerRole.ManageBooking;
 import ui.EventManagerRole.EventManagerPanel;
 import ui.EventManagerRole.ManageOrganisationAdminForEvent;
 import ui.EventManagerRole.ManageOrganisationForEvents;
@@ -28,6 +27,7 @@ import ui.HealthClubManagerRole.ManageOrganizationPanel;
 import ui.HotelManagerRole.HotelManagerPanel;
 import ui.HotelManagerRole.ManageOrganisationAdminForHotel;
 import ui.HotelManagerRole.ManageOrganisationForHotel;
+import ui.HotelManagerRole.ManageRoomPanel;
 import ui.HotelManagerRole.ViewTaskForHotel;
 import ui.RestaurantManagerRole.AddOrderPanel;
 import ui.RestaurantManagerRole.ManageOrgAdminForRestauarant;
@@ -239,18 +239,6 @@ public class Main1JFrame extends javax.swing.JFrame {
         jSplitPane.setRightComponent(new SystemAdministrationJPanel(systemAdmin, this::renderNetworkPanel, this::renderEnterprisePanel, this::renderManagerPanel, this::renderCustomerPanel));
     }
 
-    private void renderBookRoomPanel() {
-        String user = usernameField.getText();
-        System.out.println(user);
-        BookRoomServicesJPanel bookroomPanel = new BookRoomServicesJPanel(systemAdmin, this::renderEventPanel, user);
-        jSplitPane.setRightComponent(bookroomPanel);
-    }
-
-    private void renderEventPanel() {
-        String user = usernameField.getText();
-        jSplitPane.setRightComponent(new StatusJPanel(systemAdmin, this::renderBookRoomPanel, user));
-    }
-
     /**
      * @param args the command line arguments
      */
@@ -301,8 +289,40 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void renderCustomer(String username) {
         Customer customer = systemAdmin.getCustomerDirec().findCustomerUsername(username);
-        StatusJPanel statusPanel = new StatusJPanel(systemAdmin, this::renderBookRoomPanel, username);
-        jSplitPane.setRightComponent(statusPanel);
+        CustomerStartingJPanel customerPanel = new CustomerStartingJPanel(systemAdmin, this::renderBookRoomPanel, this::manageBooking);
+        jSplitPane.setRightComponent(customerPanel);
+    }
+
+    private void renderBookRoomPanel() {
+        String user = usernameField.getText();
+        BookRoomServicesJPanel bookroomPanel = new BookRoomServicesJPanel(systemAdmin, this::manageCustomerPanel, user);
+        jSplitPane.setRightComponent(bookroomPanel);
+    }
+
+    private void manageBooking() {
+        String user = usernameField.getText();
+        ManageBooking manageBookingPanel = new ManageBooking(systemAdmin, this::manageCustomerPanel, this::addServices, user);
+        jSplitPane.setRightComponent(manageBookingPanel);
+    }
+
+    private void manageCustomerPanel() {
+        String user = usernameField.getText();
+        jSplitPane.setRightComponent(new CustomerStartingJPanel(systemAdmin, this::renderBookRoomPanel, this::manageBooking));
+    }
+
+    private void addServices(Booking booking) {
+        String user = usernameField.getText();
+        AddServicePanel service = new AddServicePanel(systemAdmin, this::bookEvent, this::manageBooking, user, booking);
+        jSplitPane.setRightComponent(service);
+    }
+
+    private void bookEvent(Booking booking) {
+        String user = usernameField.getText();
+        BookEventsJPanel event = new BookEventsJPanel(systemAdmin, this::addServices, user,booking);
+        jSplitPane.setRightComponent(event);
+    }
+    private void healthClub(Booking booking){
+        
     }
 
     private void renderHealthClubManager(String username) {
@@ -462,7 +482,7 @@ public class Main1JFrame extends javax.swing.JFrame {
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(k).getUserName().equals(username)) {
                         HotelManagerPanel hotelPanel = new HotelManagerPanel(systemAdmin, this::renderViewTask2, this::renderHotelOrg,
-                                this::renderHotelAdmin);
+                                this::renderHotelAdmin, this::renderRoomPanel);
                         jSplitPane.setRightComponent(hotelPanel);
 
                     }
@@ -470,7 +490,8 @@ public class Main1JFrame extends javax.swing.JFrame {
             }
         }
     }
-        private Network findUserNetworkForHotel() {
+
+    private Network findUserNetworkForHotel() {
         String user = usernameField.getText();
         List<Network> network = systemAdmin.getListOfNetwork();
         for (int i = 0; i < network.size(); i++) {
@@ -491,8 +512,8 @@ public class Main1JFrame extends javax.swing.JFrame {
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
         Network network = findUserNetworkForHotel();
-        ViewTaskForHotel hotelPanel = new ViewTaskForHotel(systemAdmin, this::hotelManagerPanel, user, type,network);
-          jSplitPane.setRightComponent(hotelPanel);
+        ViewTaskForHotel hotelPanel = new ViewTaskForHotel(systemAdmin, this::hotelManagerPanel, user, type, network);
+        jSplitPane.setRightComponent(hotelPanel);
     }
 
     private void renderHotelOrg() {     // add an organisation for hotel
@@ -510,8 +531,16 @@ public class Main1JFrame extends javax.swing.JFrame {
         jSplitPane.setRightComponent(orgAdmin);
     }
 
+    private void renderRoomPanel() {
+        String user = usernameField.getText();
+        String type = systemAdmin.findUser(user);
+        Network network = findUserNetworkForHotel();
+        ManageRoomPanel room = new ManageRoomPanel(systemAdmin, this::hotelManagerPanel, network, user);
+        jSplitPane.setRightComponent(room);
+    }
+
     private void hotelManagerPanel() {    //go back to Hotel manager panel
-        jSplitPane.setRightComponent(new HotelManagerPanel(systemAdmin, this::renderViewTask2, this::renderHotelOrg, this::renderHotelAdmin));
+        jSplitPane.setRightComponent(new HotelManagerPanel(systemAdmin, this::renderViewTask2, this::renderHotelOrg, this::renderHotelAdmin, this::renderRoomPanel));
     }
 
     private void renderEventManager(String username) {
@@ -531,7 +560,8 @@ public class Main1JFrame extends javax.swing.JFrame {
             }
         }
     }
-        private Network findUserNetworkForEvents() {
+
+    private Network findUserNetworkForEvents() {
         String user = usernameField.getText();
         List<Network> network = systemAdmin.getListOfNetwork();
         for (int i = 0; i < network.size(); i++) {
@@ -574,5 +604,4 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void eventManagerPanel() {    //go back to event manager panel
         jSplitPane.setRightComponent(new EventManagerPanel(systemAdmin, this::renderViewTask3, this::renderEventOrg, this::renderEventAdmin));
     }
-
 }

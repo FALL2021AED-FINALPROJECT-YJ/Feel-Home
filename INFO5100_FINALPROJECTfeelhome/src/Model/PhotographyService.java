@@ -9,14 +9,38 @@ public class PhotographyService {
     private String city;
     private String contact;
     private List<Manager> listOfManager;
-    private PackgeDirectoryForPhotography photography;
 
     public PhotographyService(String name, String contact, String city) {
         this.name = name;
         this.contact = contact;
         this.city = city;
         listOfManager = new ArrayList<>();
-        photography = new PackgeDirectoryForPhotography();
+    }
+
+      public enum PhotographyType {
+        STANDARD(50, "Standard"),
+        GOLD(100, "Gold"),
+        PREMIUM(200, "Premium");
+
+        private final int rate;
+        private final String name;
+
+        private PhotographyType(int rate, String name) {
+            this.rate = rate;
+            this.name = name;
+        }
+
+        public int getRate() {
+            return rate;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String toString() {
+            return getName() + " (" + rate + "$ per night)";
+        }
     }
 
     public String getName() {
@@ -33,14 +57,6 @@ public class PhotographyService {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public PackgeDirectoryForPhotography getPhotography() {
-        return photography;
-    }
-
-    public void setPhotography(PackgeDirectoryForPhotography photography) {
-        this.photography = photography;
     }
 
     public void setContact(String contact) {
