@@ -65,9 +65,9 @@ public class TherapistOrg {
         listOfTherapist.add(therapist);
     }
      public Manager addManager(String name, String city, String user, String password1) {
-        Manager manager = new Manager(name,city, user, password1);
+        Manager manager = new Manager(name, user, password1);
         listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
 }

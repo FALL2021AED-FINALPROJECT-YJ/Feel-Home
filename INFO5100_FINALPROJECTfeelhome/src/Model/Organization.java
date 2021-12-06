@@ -3,20 +3,18 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrainerOrg {
+public abstract class Organization {
 
-    String name;
-    String city;
-    String contact;
-    List<Manager> listOfManager;
-    List<Trainer> listOfTrainer;
+    protected String name;
+    protected String city;
+    protected String contact;
+    protected List<Manager> listOfManager;
 
-    public TrainerOrg(String name, String contact, String city) {
+    public Organization(String name, String contact, String city) {
         this.name = name;
         this.city = city;
         this.contact = contact;
-        listOfManager = new ArrayList<>();
-        listOfTrainer = new ArrayList<>();
+        this.listOfManager = new ArrayList<>();
     }
 
     public String getName() {
@@ -50,15 +48,10 @@ public class TrainerOrg {
     public void setListOfManager(List<Manager> listOfManager) {
         this.listOfManager = listOfManager;
     }
-
-    public void addTrainer(String name, String city, String user, String password1) {
-        Trainer trainer = new Trainer(name, city, user, password1);
-        listOfTrainer.add(trainer);
-    }
-    public Manager addManager(String name, String city, String user, String password1) {
-        Manager manager = new Manager(name, user, password1);
+    
+    public Manager addManager(String name, String city, String user, String password) {
+        Manager manager = new Manager(name, user, password);
         listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
 }

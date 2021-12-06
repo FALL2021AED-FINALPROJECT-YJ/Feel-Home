@@ -1,17 +1,14 @@
 package ui.CustomerRole;
 
 import java.util.Date;
-import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import model.Booking;
 import model.CateringService.CateringType;
-import model.Customer;
-import model.CustomerDirectory;
-import model.DecorService.DecorType;
-import model.PhotographyService.PhotographyType;
-import model.Room;
+import model.DecorOrg.DecorType;
+import model.PhotographyOrg.PhotographyType;
 import model.SystemAdmin;
+import model.service.BusinessEventService;
 
 public class BookEventsJPanel extends javax.swing.JPanel {
 
@@ -165,7 +162,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
                         .addGap(203, 203, 203)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(141, 141, 141)
-                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -219,25 +216,37 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         Date date = dateField.getDate();
         Date checkin = booking.getCheckin();
         Date checkout = booking.getCheckout();
-        int totalPrice = 0;
-        if (date.compareTo(checkin) >= 0 && date.compareTo(checkout) <= 0) {   //compare if date is within check-in and check-out date
-            boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
-
-            PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
-            CateringType catering = (CateringType) cateringCombo.getSelectedItem();
-            DecorType decor = (DecorType) decorCombo.getSelectedItem();
-            if (photoRadioBtnSelected && photography != null) {
-                int photoPrice = photography.getRate();
-                totalPrice = photoPrice;
-            }
-            int decorPrice = decor.getRate();
-            int cateringPrice = catering.getRate();
-            totalPrice = decorPrice + cateringPrice;
-            booking.setPrice(totalPrice);      // set total price of events in booking
-        } else {
+        if (date.compareTo(checkin) < 0 || date.compareTo(checkout) > 0) {
             JOptionPane.showMessageDialog(this, "Selected date should be witihin check-in date (" + checkin
                     + ") and checkout date (" + checkout + ")");
+            return;
         }
+        boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
+        boolean decorRadioBtnSelected = decorRadioBtn.isSelected();
+        boolean cateringRadioBtnSelected = cateringRadioBtn.isSelected();
+
+        if (!photoRadioBtnSelected && !decorRadioBtnSelected && !cateringRadioBtnSelected) {
+            JOptionPane.showMessageDialog(this, "Please select at least one service for Business Event.");
+            return;
+        }
+
+        BusinessEventService service = new BusinessEventService(date);
+        if (photoRadioBtnSelected) {
+            PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
+        }
+
+        if (decorRadioBtnSelected) {
+            DecorType decor = (DecorType) decorCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
+        }
+
+        if (cateringRadioBtnSelected) {
+            CateringType catering = (CateringType) cateringCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
+        }
+       
+        booking.addService(service);
     }//GEN-LAST:event_bookEventBtnActionPerformed
 
     private void cateringComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cateringComboActionPerformed

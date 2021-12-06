@@ -14,14 +14,16 @@ public class ManageBooking extends javax.swing.JPanel {
 
     private SystemAdmin systemAdmin;
     private Runnable callOnCreateMethod1;
-    private Consumer<Booking> callOnCreateMethod2;
+    private Consumer<Booking> callOnAddServiceMethod;
+    private Consumer<Booking> callOnViewServiceMethod;
     private String username;
 
-    public ManageBooking(SystemAdmin systemAdmin, Runnable callOnCreateMethod1, Consumer<Booking> callOnCreateMethod2, String username) {
+    public ManageBooking(SystemAdmin systemAdmin, Runnable callOnCreateMethod1, Consumer<Booking> callOnCreateMethod2, Consumer<Booking> callOnViewServiceMethod, String username) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod1 = callOnCreateMethod1;
-        this.callOnCreateMethod2 = callOnCreateMethod2;
+        this.callOnAddServiceMethod = callOnCreateMethod2;
+        this.callOnViewServiceMethod = callOnViewServiceMethod;
         this.username = username;
 
         populateTable();
@@ -36,6 +38,7 @@ public class ManageBooking extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         addServiceBtn = new javax.swing.JButton();
+        viewOrder = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("BOOKING DETAILS");
@@ -67,6 +70,7 @@ public class ManageBooking extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        addServiceBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         addServiceBtn.setText("ADD SERVICES");
         addServiceBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,14 +78,18 @@ public class ManageBooking extends javax.swing.JPanel {
             }
         });
 
+        viewOrder.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        viewOrder.setText("VIEW SERVICE DETAILS");
+        viewOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(backBtn)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -91,23 +99,32 @@ public class ManageBooking extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(324, 324, 324))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(viewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(backBtn)
-                .addGap(18, 18, 18)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(340, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(347, 347, 347))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -117,22 +134,41 @@ public class ManageBooking extends javax.swing.JPanel {
 
     private void addServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addServiceBtnActionPerformed
         int selectedRowIndex = jTable1.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String bookingId = (String) model.getValueAt(selectedRowIndex, 1);
-        
-        System.out.println(bookingId+ " is selected");
-        
+
+        System.out.println(bookingId + " is selected");
+
         CustomerDirectory customDirec = systemAdmin.getCustomerDirec();
         Customer customer = customDirec.findCustomerUsername(username);
 
         List<Booking> list = customer.getBookingList();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equals(bookingId)) {
-                callOnCreateMethod2.accept(list.get(i));
+                callOnAddServiceMethod.accept(list.get(i));
                 return;
             }
         }
     }//GEN-LAST:event_addServiceBtnActionPerformed
+
+    private void viewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String bookingId = (String) model.getValueAt(selectedRowIndex, 1);
+
+        System.out.println(bookingId + " is selected");
+
+        CustomerDirectory customDirec = systemAdmin.getCustomerDirec();
+        Customer customer = customDirec.findCustomerUsername(username);
+
+        List<Booking> list = customer.getBookingList();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(bookingId)) {
+                callOnViewServiceMethod.accept(list.get(i));
+                return;
+            }
+        }
+    }//GEN-LAST:event_viewOrderActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -141,6 +177,7 @@ public class ManageBooking extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton viewOrder;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
@@ -153,7 +190,7 @@ public class ManageBooking extends javax.swing.JPanel {
         for (Booking bookingList : customer.getBookingList()) {
             row[0] = bookingList.getHotel().getName();
             row[1] = bookingList.getId();
-            row[2] = bookingList.getPrice();
+            row[2] = bookingList.getCost();
             row[3] = bookingList.getStatus();
             row[4] = bookingList.getCheckin();
             row[5] = bookingList.getCheckout();

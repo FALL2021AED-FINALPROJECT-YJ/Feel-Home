@@ -53,13 +53,13 @@ public class HealthClub extends Enterprise {
     public Manager addManager(String name, String username, String password) {
         Manager manager = new Manager(name, username, password);
         listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
 
     public Manager findManager(String username) {
         for (Manager man : listOfManager) {
-            if (man.getUserName().equals(username)) {
+            if (man.getUsername().equals(username)) {
                 return man;
             }
         }

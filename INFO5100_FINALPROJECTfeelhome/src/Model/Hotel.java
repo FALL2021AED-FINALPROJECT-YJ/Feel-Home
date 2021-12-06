@@ -11,12 +11,12 @@ public class Hotel extends Enterprise {
     private List<Manager> listOfManager;
     private List<LaundaryOrg> laundaryOrg;
     private List<TransportationOrg> transportationOrgList;
-    private Services serviceDirec;
+ 
 
     public Hotel(String name, String contact) {
         super(name, contact);
         listOfManager = new ArrayList<>();
-        serviceDirec = new Services();
+     
         roomListDirec = new RoomList();
         transportationOrgList = new ArrayList<>();
         laundaryOrg = new ArrayList<>();
@@ -73,14 +73,6 @@ public class Hotel extends Enterprise {
         return availableRooms.subList(0, count);
     }
 
-    public Services getServiceDirec() {
-        return serviceDirec;
-    }
-
-    public void setServiceDirec(Services serviceDirec) {
-        this.serviceDirec = serviceDirec;
-    }
-
     public List<Manager> getListOfManager() {
         return listOfManager;
     }
@@ -97,7 +89,7 @@ public class Hotel extends Enterprise {
 
     public Manager findManager(String username) {
         for (Manager man : listOfManager) {
-            if (man.getUserName().equals(username)) {
+            if (man.getUsername().equals(username)) {
                 return man;
             }
         }

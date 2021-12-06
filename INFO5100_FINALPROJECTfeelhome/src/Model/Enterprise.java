@@ -11,7 +11,7 @@ public class Enterprise {
        this.name = name;
        this.contact = contact;
    }
-
+   
     public String getName() {
         return name;
     }

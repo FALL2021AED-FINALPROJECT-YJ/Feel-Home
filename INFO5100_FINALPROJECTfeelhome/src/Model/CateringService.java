@@ -16,19 +16,20 @@ public class CateringService {
         this.city = city;
         listOfManager = new ArrayList<>();
     }
-      public enum CateringType {
-        STANDARD(50, "Standard","Includes 1 starter and 1 main course"),
-        GOLD(100, "Gold","Includes 1 starter and 2 entrée"),
-        PLATINUM(200, "Platinum");
+
+    public enum CateringType {
+        STANDARD(50, "Standard", "Includes 1 starter and 1 entreee"),
+        GOLD(100, "Gold", "Includes 1 starter and 2 entrée"),
+        PLATINUM(200, "Platinum", "Includes 2 starter,2 entree and 1 dessert");
 
         private final int rate;
         private final String name;
-        private String description;
+        private final String description;
 
-        private CateringType(int rate, String name,String description) {
+        private CateringType(int rate, String name, String description) {
             this.rate = rate;
             this.name = name;
-            this.decription = description;
+            this.description = description;
         }
 
         public int getRate() {
@@ -43,7 +44,6 @@ public class CateringService {
             return getName() + " (" + rate + "$ per night)";
         }
     }
-
 
     public String getName() {
         return name;
@@ -74,9 +74,9 @@ public class CateringService {
     }
 
     public Manager addManager(String name, String city, String user, String password1) {
-        Manager manager = new Manager(name,city, user, password1);
+        Manager manager = new Manager(name, user, password1);
         listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUserName());
+        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
 }

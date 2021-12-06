@@ -58,7 +58,7 @@ public class Restaurant extends Enterprise {
 
     public Manager findManager(String username) {
         for (Manager man : listOfManager) {
-            if (man.getUserName().equals(username)) {
+            if (man.getUsername().equals(username)) {
                 return man;
             }
         }
@@ -70,8 +70,12 @@ public class Restaurant extends Enterprise {
         listOfDeliveryManOrg.add(del);
     }
 
-    public void addItem(String item) {
-        listOfItem.add(new MenuItem(item));
+    public void addItem(String item,String price) {
+        listOfItem.add(new MenuItem(item,price));
+    }
+    
+    public String toString() {
+        return this.name;
     }
 
 }

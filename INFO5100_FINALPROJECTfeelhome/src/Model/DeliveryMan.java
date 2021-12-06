@@ -3,27 +3,16 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryMan {
+public class DeliveryMan extends Person {
 
-    private String name;
     private String city;
-    private String password;
-    private String username;
-
     List<Order> list = new ArrayList<>();
 
     public DeliveryMan(String name, String city, String username, String password) {
         this.name = name;
         this.password = password;
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        this.city = city;
     }
 
     public String getCity() {
@@ -34,32 +23,12 @@ public class DeliveryMan {
         this.city = city;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public DeliveryMan(String name) {
-        this.name = name;
-    }
-
     public List<Order> getList() {
         return list;
     }
 
     public void setList(List<Order> list) {
         this.list = list;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void addOrder(Order order) {

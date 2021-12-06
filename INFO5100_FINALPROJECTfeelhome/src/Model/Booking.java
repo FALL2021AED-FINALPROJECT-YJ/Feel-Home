@@ -4,24 +4,42 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import model.service.Service;
 
 public class Booking {
 
     private Date checkin;
     private Date checkout;
     private String status;
-    private int price;
-    private Services services;
-    
+    private int cost;
+
+    private List<Service> services;
+
     private Hotel hotel;
     private RoomList roomlist;
     private String id;
 
     public Booking(Hotel hotel) {
-        services = new Services();
+        this.services = new ArrayList<>();
         this.hotel = hotel;
-        roomlist = new RoomList();
-        id = UUID.randomUUID().toString();
+        this.roomlist = new RoomList();
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public int getTotalCost() {
+        int totalCost = this.cost;
+        for (Service service : services) {
+            totalCost += service.getTotalCost();
+        }
+        return totalCost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public Hotel getHotel() {
@@ -40,20 +58,16 @@ public class Booking {
         return id;
     }
 
-    public Services getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public void setServices(Services services) {
+    public void setServices(List<Service> services) {
         this.services = services;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void addService(Service service) {
+        this.services.add(service);
     }
 
     public Date getCheckin() {
@@ -79,5 +93,12 @@ public class Booking {
     public void setStatus(String status) {
         this.status = status;
     }
-
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Below are your booking details - ");
+        for (Service service : services) {
+            sb.append(service).append("\n");
+        }
+        return sb.toString();
+    }
 }

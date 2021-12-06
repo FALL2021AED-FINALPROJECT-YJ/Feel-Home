@@ -163,7 +163,7 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         for (int i = 0; i < list.size(); i++) {
             List<Manager> manager = list.get(i).getListOfManager();
             for (int j = 0; j < manager.size(); j++) {
-                if (manager.get(j).getUserName().equals(user)) {
+                if (manager.get(j).getUsername().equals(user)) {
                     RoomList roomList = list.get(i).getRoomListDirec();
                     roomList.createRoom(selectedItem);
                     JOptionPane.showMessageDialog(this, "Room added successfully");

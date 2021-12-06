@@ -14,7 +14,10 @@ import ui.CustomerRole.AddServicePanel;
 import ui.CustomerRole.BookEventsJPanel;
 import ui.CustomerRole.BookRoomServicesJPanel;
 import ui.CustomerRole.CustomerStartingJPanel;
+import ui.CustomerRole.HealthClubServicesJPanel;
 import ui.CustomerRole.ManageBooking;
+import ui.CustomerRole.PlaceOrder;
+import ui.CustomerRole.ViewServiceDetailsPanel;
 import ui.EventManagerRole.EventManagerPanel;
 import ui.EventManagerRole.ManageOrganisationAdminForEvent;
 import ui.EventManagerRole.ManageOrganisationForEvents;
@@ -301,7 +304,7 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void manageBooking() {
         String user = usernameField.getText();
-        ManageBooking manageBookingPanel = new ManageBooking(systemAdmin, this::manageCustomerPanel, this::addServices, user);
+        ManageBooking manageBookingPanel = new ManageBooking(systemAdmin, this::manageCustomerPanel, this::addServices, this::viewService, user);
         jSplitPane.setRightComponent(manageBookingPanel);
     }
 
@@ -312,17 +315,32 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void addServices(Booking booking) {
         String user = usernameField.getText();
-        AddServicePanel service = new AddServicePanel(systemAdmin, this::bookEvent, this::manageBooking, user, booking);
+        AddServicePanel service = new AddServicePanel(systemAdmin, this::bookEvent, this::placeOrder, this::healthPanel, this::manageBooking, user, booking);
         jSplitPane.setRightComponent(service);
     }
 
     private void bookEvent(Booking booking) {
         String user = usernameField.getText();
-        BookEventsJPanel event = new BookEventsJPanel(systemAdmin, this::addServices, user,booking);
+        BookEventsJPanel event = new BookEventsJPanel(systemAdmin, this::addServices, user, booking);
         jSplitPane.setRightComponent(event);
     }
-    private void healthClub(Booking booking){
-        
+
+    private void placeOrder(Booking booking) {
+        String user = usernameField.getText();
+        PlaceOrder order = new PlaceOrder(systemAdmin, this::addServices, user, booking);
+        jSplitPane.setRightComponent(order);
+    }
+
+    private void healthPanel(Booking booking) {
+        String user = usernameField.getText();
+        HealthClubServicesJPanel healthClub = new HealthClubServicesJPanel(systemAdmin, this::addServices, user, booking);
+        jSplitPane.setRightComponent(healthClub);
+    }
+
+    private void viewService(Booking booking) {
+        String user = usernameField.getText();
+        ViewServiceDetailsPanel viewService = new ViewServiceDetailsPanel(systemAdmin, this::manageBooking, user, booking);
+        jSplitPane.setRightComponent(viewService);
     }
 
     private void renderHealthClubManager(String username) {
@@ -332,7 +350,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < healthClubs.size(); j++) {
                 List<Manager> manager = healthClubs.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(username)) {
+                    if (manager.get(k).getUsername().equals(username)) {
                         HealthClubManagerPanel healthManagerPanel = new HealthClubManagerPanel(systemAdmin, this::viewTaskPanel, this::createOrganization,
                                 this::organizationAdminPanel);
                         jSplitPane.setRightComponent(healthManagerPanel);
@@ -351,7 +369,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < healthClubs.size(); j++) {
                 List<Manager> manager = healthClubs.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(user)) {
+                    if (manager.get(k).getUsername().equals(user)) {
                         return network.get(i);
 
                     }
@@ -404,7 +422,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < restaurants.size(); j++) {
                 List<Manager> manager = restaurants.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(username)) {
+                    if (manager.get(k).getUsername().equals(username)) {
                         RestaurantManagerPanel restaurantAssign = new RestaurantManagerPanel(systemAdmin, this::renderViewTask1, this::renderRestaurantOrg, this::renderRestaurantAdmin, this::addOrderPanel);
                         jSplitPane.setRightComponent(restaurantAssign);
                     }
@@ -421,7 +439,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < restaurant.size(); j++) {
                 List<Manager> manager = restaurant.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(user)) {
+                    if (manager.get(k).getUsername().equals(user)) {
                         return network.get(i);
 
                     }
@@ -480,7 +498,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < hotel.size(); j++) {
                 List<Manager> manager = hotel.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(username)) {
+                    if (manager.get(k).getUsername().equals(username)) {
                         HotelManagerPanel hotelPanel = new HotelManagerPanel(systemAdmin, this::renderViewTask2, this::renderHotelOrg,
                                 this::renderHotelAdmin, this::renderRoomPanel);
                         jSplitPane.setRightComponent(hotelPanel);
@@ -499,7 +517,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < hotel.size(); j++) {
                 List<Manager> manager = hotel.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(user)) {
+                    if (manager.get(k).getUsername().equals(user)) {
                         return network.get(i);
                     }
                 }
@@ -550,7 +568,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < event.size(); j++) {
                 List<Manager> manager = event.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(username)) {
+                    if (manager.get(k).getUsername().equals(username)) {
                         EventManagerPanel eventPanel = new EventManagerPanel(systemAdmin, this::renderViewTask3, this::renderEventOrg,
                                 this::renderEventAdmin);
                         jSplitPane.setRightComponent(eventPanel);
@@ -569,7 +587,7 @@ public class Main1JFrame extends javax.swing.JFrame {
             for (int j = 0; j < event.size(); j++) {
                 List<Manager> manager = event.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(k).getUserName().equals(user)) {
+                    if (manager.get(k).getUsername().equals(user)) {
                         return network.get(i);
 
                     }

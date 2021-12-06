@@ -3,10 +3,10 @@ package ui.EventManagerRole;
 import java.util.List;
 import model.BusinessEvent;
 import model.CateringService;
-import model.DecorService;
+import model.DecorOrg;
 import model.HealthClub;
 import model.Network;
-import model.PhotographyService;
+import model.PhotographyOrg;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -194,11 +194,11 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
             for (int j = 0; j < list2.size(); j++) {
                 cateringOrg.addItem(list2.get(j).getName());
             }
-            List<DecorService> list3 = list1.get(i).getListOfDecors();
+            List<DecorOrg> list3 = list1.get(i).getListOfDecors();
             for (int j = 0; j < list3.size(); j++) {
                 decorOrg.addItem(list3.get(j).getName());
             }
-            List<PhotographyService> list4 = list1.get(i).getListOfPhotographyServices();
+            List<PhotographyOrg> list4 = list1.get(i).getListOfPhotographyServices();
             for (int j = 0; j < list4.size(); j++) {
                 photographyOrg.addItem(list4.get(j).getName());
             }
