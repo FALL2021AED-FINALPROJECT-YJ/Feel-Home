@@ -18,13 +18,6 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     private String user;
     private String type;
 
-    /**
-     *
-     * @param systemAdmin
-     * @param callOnCreateMethod
-     * @param user
-     * @param type
-     */
     public OrganizationAdminPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
         initComponents();
         this.systemAdmin = systemAdmin;
@@ -35,8 +28,6 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             networkType.addItem(city.getName());
         }
     }
-
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -79,8 +70,10 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("ORGANIZATION TYPE");
 
+        orgCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organization", "Physician", "Trainer", "Therapist" }));
         orgCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,13 +81,18 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("NAME");
 
+        nameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel3.setText("USERNAME");
 
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel4.setText("PASSWORD");
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        addButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +100,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jButton2.setText("DELETE");
 
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -112,10 +111,15 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel5.setText("ORGANIZATION NAME ");
 
+        orgName.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel6.setText("NETWORK");
 
+        networkType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
         networkType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,73 +134,81 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(41, 41, 41)
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(104, 104, 104)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(orgCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(networkType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(137, 137, 137)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(802, 802, 802)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(backBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(367, 367, 367)
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(backBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 89, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(426, 426, 426))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(82, 82, 82))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(backBtn)
-                .addGap(92, 92, 92)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
                     .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(22, 22, 22)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(128, 128, 128)
+                .addGap(87, 87, 87)
                 .addComponent(addButton)
-                .addGap(59, 59, 59))
+                .addGap(106, 106, 106))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -213,65 +225,66 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
-        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-        List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).findManager(user) != null) {    //if manager found 
-                if (orgType.equals("Physician")) {
-                    List<PhysicianOrg> org1 = list.get(i).getListOfPhysicianOrg();
-                    for (int j = 0; j < org1.size(); j++) {
-                        if (org1.get(j).getName().equals(orgName1)) {
-                            org1.get(i).addPhysician(name, network.getName(), username, password);
-                            row[0] = network.getName();
-                            row[1] = orgType;
-                            row[2] = orgName1;
-                            row[3] = name;
-                            row[4] = username;
-                            row[5] = password;
-                            model.addRow(row);
-                            systemAdmin.addUser(username, "Physician");
-                            JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
-                            return;
+        if (systemAdmin.userExistsInSystem(username) == false) {
+            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).findManager(user) != null) {    //if health club manager found in network
+                    if (orgType.equals("Physician")) {
+                        List<PhysicianOrg> org1 = list.get(i).getListOfPhysicianOrg();
+                        for (int j = 0; j < org1.size(); j++) {
+                            if (org1.get(j).getName().equals(orgName1)) {
+                                org1.get(j).addManager(name, network.getName(), username, password); //add managers for each org (eg:physiican org)
+                                row[0] = network.getName();
+                                row[1] = orgType;
+                                row[2] = orgName1;
+                                row[3] = name;
+                                row[4] = username;
+                                row[5] = password;
+                                model.addRow(row);
+                                systemAdmin.addUser(username, "Physician");
+                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                return;
+                            }
                         }
-                    }
-                } else if (orgType.equals("Trainer")) {
-                    List<TrainerOrg> org2 = list.get(i).getListOfTrainerOrg();
-                    for (int j = 0; j < org2.size(); j++) {
-                        if (org2.get(i).getName().equals(orgName1)) {
-                            org2.get(j).addTrainer(name, network.getName(), username, password);
-                            row[0] = network.getName();
-                            row[1] = orgType;
-                            row[2] = orgName1;
-                            row[3] = name;
-                            row[4] = username;
-                            row[5] = password;
-                            model.addRow(row);
-                              systemAdmin.addUser(username, "Trainer");
-                            JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
-                            return;
+                    } else if (orgType.equals("Trainer")) {
+                        List<TrainerOrg> org2 = list.get(i).getListOfTrainerOrg();
+                        for (int j = 0; j < org2.size(); j++) {
+                            if (org2.get(j).getName().equals(orgName1)) {
+                                org2.get(j).addManager(name, network.getName(), username, password);
+                                row[0] = network.getName();
+                                row[1] = orgType;
+                                row[2] = orgName1;
+                                row[3] = name;
+                                row[4] = username;
+                                row[5] = password;
+                                model.addRow(row);
+                                systemAdmin.addUser(username, "Trainer");
+                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                return;
+                            }
                         }
-                    }
-                } else {
-                    List<TherapistOrg> org3 = list.get(i).getListOfTherapistOrg();
-                    for (int j = 0; j < org3.size(); j++) {
-                        if (org3.get(j).getName().equals(orgName1)) {
-                            org3.get(j).addTherapist(name, network.getName(), username, password);
-                            row[0] = network.getName();
-                            row[1] = orgType;
-                            row[2] = orgName1;
-                            row[3] = name;
-                            row[4] = username;
-                            row[5] = password;
-                            model.addRow(row);
-                               systemAdmin.addUser(username, "Therapist");
-                            JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
-                            return;
+                    } else {
+                        List<TherapistOrg> org3 = list.get(i).getListOfTherapistOrg();
+                        for (int j = 0; j < org3.size(); j++) {
+                            if (org3.get(j).getName().equals(orgName1)) {
+                                org3.get(j).addManager(name, network.getName(), username, password);
+                                row[0] = network.getName();
+                                row[1] = orgType;
+                                row[2] = orgName1;
+                                row[3] = name;
+                                row[4] = username;
+                                row[5] = password;
+                                model.addRow(row);
+                                systemAdmin.addUser(username, "Therapist");
+                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                return;
+                            }
                         }
                     }
                 }
             }
-
         }
 
     }//GEN-LAST:event_addButtonActionPerformed
@@ -282,23 +295,24 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).findManager(user);
-            if (orgType.equals("Physician")) {
-                List<PhysicianOrg> org1 = list.get(i).getListOfPhysicianOrg();
-                for (int j = 0; j < org1.size(); j++) {
-                    orgName.addItem(org1.get(j).getName());
-                    return;
+            if (list.get(i).findManager(user) != null) {
+                if (orgType.equals("Physician")) {
+                    List<PhysicianOrg> org1 = list.get(i).getListOfPhysicianOrg();
+                    for (int j = 0; j < org1.size(); j++) {
+                        orgName.addItem(org1.get(j).getName());
+                    }
+                } else if (orgType.equals("Trainer")) {
+                    List<TrainerOrg> org2 = list.get(i).getListOfTrainerOrg();
+                    for (int j = 0; j < org2.size(); j++) {
+                        orgName.addItem(org2.get(j).getName());
+                    }
+                } else {
+                    List<TherapistOrg> org3 = list.get(i).getListOfTherapistOrg();
+                    for (int j = 0; j < org3.size(); j++) {
+                        orgName.addItem(org3.get(j).getName());
+                    }
                 }
-            } else if (orgType.equals("Trainer")) {
-                List<TrainerOrg> org2 = list.get(i).getListOfTrainerOrg();
-                for (int j = 0; j < org2.size(); j++) {
-                    orgName.addItem(org2.get(j).getName());
-                }
-            } else {
-                List<TherapistOrg> org3 = list.get(i).getListOfTherapistOrg();
-                for (int j = 0; j < org3.size(); j++) {
-                    orgName.addItem(org3.get(j).getName());
-                }
+                return;
             }
         }
 
