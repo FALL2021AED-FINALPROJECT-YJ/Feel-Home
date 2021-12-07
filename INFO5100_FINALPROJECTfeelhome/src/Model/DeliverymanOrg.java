@@ -3,46 +3,19 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CateringService {
-
+public class DeliverymanOrg {
     private String name;
     private String city;
     private String contact;
     private List<Manager> listOfManager;
+    private List<DeliveryMan> listOfDeliveryMan;
 
-    public CateringService(String name, String contact, String city) {
+    public DeliverymanOrg(String name, String contact, String city) {
         this.name = name;
-        this.contact = contact;
         this.city = city;
+        this.contact = contact;
         listOfManager = new ArrayList<>();
-    }
-
-    public enum CateringType {
-        STANDARD(50, "Standard", "Includes 1 starter and 1 entreee"),
-        GOLD(100, "Gold", "Includes 1 starter and 2 entrée"),
-        PLATINUM(200, "Platinum", "Includes 2 starter,2 entree and 1 dessert");
-
-        private final int rate;
-        private final String name;
-        private final String description;
-
-        private CateringType(int rate, String name, String description) {
-            this.rate = rate;
-            this.name = name;
-            this.description = description;
-        }
-
-        public int getRate() {
-            return rate;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String toString() {
-            return getName() + " (" + rate + "$ per night)";
-        }
+        listOfDeliveryMan = new ArrayList<>();
     }
 
     public String getName() {
@@ -61,6 +34,10 @@ public class CateringService {
         this.city = city;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
     public void setContact(String contact) {
         this.contact = contact;
     }
@@ -73,10 +50,24 @@ public class CateringService {
         this.listOfManager = listOfManager;
     }
 
-    public Manager addManager(String name, String city, String user, String password1) {
+    public List<DeliveryMan> getListOfDeliveryMan() {
+        return listOfDeliveryMan;
+    }
+
+    public void setListOfDeliveryMan(List<DeliveryMan> listOfDeliveryMan) {
+        this.listOfDeliveryMan = listOfDeliveryMan;
+    }
+
+    public void addDeliveryman(String name, String city, String user, String password1) {
+        DeliveryMan del = new DeliveryMan(name, city, user, password1);
+        listOfDeliveryMan.add(del);
+        System.out.println("Deliveryman manager added is " + listOfDeliveryMan.size());
+    }
+      public Manager addManager(String name, String city, String user, String password1) {
         Manager manager = new Manager(name, user, password1);
         listOfManager.add(manager);
         System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
+
 }

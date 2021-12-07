@@ -1,10 +1,11 @@
+
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Transportation {
+public class LaundaryService {
+
     private String name;
     private String city;
     private String password;
@@ -12,7 +13,7 @@ public class Transportation {
 
     List<Order> list = new ArrayList<>();
 
-    public  Transportation(String name, String city, String username, String password) {
+    public LaundaryService(String name, String city, String username, String password) {
         this.name = name;
         this.password = password;
         this.username = username;

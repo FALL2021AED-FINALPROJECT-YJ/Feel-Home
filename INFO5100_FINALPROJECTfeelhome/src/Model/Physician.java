@@ -1,36 +1,17 @@
-
 package model;
 
-import java.util.Date;
+public class Physician extends Person {
 
-public class Physician {
-    private String name;
-    private boolean status;
-    private Date date;
+    private String city;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Physician(String name, String city, String username, String password) {
         this.name = name;
+        this.city = city;
+        this.username = username;
+        this.password = password;
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getCity() {
+        return city;
     }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    
-    
 }

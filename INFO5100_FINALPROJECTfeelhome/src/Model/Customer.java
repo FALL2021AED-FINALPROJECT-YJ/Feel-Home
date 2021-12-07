@@ -1,24 +1,20 @@
 
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
     private String name;
     private String contact;
     private String address;
+    private String city;
     private String password;
     private String userName;
-    private BookingList bookingList;
+    private List<Booking> bookingList;
 
     public Customer() {
-        bookingList = new BookingList();
-    }
-
-    public BookingList getBookingList() {
-        return bookingList;
-    }
-
-    public void setBookingList(BookingList bookingList) {
-        this.bookingList = bookingList;
+        bookingList = new ArrayList<>();
     }
     
     public String getPassword() {
@@ -27,6 +23,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getUserName() {
@@ -49,6 +53,14 @@ public class Customer {
         return contact;
     }
 
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
     public void setContact(String contact) {
         this.contact = contact;
     }
@@ -60,5 +72,12 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-    
+    public Booking addBooking(Hotel hotel){
+        Booking booking = new Booking(hotel);
+        bookingList.add(booking);
+        return booking;
+    }
+    public String toString(){
+        return userName;
+    }
 }

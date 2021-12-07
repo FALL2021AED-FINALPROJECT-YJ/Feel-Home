@@ -5,26 +5,25 @@ import java.util.List;
 import java.util.Map;
 
 public class EnterpriseDirectory {
-   Map<String,List<Enterprise>> map;
 
-//    private HotelDirectory hotelDirec;
+    private List<Hotel> listOfHotel;
     private List<BusinessEvent> listOfEvents;
     private List<HealthClub> listOfHealthClub;
     private List<Restaurant> listOfRestaurants;
 
     public EnterpriseDirectory() {
-//         hotelDirec = new HotelDirectory();
-         listOfEvents = new ArrayList<>();
-         listOfHealthClub = new ArrayList<>();
-         listOfRestaurants = new ArrayList<>();
-    }
-    
-    public Map<String, List<Enterprise>> getMap() {
-        return map;
+        listOfHotel = new ArrayList<>();
+        listOfEvents = new ArrayList<>();
+        listOfHealthClub = new ArrayList<>();
+        listOfRestaurants = new ArrayList<>();
     }
 
-    public void setMap(Map<String, List<Enterprise>> map) {
-        this.map = map;
+    public List<Hotel> getListOfHotel() {
+        return listOfHotel;
+    }
+
+    public void setListOfHotel(List<Hotel> listOfHotel) {
+        this.listOfHotel = listOfHotel;
     }
 
     public List<BusinessEvent> getListOfEvents() {
@@ -51,23 +50,62 @@ public class EnterpriseDirectory {
         this.listOfRestaurants = listOfRestaurants;
     }
 
-    public void addHealthClub(String name, String contact, String userName, String password) {
-        HealthClub healthClub = new HealthClub(name, contact, userName, password);
+    public void addHealthClub(String name, String contact) {
+        HealthClub healthClub = new HealthClub(name, contact);
         listOfHealthClub.add(healthClub);
     }
 
-    public void addRestaurant(String name, String contact, String username, String password) {
-        Restaurant restaurant = new Restaurant(name, contact, username, password);
+    public void addRestaurant(String name, String contact) {
+        Restaurant restaurant = new Restaurant(name, contact);
         listOfRestaurants.add(restaurant);
     }
 
-    public void addBusinessEvent(String name, String contact, String userName, String password) {
-        BusinessEvent event = new BusinessEvent(name, contact, userName, password);
+    public void addBusinessEvent(String name, String contact) {
+        BusinessEvent event = new BusinessEvent(name, contact);
         listOfEvents.add(event);
     }
 
-    public void addHotel(String name, String contact, String userName, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addHotel(String name, String contact) {
+        Hotel hotel = new Hotel(name, contact);
+        listOfHotel.add(hotel);
     }
+
+    public Hotel findHotel(String hotelName) {
+        for (Hotel hotel : listOfHotel) {
+            if (hotel.getName().equals(hotelName)) {
+                return hotel;
+            }
+        }
+        return null;
+    }
+
+    public HealthClub findHealthClub(String clubName) {
+        for (HealthClub club : listOfHealthClub) {
+            if (club.getName().equals(clubName)) {
+                return club;
+            }
+        }
+        return null;
+    }
+
+    public Restaurant findRestaurant(String name) {
+        for (Restaurant restaurant : listOfRestaurants) {
+            if (restaurant.getName().equals(name)) {
+                return restaurant;
+            }
+        }
+        return null;
+    }
+
+    public BusinessEvent findEvent(String name) {
+        for (BusinessEvent event : listOfEvents) {
+            if (event.getName().equals(name)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+
 
 }

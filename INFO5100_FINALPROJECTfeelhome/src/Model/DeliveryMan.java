@@ -1,40 +1,26 @@
-
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryMan {
-    private String name;
-    private String password;
-    private String contact;
-   
+public class DeliveryMan extends Person {
+
+    private String city;
     List<Order> list = new ArrayList<>();
 
-    public DeliveryMan(String name, String password,String contact) {
-     this.name = name;
-     this.password = password;
-     this.contact = contact;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public DeliveryMan(String name) {
+    public DeliveryMan(String name, String city, String username, String password) {
         this.name = name;
+        this.password = password;
+        this.username = username;
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public List<Order> getList() {
@@ -45,19 +31,6 @@ public class DeliveryMan {
         this.list = list;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-    
     public void addOrder(Order order) {
         list.add(order);
     }
@@ -69,6 +42,11 @@ public class DeliveryMan {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

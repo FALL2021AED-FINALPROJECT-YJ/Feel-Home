@@ -1,15 +1,16 @@
-
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BusinessEvent extends Enterprise {
 
+    private Date date;
     private List<Manager> listOfManager;
     private List<CateringService> listOfCatering;
-    private List<PhotographyService> listOfPhotographyServices;
-    private List<DecorService> listOfDecors;
+    private List<PhotographyOrg> listOfPhotographyServices;
+    private List<DecorOrg> listOfDecors;
 
     public BusinessEvent(String name, String contact) {
         super(name, contact);
@@ -19,6 +20,15 @@ public class BusinessEvent extends Enterprise {
         listOfDecors = new ArrayList<>();
 
     }
+  
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
 
     public List<Manager> getListOfManager() {
         return listOfManager;
@@ -36,19 +46,19 @@ public class BusinessEvent extends Enterprise {
         this.listOfCatering = listOfCatering;
     }
 
-    public List<PhotographyService> getListOfPhotographyServices() {
+    public List<PhotographyOrg> getListOfPhotographyServices() {
         return listOfPhotographyServices;
     }
 
-    public void setListOfPhotographyServices(List<PhotographyService> listOfPhotographyServices) {
+    public void setListOfPhotographyServices(List<PhotographyOrg> listOfPhotographyServices) {
         this.listOfPhotographyServices = listOfPhotographyServices;
     }
 
-    public List<DecorService> getListOfDecors() {
+    public List<DecorOrg> getListOfDecors() {
         return listOfDecors;
     }
 
-    public void setListOfDecors(List<DecorService> listOfDecors) {
+    public void setListOfDecors(List<DecorOrg> listOfDecors) {
         this.listOfDecors = listOfDecors;
     }
 
@@ -60,7 +70,7 @@ public class BusinessEvent extends Enterprise {
 
     public Manager findManager(String username) {
         for (Manager man : listOfManager) {
-            if (man.getUserName().equals(username)) {
+            if (man.getUsername().equals(username)) {
                 return man;
             }
         }
@@ -71,18 +81,18 @@ public class BusinessEvent extends Enterprise {
         CateringService cat = new CateringService(name, contact, city);
         System.out.println(name);
         listOfCatering.add(cat);
-            System.out.println("catering size is " +listOfCatering.size()+ " name is " +listOfCatering.get(0).getName());
+        System.out.println("catering size is " + listOfCatering.size() + " name is " + listOfCatering.get(0).getName());
 
     }
 
     public void addPhotographyService(String name, String contact, String city) {
-        PhotographyService photo = new PhotographyService(name, contact, city);
+        PhotographyOrg photo = new PhotographyOrg(name, contact, city);
         listOfPhotographyServices.add(photo);
 
     }
 
     public void addDecorService(String name, String contact, String city) {
-        DecorService decor = new DecorService(name, contact, city);
+        DecorOrg decor = new DecorOrg(name, contact, city);
         listOfDecors.add(decor);
     }
 

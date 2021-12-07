@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Enterprise {
-    private String name;
-    private String contact;
+    protected String name;
+    protected String contact;
     
    public Enterprise(String name,String contact){
        this.name = name;
        this.contact = contact;
    }
+   
     public String getName() {
         return name;
     }

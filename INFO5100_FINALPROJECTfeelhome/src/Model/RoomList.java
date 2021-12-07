@@ -1,33 +1,32 @@
-
 package model;
+
 import java.util.ArrayList;
 import java.util.List;
+import model.Room.RoomType;
 
 public class RoomList {
-    List<Room> listOfRooms;
-    
-    public RoomList(){
-      listOfRooms = new ArrayList<>(); 
-      listOfRooms.add(new Room(1));
-      listOfRooms.add(new Room(2));
-      listOfRooms.add(new Room(3));   
+
+    private List<Room> listOfRooms;
+    private int nextRoomNumber = 1;
+
+    public RoomList() {
+        listOfRooms = new ArrayList<>();
     }
-    
+
     public List<Room> getListOfRooms() {
         return listOfRooms;
     }
 
     public void setListOfRooms(List<Room> listOfRooms) {
         this.listOfRooms = listOfRooms;
+        if (listOfRooms != null && listOfRooms.size() > 0) {
+            nextRoomNumber = listOfRooms.get(listOfRooms.size() - 1).getRoomNo() + 1;
+        }
     }
-    public void createRoom(){
-        Room room = new Room(listOfRooms.size()+1);
+
+    public void createRoom(RoomType type) {
+        Room room = new Room(type, nextRoomNumber);
+        nextRoomNumber++;
         listOfRooms.add(room);
     }
-    
-    public int getRoomPrice(int noOfRooms){
-        int price = noOfRooms * 2;  //price per room is $2
-        return price;
-    }
-     
 }
