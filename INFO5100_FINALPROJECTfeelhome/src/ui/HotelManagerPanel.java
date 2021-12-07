@@ -8,14 +8,15 @@ public class HotelManagerPanel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod1;
     private Runnable callOnCreateMethod2;
     private Runnable callOnCreateMethod3;
+    private Runnable callOnCreateMethod4;
 
-    public HotelManagerPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod1, Runnable callOnCreateMethod2, Runnable callOnCreateMethod3) {
+    public HotelManagerPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod1, Runnable callOnCreateMethod2, Runnable callOnCreateMethod3, Runnable callOnCreateMethod4) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.callOnCreateMethod2 = callOnCreateMethod2;
         this.callOnCreateMethod3 = callOnCreateMethod3;
-
+        this.callOnCreateMethod4 = callOnCreateMethod4;
     }
 
     @SuppressWarnings("unchecked")
@@ -26,6 +27,9 @@ public class HotelManagerPanel extends javax.swing.JPanel {
         orgAdminBtn = new javax.swing.JButton();
         orgBtn = new javax.swing.JButton();
         viewTask = new javax.swing.JButton();
+        manageRooms = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(204, 255, 255));
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("HOTEL MANAGER");
@@ -54,33 +58,43 @@ public class HotelManagerPanel extends javax.swing.JPanel {
             }
         });
 
+        manageRooms.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        manageRooms.setText("MANAGE ROOMS");
+        manageRooms.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageRoomsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(346, 346, 346)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(363, 363, 363)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblsysadmin)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(viewTask, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(orgBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(orgAdminBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(392, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(viewTask, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                        .addComponent(manageRooms, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orgAdminBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orgBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(375, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(115, 115, 115)
                 .addComponent(lblsysadmin)
-                .addGap(69, 69, 69)
+                .addGap(108, 108, 108)
                 .addComponent(viewTask)
                 .addGap(43, 43, 43)
                 .addComponent(orgBtn)
                 .addGap(48, 48, 48)
                 .addComponent(orgAdminBtn)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(manageRooms)
+                .addContainerGap(286, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -96,9 +110,14 @@ public class HotelManagerPanel extends javax.swing.JPanel {
         callOnCreateMethod2.run();
     }//GEN-LAST:event_orgBtnActionPerformed
 
+    private void manageRoomsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageRoomsActionPerformed
+        callOnCreateMethod4.run();
+    }//GEN-LAST:event_manageRoomsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblsysadmin;
+    private javax.swing.JButton manageRooms;
     private javax.swing.JButton orgAdminBtn;
     private javax.swing.JButton orgBtn;
     private javax.swing.JButton viewTask;
