@@ -27,6 +27,8 @@ public class EventManagerPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         orgadmin = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 255, 255));
+
         orgBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         orgBtn.setText("MANAGE ORGANISATION");
         orgBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -59,22 +61,21 @@ public class EventManagerPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(300, 300, 300)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(338, 338, 338)
+                        .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(orgadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(orgBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(viewTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(270, 270, 270)
-                        .addComponent(jLabel1)))
-                .addContainerGap(330, Short.MAX_VALUE))
+                            .addComponent(viewTask, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1))
+                .addContainerGap(300, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+                .addGap(154, 154, 154)
                 .addComponent(jLabel1)
                 .addGap(84, 84, 84)
                 .addComponent(viewTask)
@@ -82,7 +83,7 @@ public class EventManagerPanel extends javax.swing.JPanel {
                 .addComponent(orgBtn)
                 .addGap(56, 56, 56)
                 .addComponent(orgadmin)
-                .addContainerGap(391, Short.MAX_VALUE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

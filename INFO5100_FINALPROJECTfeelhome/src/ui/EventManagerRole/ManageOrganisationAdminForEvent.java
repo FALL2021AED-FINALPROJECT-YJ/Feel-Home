@@ -5,11 +5,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
 import model.CateringService;
-import model.DecorService;
+import model.DecorOrg;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Network;
-import model.PhotographyService;
+import model.PhotographyOrg;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -59,6 +59,8 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         updateBtn = new javax.swing.JButton();
         orgName = new javax.swing.JComboBox<>();
 
+        setBackground(new java.awt.Color(204, 255, 255));
+
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("NAME");
 
@@ -105,6 +107,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(0, 204, 204));
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,15 +195,14 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         .addComponent(updateBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(255, 255, 255)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jLabel1)))
+                .addContainerGap(240, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(51, 51, 51))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +282,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else if (orgType.equals("Decor")) {
-                        List<DecorService> org2 = list.get(i).getListOfDecors();
+                        List<DecorOrg> org2 = list.get(i).getListOfDecors();
 
                         for (int j = 0; j < org2.size(); j++) {
                             System.out.println(org2.get(i).getName() + "name of decor org");
@@ -299,7 +301,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else {
-                        List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
+                        List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
                         for (int j = 0; j < org3.size(); j++) {
                             if (org3.get(j).getName().equals(orgName1)) {
                                 org3.get(j).addManager(name, network.getName(), username, password);
@@ -336,12 +338,12 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         orgName.addItem(org1.get(j).getName());
                     }
                 } else if (orgType.equals("Decor")) {
-                    List<DecorService> org2 = list.get(i).getListOfDecors();
+                    List<DecorOrg> org2 = list.get(i).getListOfDecors();
                     for (int j = 0; j < org2.size(); j++) {
                         orgName.addItem(org2.get(j).getName());
                     }
                 } else {
-                    List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
+                    List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
                     for (int j = 0; j < org3.size(); j++) {
                         orgName.addItem(org3.get(j).getName());
                     }
