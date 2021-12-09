@@ -70,12 +70,11 @@ public class Restaurant extends Enterprise {
         listOfDeliveryManOrg.add(del);
     }
 
-    public void addItem(String item,String price) {
-        listOfItem.add(new MenuItem(item,price));
+    public void addItem(String item, int price) {
+        listOfItem.add(new MenuItem(item, price));
     }
     
     public String toString() {
         return this.name;
     }
-
 }

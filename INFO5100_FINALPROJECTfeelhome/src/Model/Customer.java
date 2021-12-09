@@ -72,8 +72,8 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-    public Booking addBooking(Hotel hotel){
-        Booking booking = new Booking(hotel);
+    public Booking addBooking(Hotel hotel, Network network){
+        Booking booking = new Booking(hotel, network);
         bookingList.add(booking);
         return booking;
     }

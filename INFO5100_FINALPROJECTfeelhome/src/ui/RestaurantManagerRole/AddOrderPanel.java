@@ -154,10 +154,10 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        Object row[] = new Object[20];
-        
+
         String item = menuField.getText();
-        String price = priceField.getText();
+        int price = Integer.parseInt(priceField.getText().trim());
+        
         List<Network> network = systemAdmin.getListOfNetwork(); //get all network
         for (int i = 0; i < network.size(); i++) {
             EnterpriseDirectory enterpriseDirec = network.get(i).getEnterpriseDirectory();
@@ -166,10 +166,8 @@ public class AddOrderPanel extends javax.swing.JPanel {
                 List<Manager> manager = res.get(i).getListOfManager(); //get all managers
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(i).getUsername().equals(user)) {            //if manager is found in that restaurant then add item to that res...
-                        res.get(i).addItem(item,price);
-                   
-//                       row[0] = item;
-//                        model.addRow(row);
+                        res.get(i).addItem(item, price);
+
                         JOptionPane.showMessageDialog(this, " Item added successfully");
                         return;
                     }

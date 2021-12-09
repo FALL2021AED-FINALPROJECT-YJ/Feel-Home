@@ -4,7 +4,9 @@ import java.util.Date;
 import model.Organization;
 
 public abstract class Service {
-
+    
+    protected static final String TAB = "      ";
+    
     static enum ServiceType {
         BUSINESS_EVENT,
         RESTURANT,
@@ -68,18 +70,5 @@ public abstract class Service {
         this.status = status;
     }
 
-    public String toString() {
-        switch (status) {
-            case PENDING:
-                return String.format("Service of type '%s' is currently in pending state and scheduled on '%s'",
-                        serviceType, date);
-            case CONFIRMED:
-                return String.format("Service of type '%s' is confirmed and will be managed by '%s' organization on '%s'",
-                        serviceType, organization, date);
-            case REJECTED:
-                return String.format("Service request of type '%s' is rejected and will cannot be scheduled on '%s'",
-                        serviceType, date);
-        }
-        return null;
-    }
+    public abstract String toString();
 }

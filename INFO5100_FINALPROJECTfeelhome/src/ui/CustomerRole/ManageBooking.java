@@ -2,8 +2,7 @@ package ui.CustomerRole;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
 import model.Customer;
@@ -134,6 +133,11 @@ public class ManageBooking extends javax.swing.JPanel {
 
     private void addServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addServiceBtnActionPerformed
         int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to add services.");
+            return;
+        }
+
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String bookingId = (String) model.getValueAt(selectedRowIndex, 1);
 
@@ -154,6 +158,10 @@ public class ManageBooking extends javax.swing.JPanel {
     private void viewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderActionPerformed
         int selectedRowIndex = jTable1.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to view its details.");
+            return;
+        }
         String bookingId = (String) model.getValueAt(selectedRowIndex, 1);
 
         System.out.println(bookingId + " is selected");

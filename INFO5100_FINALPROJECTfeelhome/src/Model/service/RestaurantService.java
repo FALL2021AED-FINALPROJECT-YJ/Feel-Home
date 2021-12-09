@@ -1,8 +1,6 @@
 package model.service;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import model.Restaurant;
 
 public class RestaurantService extends Service {
@@ -24,14 +22,14 @@ public class RestaurantService extends Service {
     public void setMenuItem(String menuItem) {
         this.menuItem = menuItem;
     }
-    
+
     public String toString() {
-        StringBuilder sb = new StringBuilder("\nRestaurant order details - ");
-        sb.append("\n\tRestaurant name - ").append(res.getName());
-        sb.append("\n\tOrder item - ").append(menuItem);
-        sb.append("\n\tTotal cost - ").append(totalCost);
-        sb.append("\n\tDate of order - ").append(getDate());
-        sb.append("\n\tStatus - ").append(getStatus());
+        StringBuilder sb = new StringBuilder("\nRestaurant order details:");
+        sb.append("\n").append(TAB).append("Restaurant name: ").append(res.getName());
+        sb.append("\n").append(TAB).append("Order item: ").append(menuItem);
+        sb.append("\n").append(TAB).append("Total cost: ").append(totalCost);
+        sb.append("\n").append(TAB).append("Date of order: ").append(getDate());
+        sb.append("\n").append(TAB).append("Status: ").append(getStatus());
         return sb.toString();
     }
 }
