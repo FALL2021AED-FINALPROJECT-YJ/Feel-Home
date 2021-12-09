@@ -95,5 +95,9 @@ public class BusinessEvent extends Enterprise {
         DecorOrg decor = new DecorOrg(name, contact, city);
         listOfDecors.add(decor);
     }
+    
+    public String toString() {
+        return name;
+    }
 
 }

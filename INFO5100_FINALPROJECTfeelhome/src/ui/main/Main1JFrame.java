@@ -16,7 +16,7 @@ import ui.CustomerRole.BookRoomServicesJPanel;
 import ui.CustomerRole.CustomerStartingJPanel;
 import ui.CustomerRole.HealthClubServicesJPanel;
 import ui.CustomerRole.ManageBooking;
-import ui.CustomerRole.PlaceOrder;
+import ui.CustomerRole.RestuarantServicePanel;
 import ui.CustomerRole.ViewServiceDetailsPanel;
 import ui.EventManagerRole.EventManagerPanel;
 import ui.EventManagerRole.ManageOrganisationAdminForEvent;
@@ -327,7 +327,7 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void placeOrder(Booking booking) {
         String user = usernameField.getText();
-        PlaceOrder order = new PlaceOrder(systemAdmin, this::addServices, user, booking);
+        RestuarantServicePanel order = new RestuarantServicePanel(systemAdmin, this::addServices, user, booking);
         jSplitPane.setRightComponent(order);
     }
 

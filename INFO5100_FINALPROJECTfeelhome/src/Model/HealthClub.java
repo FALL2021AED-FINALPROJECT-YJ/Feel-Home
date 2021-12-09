@@ -80,5 +80,8 @@ public class HealthClub extends Enterprise {
         TrainerOrg trainerOrg = new TrainerOrg(name, contact, networkName);
         listOfTrainerOrg.add(trainerOrg);
     }
-
+    
+    public String toString() {
+        return name;
+    }
 }

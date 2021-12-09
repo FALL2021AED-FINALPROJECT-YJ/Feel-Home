@@ -3,6 +3,7 @@ package model.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.HealthClub;
 
 public class HealthClubService extends Service {
 
@@ -22,37 +23,47 @@ public class HealthClubService extends Service {
         }
     }
 
-    private List<HealthClubServiceType> healthClubService;
+    private HealthClub healthClub;
+    private List<HealthClubServiceType> healthClubServices;
 
-    public HealthClubService(Date eventDate) {
-        super(Service.ServiceType.HEALTH_CLUB, eventDate);
-        this.healthClubService = new ArrayList<>();
+    public HealthClubService(HealthClub healthClub, Date date) {
+        super(Service.ServiceType.HEALTH_CLUB, date);
+        this.healthClubServices = new ArrayList<>();
+        this.healthClub = healthClub;
     }
 
-    public List<HealthClubServiceType> getHealthClubService() {
-        return healthClubService;
+    public HealthClub getHealthClub() {
+        return healthClub;
     }
 
-    public void setHealthClubService(List<HealthClubServiceType> healthClubService) {
-        this.healthClubService = healthClubService;
+    public void setHealthClub(HealthClub healthClub) {
+        this.healthClub = healthClub;
+    }
+
+    public List<HealthClubServiceType> getHealthClubServices() {
+        return healthClubServices;
+    }
+
+    public void setHealthClubServices(List<HealthClubServiceType> healthClubServices) {
+        this.healthClubServices = healthClubServices;
     }
 
     public void addService(HealthClubServiceType type) {
-        healthClubService.add(type);
+        healthClubServices.add(type);
         totalCost += type.price;
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder(super.toString());
-
-        if (!getStatus().equals(Service.Status.REJECTED)) {
-            builder.append("\nBelow are the details of the services includede in the event - ");
-
-            for (HealthClubServiceType type : healthClubService) {
-                builder.append(String.format("\n     BusineessEventType - %s, Cost %d", type.name(), type.price));
-            }
-            builder.append("\n Total cost for the event will be ").append(totalCost);
+        StringBuilder sb = new StringBuilder("\nHealth club service details:");
+        sb.append("\n").append(TAB).append("Health club: ").append(healthClub);
+        sb.append("\n").append(TAB).append("Date of appointment: ").append(getDate());
+        sb.append("\n").append(TAB).append("Status: ").append(getStatus());
+        sb.append("\n").append(TAB).append("Below are the details of services included for your appointment:");
+        for (HealthClubServiceType service : healthClubServices) {
+            sb.append("\n").append(TAB).append(TAB)
+                    .append(String.format("Service type: %s, Cost: %d", service.toString(), service.getPrice()));
         }
-        return builder.toString();
+        sb.append("\n").append(TAB).append("Total cost: ").append(totalCost);
+        return sb.toString();
     }
 }

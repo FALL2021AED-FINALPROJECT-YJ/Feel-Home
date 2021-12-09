@@ -5,18 +5,18 @@ import java.util.List;
 public class MenuItem {
 
     private String details;
-    private String price;
+    private int price;
 
-    public MenuItem(String item, String price) {
+    public MenuItem(String item, int price) {
         this.details = item;
         this.price = price;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

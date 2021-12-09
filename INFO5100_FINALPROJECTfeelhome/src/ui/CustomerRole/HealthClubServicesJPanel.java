@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import model.Booking;
-import model.PhotographyOrg;
+import model.HealthClub;
 import model.SystemAdmin;
-import model.service.BusinessEventService;
 import model.service.HealthClubService;
 
 public class HealthClubServicesJPanel extends javax.swing.JPanel {
@@ -22,6 +21,10 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.username = username;
         this.booking = booking;
+
+        for (HealthClub healthClub : booking.getNetwork().getEnterpriseDirectory().getListOfHealthClub()) {
+            healthClubCombo.addItem(healthClub);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +33,6 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
 
         lblbookservices = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         yogaBtn = new javax.swing.JCheckBox();
         massageBtn = new javax.swing.JCheckBox();
         medicalServiceBtn = new javax.swing.JCheckBox();
@@ -42,6 +44,8 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         dateField = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        healthClubCombo = new javax.swing.JComboBox<>();
 
         lblbookservices.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblbookservices.setText("HEALTH CLUB SERVICES");
@@ -53,9 +57,6 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
                 backBtnActionPerformed(evt);
             }
         });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("SELECT BELOW SERVICES ");
 
         yogaBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         yogaBtn.setText("YOGA");
@@ -95,12 +96,27 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel7.setText("SELECT A DATE ");
 
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel4.setText("Health Club");
+
+        healthClubCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(213, 213, 213)
+                .addComponent(lblbookservices)
+                .addGap(0, 373, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(addServiceBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -110,34 +126,23 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(medicalServiceBtn)
                                         .addComponent(massageBtn))
-                                    .addComponent(jLabel7))
-                                .addGap(26, 26, 26))
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel1)
-                                .addGap(63, 63, 63)))
+                                .addGap(37, 37, 37)))
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
                             .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(dateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(lblbookservices)))
-                .addGap(0, 353, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(backBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(318, 318, 318)
-                        .addComponent(addServiceBtn)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)))
+                            .addComponent(healthClubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -148,15 +153,17 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblbookservices)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel2)
-                                .addGap(63, 63, 63)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7))
-                        .addGap(41, 41, 41)
+                        .addComponent(lblbookservices)
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel7))
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(healthClubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(yogaBtn)
                             .addComponent(jLabel3))
@@ -170,10 +177,10 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel6))
                         .addGap(75, 75, 75)
                         .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -182,9 +189,16 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_medicalServiceBtnActionPerformed
 
     private void addServiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addServiceBtnActionPerformed
+
+        HealthClub healthClub = (HealthClub) healthClubCombo.getSelectedItem();
+        if (healthClub == null) {
+            JOptionPane.showMessageDialog(this, "Please select a health club from the dropdown.");
+            return;
+        }
         Date date = dateField.getDate();
         Date checkin = booking.getCheckin();
         Date checkout = booking.getCheckout();
+
         if (date.compareTo(checkin) < 0 || date.compareTo(checkout) > 0) {
             JOptionPane.showMessageDialog(this, "Selected date should be witihin check-in date (" + checkin
                     + ") and checkout date (" + checkout + ")");
@@ -200,18 +214,22 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
             return;
         }
 
-        HealthClubService healthClubService = new HealthClubService(date);
+        HealthClubService healthClubService = new HealthClubService(healthClub, date);
         if (yogaBtnSelected) {
             healthClubService.addService(HealthClubService.HealthClubServiceType.TRAINER);
         }
+
         if (massageRadioBtnSelected) {
             healthClubService.addService(HealthClubService.HealthClubServiceType.THERAPIST);
         }
+
         if (medicalRadioBtnSelected) {
             healthClubService.addService(HealthClubService.HealthClubServiceType.PHYSICIAN);
         }
 
         booking.addService(healthClubService);
+        JOptionPane.showMessageDialog(this, "Your health club appointment is booked for " + date);
+        callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_addServiceBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -223,9 +241,10 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
     private javax.swing.JButton addServiceBtn;
     private javax.swing.JButton backBtn;
     private com.toedter.calendar.JDateChooser dateField;
+    private javax.swing.JComboBox<HealthClub> healthClubCombo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
