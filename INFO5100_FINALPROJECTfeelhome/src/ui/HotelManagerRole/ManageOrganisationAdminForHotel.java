@@ -3,12 +3,17 @@ package ui.HotelManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
 import model.LaundaryService;
+import model.Manager;
 import model.Network;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -21,16 +26,17 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
+    private Network network;
 
-    public ManageOrganisationAdminForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrganisationAdminForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network city : systemAdmin.getListOfNetwork()) {
-            networkType.addItem(city.getName());
-        }
+        this.network = network;
+        cityCombo.addItem(network.getName());
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -43,7 +49,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        networkType = new javax.swing.JComboBox<>();
+        cityCombo = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
@@ -87,7 +93,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("NETWORK");
 
-        networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
+        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("UPDATE");
@@ -168,7 +174,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                                         .addGap(169, 169, 169))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(networkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cityCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(orgName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(orgCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(83, 83, 83)
@@ -205,7 +211,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +255,6 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
         String orgType = orgCombo.getSelectedItem().toString();
         String orgName1 = orgName.getSelectedItem().toString();
@@ -257,7 +262,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (systemAdmin.userExistsInSystem(username) == false) {
-            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+            Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<Hotel> list = enterpriseDirec.getListOfHotel();
             for (int i = 0; i < list.size(); i++) {
@@ -300,13 +305,13 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                 }
             }
         } else {
-             JOptionPane.showMessageDialog(this, " This username already exists");
+            JOptionPane.showMessageDialog(this, " This username already exists");
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
         String orgType = orgCombo.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<Hotel> list = enterpriseDirec.getListOfHotel();
         for (int i = 0; i < list.size(); i++) {
@@ -333,6 +338,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
+    private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -345,10 +351,50 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblsysadmin;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> networkType;
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+            if (hotel.findManager(user) != null) {
+                if (orgType1.equals("Laundary")) {
+                    row[0] = "Laundary";
+                    for (LaundaryOrg laundary : hotel.getLaundaryOrg()) {
+                        for (Manager manager : laundary.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Laundary";
+                            row[2] = laundary.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+                if (orgType1.equals("Transportation")) {
+                    row[0] = "Transportation";
+                    for (TransportationOrg transportation : hotel.getTransportationOrgList()) {
+                        for (Manager manager : transportation.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Transportation";
+                            row[2] = transportation.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

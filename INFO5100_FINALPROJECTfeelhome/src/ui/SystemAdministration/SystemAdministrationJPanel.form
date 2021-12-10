@@ -24,11 +24,11 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="381" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="enterpriseBtn" min="-2" pref="247" max="-2" attributes="0"/>
-                          <Component id="btnmanagenetworks" min="-2" pref="247" max="-2" attributes="0"/>
-                          <Component id="btnmanagemanagers" alignment="1" min="-2" pref="247" max="-2" attributes="0"/>
-                          <Component id="btnmanagecustomers" alignment="1" min="-2" pref="235" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="enterpriseBtn" alignment="0" pref="247" max="32767" attributes="0"/>
+                          <Component id="btnmanagenetworks" alignment="0" pref="247" max="32767" attributes="0"/>
+                          <Component id="btnmanagemanagers" alignment="0" pref="247" max="32767" attributes="0"/>
+                          <Component id="btnmanagecustomers" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -41,15 +41,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
               <Component id="lblsysadmin" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-              <Component id="btnmanagenetworks" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-              <Component id="enterpriseBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Component id="btnmanagemanagers" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-              <Component id="btnmanagecustomers" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="249" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+              <Component id="btnmanagenetworks" min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="enterpriseBtn" min="-2" pref="48" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="btnmanagemanagers" min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="btnmanagecustomers" min="-2" pref="43" max="-2" attributes="0"/>
+              <EmptySpace pref="269" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

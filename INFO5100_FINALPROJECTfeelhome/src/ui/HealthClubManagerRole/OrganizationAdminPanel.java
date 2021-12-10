@@ -3,9 +3,14 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
+import model.Manager;
 import model.Network;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -17,16 +22,19 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
+    private Network network;
 
-    public OrganizationAdminPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public OrganizationAdminPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
+        this.network = network;
         for (Network city : systemAdmin.getListOfNetwork()) {
             networkType.addItem(city.getName());
         }
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -218,7 +226,6 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
         String orgType = orgCombo.getSelectedItem().toString();
         String orgName1 = orgName.getSelectedItem().toString();
@@ -342,4 +349,60 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     private javax.swing.JTextField passwordField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {
+            if (health.findManager(user) != null) {
+                if (orgType1.equals("Physician")) {
+                    row[0] = "Physician";
+                    for (PhysicianOrg physician : health.getListOfPhysicianOrg()) {
+                        for (Manager manager : physician.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Physician";
+                            row[2] = physician.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+                if (orgType1.equals("Therapist")) {
+                    row[0] = "Therapist";
+                    for (TherapistOrg therapist : health.getListOfTherapistOrg()) {
+                        for (Manager manager : therapist.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Therapist";
+                            row[2] = therapist.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+                if (orgType1.equals("Trainer")) {
+                    row[0] = "Trainer";
+                    for (TrainerOrg trainer : health.getListOfTrainerOrg()) {
+                        for (Manager manager : trainer.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Trainer";
+                            row[2] = trainer.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }

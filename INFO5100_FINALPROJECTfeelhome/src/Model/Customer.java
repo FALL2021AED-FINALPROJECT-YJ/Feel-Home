@@ -1,10 +1,10 @@
-
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
+
     private String name;
     private String contact;
     private String address;
@@ -16,7 +16,7 @@ public class Customer {
     public Customer() {
         bookingList = new ArrayList<>();
     }
-    
+
     public String getPassword() {
         return password;
     }
@@ -40,7 +40,7 @@ public class Customer {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -72,12 +72,14 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-    public Booking addBooking(Hotel hotel, Network network){
+
+    public Booking addBooking(Hotel hotel, Network network) {
         Booking booking = new Booking(hotel, network);
         bookingList.add(booking);
         return booking;
     }
-    public String toString(){
+
+    public String toString() {
         return userName;
     }
 }

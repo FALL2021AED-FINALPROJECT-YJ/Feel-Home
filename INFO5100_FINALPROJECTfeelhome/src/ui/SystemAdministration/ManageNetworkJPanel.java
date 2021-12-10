@@ -2,6 +2,10 @@ package ui.SystemAdministration;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.Enterprise;
+import model.EnterpriseDirectory;
+import model.Manager;
 import model.Network;
 import model.SystemAdmin;
 
@@ -40,14 +44,7 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         jTabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "NETWORK NAME"
@@ -89,17 +86,17 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(227, 227, 227)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addGap(36, 36, 36)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(backButton)
+                .addGap(22, 22, 22)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(lblsysadmin)
                 .addGap(36, 36, 36)
@@ -108,8 +105,8 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton))
-                .addContainerGap(342, Short.MAX_VALUE))
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,13 +119,7 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         systemAdmin.addNetwork(name);
         JOptionPane.showMessageDialog(this, "Network added successfully");
         nameField.setText("");
-        DefaultTableModel model = (DefaultTableModel) jTabel.getModel();
-        model.setRowCount(0);
-        Object row[] = new Object[10];
-        for (Network network : systemAdmin.getListOfNetwork()) {
-            row[0] = network.getName();
-            model.addRow(row);
-        }
+        populateTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
 
@@ -146,7 +137,7 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTabel.getModel();
         model.setRowCount(0);
         Object row[] = new Object[10];
-        for (Network network : systemAdmin.getListOfNetwork()) {
+        for (Network network : systemAdmin.getListOfNetwork()) {        //populate network
             row[0] = network.getName();
             model.addRow(row);
         }

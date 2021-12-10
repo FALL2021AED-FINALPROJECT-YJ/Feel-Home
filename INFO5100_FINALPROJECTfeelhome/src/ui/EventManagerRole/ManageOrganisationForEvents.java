@@ -4,9 +4,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
 import model.EnterpriseDirectory;
-import model.HealthClub;
 import model.Network;
+import model.PhotographyService;
 import model.SystemAdmin;
 
 public class ManageOrganisationForEvents extends javax.swing.JPanel {
@@ -15,16 +17,20 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String type;
     private String user;
+    private Network network;
 
-    public ManageOrganisationForEvents(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrganisationForEvents(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network network : systemAdmin.getListOfNetwork()) {
-            cityCombo.addItem(network.getName());
-        }
+        this.network = network;
+
+        cityNameTextField.setText(network.getName());
+        cityNameTextField.setEditable(false);
+
+        populateTable();
 
     }
 
@@ -37,16 +43,16 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         backButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        orgType = new javax.swing.JComboBox<>();
+        orgCombo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         contactField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        cityCombo = new javax.swing.JComboBox<>();
         addBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
+        cityNameTextField = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,15 +85,13 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
 
         jLabel2.setText("ORGANISATION TYPE");
 
-        orgType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation", "Decor", "Catering", "Photography" }));
+        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation", "Decor", "Catering", "Photography" }));
 
         jLabel3.setText("NAME");
 
         jLabel4.setText("CONTACT");
 
         jLabel5.setText("CITY");
-
-        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a city" }));
 
         addBtn.setText("ADD");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +103,12 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         jButton3.setText("DELETE");
 
         updateBtn.setText("UPDATE");
+
+        cityNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cityNameTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -121,11 +131,12 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(orgType, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cityCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 199, Short.MAX_VALUE)
-                                .addComponent(contactField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(contactField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                                    .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(278, 278, 278)
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,18 +170,18 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(orgType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
                         .addComponent(jLabel3)))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(contactField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                    .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn)
                     .addComponent(updateBtn))
@@ -180,13 +191,12 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
-        String networkName = cityCombo.getSelectedItem().toString();   //find the network from city-combobox
+        String networkName = network.getName();
         String name = nameField.getText();
         String contact = contactField.getText();
-        Network network = systemAdmin.findNetwork(networkName);
-        String orgType1 = orgType.getSelectedItem().toString();      // org-type (physician org)     
+
+        String orgType1 = orgCombo.getSelectedItem().toString();      // org-type (physician org)     
         EnterpriseDirectory enterpriseDirc = network.getEnterpriseDirectory();
         List<BusinessEvent> events = enterpriseDirc.getListOfEvents();
         for (int i = 0; i < events.size(); i++) {
@@ -200,7 +210,7 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                 model.addRow(row);
                 JOptionPane.showMessageDialog(this, " Organisation added successfully");
                 return;                               //healthclub found
-            } else if (type.equals("Decor")) {
+            } else if (orgType1.equals("Decor")) {
                 events.get(i).addDecorService(name, contact, networkName);
                 row[0] = orgType1;
                 row[1] = name;
@@ -225,14 +235,18 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-           callOnCreateMethod.run();
+        callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void cityNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cityNameTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton backButton;
-    private javax.swing.JComboBox<String> cityCombo;
+    private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -243,7 +257,51 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> orgType;
+    private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+            if (event.findManager(user) != null) {
+                if (event.getListOfCatering() != null) {
+                    row[0] = "Catering";
+                    for (CateringService catering : event.getListOfCatering()) {
+                        row[0] = "Catering";
+                        row[1] = catering.getName();
+                        row[2] = catering.getContact();
+                        row[3] = network1.getName();
+                        model.addRow(row);
+                    }
+                }
+                if (event.getListOfDecors() != null) {
+                    row[0] = "Decor";
+                    for (DecorServices decor : event.getListOfDecors()) {
+                        row[0] = "Decor";
+                        row[1] = decor.getName();
+                        row[2] = decor.getContact();
+                        row[3] = network.getName();
+                        model.addRow(row);
+                    }
+                }
+                if (event.getListOfPhotographyServices() != null) {
+                    row[0] = "Photography";
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        row[0] = "Photography";
+                        row[1] = photo.getName();
+                        row[2] = photo.getContact();
+                        row[3] = network.getName();
+                        model.addRow(row);
+                    }
+                }
+
+            }
+        }
+    }
 }

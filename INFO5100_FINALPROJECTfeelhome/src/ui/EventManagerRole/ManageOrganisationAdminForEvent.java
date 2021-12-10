@@ -5,11 +5,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
 import model.CateringService;
-import model.DecorOrg;
+import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
+import model.Manager;
 import model.Network;
-import model.PhotographyOrg;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -21,16 +22,17 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
+    private Network network;
 
-    public ManageOrganisationAdminForEvent(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrganisationAdminForEvent(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network city : systemAdmin.getListOfNetwork()) {
-            networkType.addItem(city.getName());
-        }
+        this.network = network;
+        cityCombo.addItem(network.getName());
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -39,16 +41,14 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
         jLabel6 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
         nameField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        networkType = new javax.swing.JComboBox<>();
+        cityCombo = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
@@ -62,17 +62,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("NAME");
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("UPDATE");
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("ORGANIZATION TYPE ");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("NETWORK");
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("ADD");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("USERNAME");
@@ -83,8 +77,8 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("ORGANIZATION NAME");
 
-        networkType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
+        cityCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setText("DELETE");
@@ -151,22 +145,14 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jButton3))
-                    .addComponent(networkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cityCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(orgCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(orgName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,6 +166,10 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                     .addComponent(nameField)
                     .addComponent(passwordField))
                 .addGap(99, 99, 99))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -191,32 +181,28 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         .addGap(85, 85, 85)
                         .addComponent(updateBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(255, 255, 255)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(jLabel1)))
                 .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(backButton)
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addGap(45, 45, 45)
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(31, 31, 31)
@@ -231,15 +217,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addBtn)
-                    .addComponent(updateBtn))
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(35, 35, 35))
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(115, 115, 115))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -249,7 +231,6 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
         String orgType = orgCombo.getSelectedItem().toString();
         String orgName1 = orgName.getSelectedItem().toString();
@@ -257,7 +238,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (systemAdmin.userExistsInSystem(username) == false) {
-            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+            Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
             for (int i = 0; i < list.size(); i++) {
@@ -280,7 +261,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else if (orgType.equals("Decor")) {
-                        List<DecorOrg> org2 = list.get(i).getListOfDecors();
+                        List<DecorServices> org2 = list.get(i).getListOfDecors();
 
                         for (int j = 0; j < org2.size(); j++) {
                             System.out.println(org2.get(i).getName() + "name of decor org");
@@ -299,7 +280,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                             }
                         }
                     } else {
-                        List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
+                        List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
                         for (int j = 0; j < org3.size(); j++) {
                             if (org3.get(j).getName().equals(orgName1)) {
                                 org3.get(j).addManager(name, network.getName(), username, password);
@@ -324,7 +305,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
         String orgType = orgCombo.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
         for (int i = 0; i < list.size(); i++) {
@@ -336,12 +317,12 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         orgName.addItem(org1.get(j).getName());
                     }
                 } else if (orgType.equals("Decor")) {
-                    List<DecorOrg> org2 = list.get(i).getListOfDecors();
+                    List<DecorServices> org2 = list.get(i).getListOfDecors();
                     for (int j = 0; j < org2.size(); j++) {
                         orgName.addItem(org2.get(j).getName());
                     }
                 } else {
-                    List<PhotographyOrg> org3 = list.get(i).getListOfPhotographyServices();
+                    List<PhotographyService> org3 = list.get(i).getListOfPhotographyServices();
                     for (int j = 0; j < org3.size(); j++) {
                         orgName.addItem(org3.get(j).getName());
                     }
@@ -359,8 +340,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -372,11 +352,66 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> networkType;
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
     private javax.swing.JButton updateBtn;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+            if (event.findManager(user) != null) {
+                if (orgType1.equals("Catering")) {
+                    row[0] = "Catering";
+                    for (CateringService catering : event.getListOfCatering()) {
+                        for (Manager manager : catering.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Catering";
+                            row[2] = catering.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+                if (orgType1.equals("Decor")) {
+                    row[0] = "Decor";
+                    for (DecorServices decor : event.getListOfDecors()) {
+                        for (Manager manager : decor.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Decor";
+                            row[2] = decor.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+                if (orgType1.equals("Photography")) {
+                    row[0] = "Photography";
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        for (Manager manager : photo.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Photography";
+                            row[2] = photo.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }

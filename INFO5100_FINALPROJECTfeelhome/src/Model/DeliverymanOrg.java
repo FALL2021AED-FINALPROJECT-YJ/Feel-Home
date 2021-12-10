@@ -3,53 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliverymanOrg {
-    private String name;
-    private String city;
-    private String contact;
-    private List<Manager> listOfManager;
+public class DeliverymanOrg extends Organization{
+
     private List<DeliveryMan> listOfDeliveryMan;
 
-    public DeliverymanOrg(String name, String contact, String city) {
-        this.name = name;
-        this.city = city;
-        this.contact = contact;
-        listOfManager = new ArrayList<>();
-        listOfDeliveryMan = new ArrayList<>();
+  public DeliverymanOrg(String name, String contact, String city) {
+        super(name, contact, city);
+        this .listOfDeliveryMan = new ArrayList<>();
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public List<Manager> getListOfManager() {
-        return listOfManager;
-    }
-
-    public void setListOfManager(List<Manager> listOfManager) {
-        this.listOfManager = listOfManager;
-    }
-
+  
     public List<DeliveryMan> getListOfDeliveryMan() {
         return listOfDeliveryMan;
     }
@@ -62,12 +24,6 @@ public class DeliverymanOrg {
         DeliveryMan del = new DeliveryMan(name, city, user, password1);
         listOfDeliveryMan.add(del);
         System.out.println("Deliveryman manager added is " + listOfDeliveryMan.size());
-    }
-      public Manager addManager(String name, String city, String user, String password1) {
-        Manager manager = new Manager(name, user, password1);
-        listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
-        return manager;
     }
 
 }

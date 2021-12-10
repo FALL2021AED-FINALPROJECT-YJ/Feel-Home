@@ -1,11 +1,13 @@
 package ui.SystemAdministration;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Hotel;
+import model.Manager;
 import model.Network;
 import model.Restaurant;
 import model.SystemAdmin;
@@ -95,6 +97,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             }
         });
 
+        nameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFieldActionPerformed(evt);
@@ -107,6 +110,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("NETWORK");
 
+        networkType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
         networkType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,12 +124,17 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("MANAGER NAME");
 
+        usernameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("USERNAME");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("PASSWORD");
 
+        passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
+        enterpriseType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         enterpriseType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a enterprise", "Health Club", "Restaurant", "Hotel", "Business Event" }));
         enterpriseType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,8 +205,8 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(23, 23, 23)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -222,10 +231,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(jButton3))
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -240,8 +249,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        Object row[] = new Object[20];
+        Object row[] = new Object[10];
         String ManagerName = nameField.getText();
         String userName = usernameField.getText();
         String password = passwordField.getText();
@@ -254,60 +262,59 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             if (enterpriseType1.equals("Health Club")) {
                 HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
                 healthclubName1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Health Club";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else if (enterpriseType1.equals("Business Event")) {
                 BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
                 event1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Business Event");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "BusinessEvent";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Business Event");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else if (enterpriseType1.equals("Restaurant")) {
                 Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
                 res1.addManager(userName, userName, password);
                 System.out.println(res1.getListOfManager().size() + " manager in restaurant");
+                systemAdmin.addUser(userName, "Restaurant");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Restaurant";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Restaurant");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else {
                 Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
                 hotel1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Hotel");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Hotel";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Hotel");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             }
-        } else 
-        {
-              JOptionPane.showMessageDialog(this, " This username already exists ");
+        } else {
+            JOptionPane.showMessageDialog(this, " This username already exists ");
         }
 
     }//GEN-LAST:event_addButtonActionPerformed
@@ -321,7 +328,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkTypeActionPerformed
 
     private void enterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeActionPerformed
-      enterpriseName.removeAllItems();
+        enterpriseName.removeAllItems();       
         String networkName = networkType.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkName);
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
@@ -370,6 +377,66 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        for (Network network : systemAdmin.getListOfNetwork()) {        //populate network
+            row[0] = network.getName();
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();  //populate enterpirse name
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {   //poplulate events enterprise
+                row[1] = "Business Event";
+                row[2] = event.getName();
+                for (Manager manager : event.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Business Event";
+                    row[2] = event.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+                for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {   //poplulate restauarant enterprise
+                row[1] = "Restaurant";
+                row[2] = res.getName();
+                for (Manager manager :res.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Restaurant";
+                    row[2] = res.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+                for (Hotel hotel : enterpriseDirec.getListOfHotel()) {   //poplulate hotel enterprise
+                row[1] = "Hotel";
+                row[2] = hotel.getName();
+                for (Manager manager :hotel.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Hotel";
+                    row[2] = hotel.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+                 for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {   //poplulate hotel enterprise
+                row[1] = "Health Club";
+                row[2] = health.getName();
+                for (Manager manager :health.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Health Club";
+                    row[2] = health.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
 
+        }
     }
+
 }

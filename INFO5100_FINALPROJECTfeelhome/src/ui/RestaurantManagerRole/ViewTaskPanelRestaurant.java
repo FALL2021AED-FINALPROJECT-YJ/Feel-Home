@@ -1,14 +1,18 @@
 package ui.RestaurantManagerRole;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Booking;
+import model.Customer;
+import model.CustomerDirectory;
 import model.DeliverymanOrg;
-import model.HealthClub;
-import model.Network;
-import model.PhysicianOrg;
+import model.Organization;
 import model.Restaurant;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
+import model.service.RestaurantService;
+import model.service.Service;
 
 public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
@@ -16,15 +20,15 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
-    private Network network;
+    private Restaurant restaurant;
 
-    public ViewTaskPanelRestaurant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
+    public ViewTaskPanelRestaurant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Restaurant restaurant) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        this.network = network;
+        this.restaurant = restaurant;
         populateComboBox();
         populateTable();
     }
@@ -48,7 +52,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
             },
             new String [] {
-                "CUSTOMER NAME", "ORDER DETAILS", "STATUS", "ADDRESS", "ORDER ID "
+                "ORDER ID", "CUSTOMER NAME", "ORDER DETAIL", "ADDRESS", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -62,13 +66,17 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         deliveryOrg.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        deliveryOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation" }));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("SELECT A ORGANIZATION FOR DELIVERYMAN");
 
         acceptBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         acceptBtn.setText("ACCEPT ORDERS");
+        acceptBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptBtnActionPerformed(evt);
+            }
+        });
 
         denyBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         denyBtn.setText("DENY ORDERS");
@@ -103,8 +111,9 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addComponent(acceptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
+                                .addGap(38, 38, 38)
                                 .addComponent(denyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -121,7 +130,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -131,8 +140,8 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(acceptBtn)
-                            .addComponent(denyBtn))
+                            .addComponent(acceptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(denyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(171, 171, 171))))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -141,11 +150,38 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         callOnCreateMethod.run();
     }//GEN-LAST:event_backBtnActionPerformed
 
+    private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
+        int selectRowIndex = jTable1.getSelectedRow();
+        if (selectRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Booking booking = (Booking) model.getValueAt(selectRowIndex, 0);
+        RestaurantService restaurantService = null;
+        for (Service service : booking.getServices()) {
+            if (restaurant.getName().equals(service.getEnterprise().getName())) {
+                restaurantService = (RestaurantService) service;
+                break;
+            }
+        }
+        List<Organization> organizations = new ArrayList<>();
+        DeliverymanOrg delivery = (DeliverymanOrg) deliveryOrg.getSelectedItem();
+        
+        if (delivery == null) {
+            JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged  ");
+        } else {
+            organizations.add(delivery);     // assign to  deliverymanorg           
+        }
+
+
+    }//GEN-LAST:event_acceptBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptBtn;
     private javax.swing.JButton backBtn;
-    private javax.swing.JComboBox<String> deliveryOrg;
+    private javax.swing.JComboBox<DeliverymanOrg> deliveryOrg;
     private javax.swing.JButton denyBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -155,16 +191,37 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
     private void populateTable() {
 
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object row[] = new Object[10];
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
+        for (Customer customer : customerDirec.getListOfCustomer()) {
+            for (Booking booking : customer.getBookingList()) {      //get booking details each customer
+                for (Service service : booking.getServices()) {       //get services under booking
+
+                    if (service.getEnterprise().getName().equals(restaurant.getName())) {
+
+                        RestaurantService restaurantService = (RestaurantService) service;
+
+                        row[0] = booking;
+                        row[1] = customer;
+                        row[2] = booking.getStatus();
+                        row[3] = customer.getAddress();
+                        row[4] = restaurantService.getStatus();
+                        model.addRow(row);
+
+                    }
+                }
+            }
+        }
+
     }
 
     private void populateComboBox() {
-        List<Restaurant> list1 = network.getEnterpriseDirectory().getListOfRestaurants();
-        for (int i = 0; i < list1.size(); i++) {
-            List<DeliverymanOrg> list2 = list1.get(i).getListOfDeliveryManOrg();
-            for (int j = 0; j < list2.size(); j++) {
-                deliveryOrg.addItem(list2.get(j).getName());
+        deliveryOrg.addItem(null);
+        for (DeliverymanOrg delivery : restaurant.getListOfDeliveryManOrg()) {
+            if (delivery != null) {
+                deliveryOrg.addItem(delivery);
             }
         }
     }
-
 }

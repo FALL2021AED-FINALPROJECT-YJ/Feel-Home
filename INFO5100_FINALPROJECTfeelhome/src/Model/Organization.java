@@ -54,4 +54,8 @@ public abstract class Organization {
         listOfManager.add(manager);
         return manager;
     }
+    
+    public String toString() {
+        return name;
+    }
 }

@@ -45,7 +45,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="networkType" max="32767" attributes="0"/>
+                                          <Component id="cityCombo" max="32767" attributes="0"/>
                                           <Component id="orgName" alignment="0" max="32767" attributes="0"/>
                                           <Component id="orgCombo" alignment="0" max="32767" attributes="0"/>
                                       </Group>
@@ -95,7 +95,7 @@
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="networkType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cityCombo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="nameField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -195,7 +195,7 @@
         <Property name="text" type="java.lang.String" value="NETWORK"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="networkType">
+    <Component class="javax.swing.JComboBox" name="cityCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">

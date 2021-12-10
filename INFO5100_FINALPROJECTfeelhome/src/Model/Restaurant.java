@@ -73,8 +73,4 @@ public class Restaurant extends Enterprise {
     public void addItem(String item, int price) {
         listOfItem.add(new MenuItem(item, price));
     }
-    
-    public String toString() {
-        return this.name;
-    }
 }

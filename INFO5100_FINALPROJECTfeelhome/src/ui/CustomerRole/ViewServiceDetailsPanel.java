@@ -127,6 +127,6 @@ public class ViewServiceDetailsPanel extends javax.swing.JPanel {
     private void populatePanel() {
         checkin.setText(booking.getCheckin().toString());
         checkout.setText(booking.getCheckout().toString());
-        bookingDetails.setText(booking.toString());
+        bookingDetails.setText(booking.prettyPrint());
     }
 }

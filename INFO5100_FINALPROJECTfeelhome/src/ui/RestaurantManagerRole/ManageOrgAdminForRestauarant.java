@@ -3,10 +3,15 @@ package ui.RestaurantManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
 import model.DeliverymanOrg;
 import model.EnterpriseDirectory;
 import model.HealthClub;
+import model.Manager;
 import model.Network;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.Restaurant;
 import model.SystemAdmin;
@@ -19,16 +24,17 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String type;
     private String user;
+    private Network network;
 
-    public ManageOrgAdminForRestauarant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrgAdminForRestauarant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network city : systemAdmin.getListOfNetwork()) {
-            networkType.addItem(city.getName());
-        }
+        this.network = network;
+        cityCombo.addItem(network.getName());
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -39,7 +45,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         backBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        networkType = new javax.swing.JComboBox<>();
+        cityCombo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         orgName = new javax.swing.JComboBox<>();
@@ -83,8 +89,8 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("NETWORK");
 
-        networkType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
+        cityCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("ORGANIZATION TYPE");
@@ -156,7 +162,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(98, 98, 98)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -186,7 +192,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
@@ -214,7 +220,6 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
         String orgType = orgCombo.getSelectedItem().toString();
         String orgName1 = orgName.getSelectedItem().toString();
@@ -222,7 +227,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (systemAdmin.userExistsInSystem(username) == false) {
-            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+            Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<Restaurant> list = enterpriseDirec.getListOfRestaurants();
             for (int i = 0; i < list.size(); i++) {
@@ -252,7 +257,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
         String orgType = orgCombo.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<Restaurant> list = enterpriseDirec.getListOfRestaurants();
         for (int i = 0; i < list.size(); i++) {
@@ -273,6 +278,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backBtn;
+    private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -283,10 +289,36 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> networkType;
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
+            if (restaurant.findManager(user) != null) {
+                if (orgType1.equals("Deliveryman")) {
+                    row[0] = "Deliveryman";
+                    for (DeliverymanOrg delivery : restaurant.getListOfDeliveryManOrg()) {
+                        for (Manager manager : delivery.getListOfManager()) {       //add manager 
+                            row[0] = network1.getName();
+                            row[1] = "Deliveryman";
+                            row[2] = delivery.getName();
+                            row[3] = manager.getName();
+                            row[4] = manager.getUsername();
+                            row[5] = manager.getPassword();
+                            model.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

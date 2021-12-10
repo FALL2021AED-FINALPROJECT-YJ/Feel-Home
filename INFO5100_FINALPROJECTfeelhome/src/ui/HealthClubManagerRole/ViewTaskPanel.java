@@ -1,12 +1,29 @@
 package ui.HealthClubManagerRole;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Booking;
+import model.BusinessEvent;
+import model.CateringService;
+import model.Customer;
+import model.CustomerDirectory;
+import model.DecorServices;
 import model.HealthClub;
 import model.Network;
+import model.Organization;
+import model.PhotographyService;
+import model.Physician;
 import model.PhysicianOrg;
 import model.SystemAdmin;
+import model.Therapist;
 import model.TherapistOrg;
+import model.Trainer;
 import model.TrainerOrg;
+import model.service.BusinessEventService;
+import model.service.HealthClubService;
+import model.service.Service;
 
 public class ViewTaskPanel extends javax.swing.JPanel {
 
@@ -14,15 +31,15 @@ public class ViewTaskPanel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
-    private Network network;
+    private HealthClub healthClub;
 
-    public ViewTaskPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
+    public ViewTaskPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, HealthClub healthClub) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        this.network = network;
+        this.healthClub = healthClub;
         populateComboBox();
         populateTable();
 
@@ -53,11 +70,11 @@ public class ViewTaskPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "CUSTOMER NAME", "STATUS", "THERAPIST", "PHYSICIAN", "TRAINER"
+                "ORDER ID", "NAME", "STATUS", "THERAPIST", "PHYSICIAN", "TRAINER"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -70,16 +87,18 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         jLabel1.setText("VIEW ORDER DETAILS");
 
         therapistOrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        therapistOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a therapist" }));
 
         physicianOrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        physicianOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a physician" }));
 
         trainerOrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        trainerOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a trainer" }));
 
         assignwork.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         assignwork.setText("Assign work");
+        assignwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignworkActionPerformed(evt);
+            }
+        });
 
         backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backButton.setText("BACK");
@@ -176,8 +195,8 @@ public class ViewTaskPanel extends javax.swing.JPanel {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(assignwork)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addComponent(assignwork, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -185,6 +204,72 @@ public class ViewTaskPanel extends javax.swing.JPanel {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void assignworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignworkActionPerformed
+            int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Booking booking = (Booking) model.getValueAt(selectedRowIndex, 0);
+
+        HealthClubService healthClubService = null;
+        for (Service service : booking.getServices()) {
+            if (healthClub.getName().equals(service.getEnterprise().getName())) {
+                healthClubService = (HealthClubService) service;
+                break;
+            }
+        }
+
+        if (healthClubService == null) {
+            JOptionPane.showMessageDialog(this, "Cannot find health club");
+            return;
+        }
+
+        TherapistOrg therapist= (TherapistOrg) therapistOrg.getSelectedItem();
+        PhysicianOrg physician = (PhysicianOrg) physicianOrg.getSelectedItem();
+        TrainerOrg trainer = (TrainerOrg) trainerOrg.getSelectedItem();
+
+        List<Organization> organizations = new ArrayList<>();
+        for (HealthClubService.HealthClubServiceType type : healthClubService.getHealthClubServices()) {
+            switch (type) {
+                case THERAPIST:
+                    if (therapist == null) {
+                        JOptionPane.showMessageDialog(this, "Please select therapist organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(therapist);
+                    }
+                    break;
+                case PHYSICIAN:
+                    if (physician== null) {
+                        JOptionPane.showMessageDialog(this, "Please select physician organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(physician);
+                    }
+                    break;
+                case TRAINER:
+                    if (trainer == null) {
+                        JOptionPane.showMessageDialog(this, "Please select trainer organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(trainer);
+                    }
+                    break;
+            }
+        }
+
+        for (Organization organization : organizations) {
+            healthClubService.addOrganization(organization);
+        }
+        healthClubService.setStatus(Service.Status.CONFIRMED);
+        JOptionPane.showMessageDialog(this, "Assigned all healthclub services to the booking: " + booking.getId());
+        return;
+ 
+    }//GEN-LAST:event_assignworkActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -199,31 +284,72 @@ public class ViewTaskPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JComboBox<String> physicianOrg;
-    private javax.swing.JComboBox<String> therapistOrg;
-    private javax.swing.JComboBox<String> trainerOrg;
+    private javax.swing.JComboBox<PhysicianOrg> physicianOrg;
+    private javax.swing.JComboBox<TherapistOrg> therapistOrg;
+    private javax.swing.JComboBox<TrainerOrg> trainerOrg;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
-    
-    }
 
-    private void populateComboBox() {
-        List<HealthClub> list1 = network.getEnterpriseDirectory().getListOfHealthClub();
-        for (int i = 0; i < list1.size(); i++) {
-                List<TherapistOrg> list2 = list1.get(i).getListOfTherapistOrg();
-                for (int j = 0; j < list2.size(); j++) {
-                    therapistOrg.addItem(list2.get(j).getName());
-                } 
-                List<PhysicianOrg> list3 = list1.get(i).getListOfPhysicianOrg();
-                for (int j = 0; j < list3.size(); j++) {
-                    physicianOrg.addItem(list3.get(j).getName());
-                }
-                List<TrainerOrg> list4 = list1.get(i).getListOfTrainerOrg();
-                for (int j = 0; j < list4.size(); j++) {
-                    trainerOrg.addItem(list4.get(j).getName());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        Object row[] = new Object[10];
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
+        for (Customer customer : customerDirec.getListOfCustomer()) {
+            for (Booking booking : customer.getBookingList()) {      //get booking details each customer
+                for (Service service : booking.getServices()) {       //get services under booking
+
+                    if (service.getEnterprise().getName().equals(healthClub.getName())) {
+
+                        HealthClubService healthClubService = (HealthClubService) service;
+
+                        row[0] = booking;
+                        row[1] = customer;
+                        row[2] = healthClubService.getStatus();
+                        row[3] = "NO";
+                        row[4] = "NO";
+                        row[5] = "NO";
+
+                        for (HealthClubService.HealthClubServiceType type : healthClubService.getHealthClubServices()) {
+                            switch (type) {
+                                case THERAPIST:
+                                    row[3] = "YES";
+                                    break;
+                                case PHYSICIAN:
+                                    row[4] = "YES";
+                                    break;
+                                case TRAINER:
+                                    row[5] = "YES";
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
         }
+
+    }
+
+    private void populateComboBox() {
+        therapistOrg.addItem(null);
+        physicianOrg.addItem(null);
+        trainerOrg.addItem(null);
+
+        for (TherapistOrg therapist : healthClub.getListOfTherapistOrg()) {
+            if (therapist != null) {
+                therapistOrg.addItem(therapist);
+            }
+        }
+        for (PhysicianOrg physician : healthClub.getListOfPhysicianOrg()) {
+            if (physician != null) {
+                physicianOrg.addItem(physician);
+            }
+        }
+        for (TrainerOrg trainer : healthClub.getListOfTrainerOrg()) {
+            if (trainer != null) {
+                trainerOrg.addItem(trainer);
+            }
+        }
+    }
 
 }

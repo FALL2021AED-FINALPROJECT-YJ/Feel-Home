@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import ui.main.DateUtils;
 
 public class Room {
 
@@ -88,8 +89,8 @@ public class Room {
     }
 
     private Set<Date> daysBetween(Date startDate, Date endDate) {
-        startDate = formatDate(startDate);
-        endDate = formatDate(endDate);
+        startDate = DateUtils.formatDate(startDate);
+        endDate = DateUtils.formatDate(endDate);
 
         Set<Date> days = new HashSet<>();
         do {
@@ -102,11 +103,6 @@ public class Room {
         } while (startDate.getTime() <= endDate.getTime());
 
         return days;
-    }
-
-    private Date formatDate(Date date) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).with(LocalTime.MIN);
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public String toString() {

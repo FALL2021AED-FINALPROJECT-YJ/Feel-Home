@@ -5,19 +5,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import model.service.Service;
+import ui.main.DateUtils;
 
 public class Booking {
 
     private static final String TAB = "      ";
-    
+
     private Date checkin;
     private Date checkout;
     private String status;
     private int cost;
     private Network network;
-
+    
     private List<Service> services;
-
+    
     private Hotel hotel;
     private RoomList roomlist;
     private String id;
@@ -68,6 +69,7 @@ public class Booking {
 
     public void addService(Service service) {
         this.services.add(service);
+        System.out.println("service added in service class is " +service.toString());
     }
 
     public Date getCheckin() {
@@ -75,7 +77,7 @@ public class Booking {
     }
 
     public void setCheckin(Date checkin) {
-        this.checkin = checkin;
+        this.checkin = DateUtils.formatDate(checkin);
     }
 
     public Date getCheckout() {
@@ -83,7 +85,7 @@ public class Booking {
     }
 
     public void setCheckout(Date checkout) {
-        this.checkout = checkout;
+        this.checkout = DateUtils.formatDate(checkout);
     }
 
     public String getStatus() {
@@ -110,7 +112,7 @@ public class Booking {
         this.hotel = hotel;
     }
 
-    public String toString() {
+    public String prettyPrint() {
         StringBuilder sb = new StringBuilder("Below are your booking details -\n");
         sb.append("\n").append("Hotel booking details are as follows:");
         sb.append("\n").append(TAB).append("Hotel Name: ").append(hotel.getName());
@@ -131,5 +133,9 @@ public class Booking {
             sb.append("\n").append(service).append("\n");
         }
         return sb.toString();
+    }
+
+    public String toString() {
+        return id;
     }
 }

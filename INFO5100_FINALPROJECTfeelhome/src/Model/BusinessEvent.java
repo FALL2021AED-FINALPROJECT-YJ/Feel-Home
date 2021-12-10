@@ -9,8 +9,8 @@ public class BusinessEvent extends Enterprise {
     private Date date;
     private List<Manager> listOfManager;
     private List<CateringService> listOfCatering;
-    private List<PhotographyOrg> listOfPhotographyServices;
-    private List<DecorOrg> listOfDecors;
+    private List<PhotographyService> listOfPhotographyServices;
+    private List<DecorServices> listOfDecors;
 
     public BusinessEvent(String name, String contact) {
         super(name, contact);
@@ -46,19 +46,19 @@ public class BusinessEvent extends Enterprise {
         this.listOfCatering = listOfCatering;
     }
 
-    public List<PhotographyOrg> getListOfPhotographyServices() {
+    public List<PhotographyService> getListOfPhotographyServices() {
         return listOfPhotographyServices;
     }
 
-    public void setListOfPhotographyServices(List<PhotographyOrg> listOfPhotographyServices) {
+    public void setListOfPhotographyServices(List<PhotographyService> listOfPhotographyServices) {
         this.listOfPhotographyServices = listOfPhotographyServices;
     }
 
-    public List<DecorOrg> getListOfDecors() {
+    public List<DecorServices> getListOfDecors() {
         return listOfDecors;
     }
 
-    public void setListOfDecors(List<DecorOrg> listOfDecors) {
+    public void setListOfDecors(List<DecorServices> listOfDecors) {
         this.listOfDecors = listOfDecors;
     }
 
@@ -86,18 +86,14 @@ public class BusinessEvent extends Enterprise {
     }
 
     public void addPhotographyService(String name, String contact, String city) {
-        PhotographyOrg photo = new PhotographyOrg(name, contact, city);
+        PhotographyService photo = new PhotographyService(name, contact, city);
         listOfPhotographyServices.add(photo);
 
     }
 
     public void addDecorService(String name, String contact, String city) {
-        DecorOrg decor = new DecorOrg(name, contact, city);
+        DecorServices decor = new DecorServices(name, contact, city);
         listOfDecors.add(decor);
     }
     
-    public String toString() {
-        return name;
-    }
-
 }
