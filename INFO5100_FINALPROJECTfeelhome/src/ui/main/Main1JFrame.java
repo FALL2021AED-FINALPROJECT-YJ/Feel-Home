@@ -4,6 +4,7 @@ import java.util.List;
 import model.Booking;
 import model.BusinessEvent;
 import model.Customer;
+import model.Enterprise;
 import model.HealthClub;
 import model.Hotel;
 import model.Manager;
@@ -15,6 +16,7 @@ import ui.CustomerRole.BookEventsJPanel;
 import ui.CustomerRole.BookRoomServicesJPanel;
 import ui.CustomerRole.CustomerStartingJPanel;
 import ui.CustomerRole.HealthClubServicesJPanel;
+import ui.CustomerRole.HotelServicePanel;
 import ui.CustomerRole.ManageBooking;
 import ui.CustomerRole.RestuarantServicePanel;
 import ui.CustomerRole.ViewServiceDetailsPanel;
@@ -315,7 +317,7 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void addServices(Booking booking) {
         String user = usernameField.getText();
-        AddServicePanel service = new AddServicePanel(systemAdmin, this::bookEvent, this::placeOrder, this::healthPanel, this::manageBooking, user, booking);
+        AddServicePanel service = new AddServicePanel(systemAdmin, this::bookEvent, this::placeOrder, this::healthPanel, this::hotelService, this::manageBooking, user, booking);
         jSplitPane.setRightComponent(service);
     }
 
@@ -325,16 +327,23 @@ public class Main1JFrame extends javax.swing.JFrame {
         jSplitPane.setRightComponent(event);
     }
 
-    private void placeOrder(Booking booking) {
+    private void placeOrder(Booking booking) {           //customer order from restaurant
         String user = usernameField.getText();
         RestuarantServicePanel order = new RestuarantServicePanel(systemAdmin, this::addServices, user, booking);
         jSplitPane.setRightComponent(order);
     }
 
-    private void healthPanel(Booking booking) {
+    private void healthPanel(Booking booking) {             // healthclub panel for customer
         String user = usernameField.getText();
         HealthClubServicesJPanel healthClub = new HealthClubServicesJPanel(systemAdmin, this::addServices, user, booking);
         jSplitPane.setRightComponent(healthClub);
+    }
+
+    private void hotelService(Booking booking) {    //laundary and transport service panel fpr customer
+        String user = usernameField.getText();
+        Hotel hotel = (Hotel) findUserHotel();
+        HotelServicePanel hotelPanel = new HotelServicePanel(systemAdmin, this::addServices, user, booking, hotel);
+        jSplitPane.setRightComponent(hotelPanel);
     }
 
     private void viewService(Booking booking) {
@@ -379,11 +388,28 @@ public class Main1JFrame extends javax.swing.JFrame {
         return null;
     }
 
+    private Enterprise findUserHealthClub() {
+        String user = usernameField.getText();
+        List<Network> network = systemAdmin.getListOfNetwork();
+        for (int i = 0; i < network.size(); i++) {
+            List<HealthClub> health = network.get(i).getEnterpriseDirectory().getListOfHealthClub();
+            for (int j = 0; j < health.size(); j++) {
+                List<Manager> manager = health.get(j).getListOfManager();
+                for (int k = 0; k < manager.size(); k++) {
+                    if (manager.get(k).getUsername().equals(user)) {
+                        return health.get(j);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private void viewTaskPanel() {   //view task for health club
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForHealthClub();   //find network and send it to enterprise 
-        ViewTaskPanel viewTask = new ViewTaskPanel(systemAdmin, this::healthClubManagerPanel, user, type, network
+        HealthClub healthClub = (HealthClub) findUserHealthClub();  //find network and send it to enterprise 
+        ViewTaskPanel viewTask = new ViewTaskPanel(systemAdmin, this::healthClubManagerPanel, user, type, healthClub
         );
         jSplitPane.setRightComponent(viewTask);
     }
@@ -391,7 +417,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void createOrganization() {    //create org for health club
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrganizationPanel org = new ManageOrganizationPanel(systemAdmin, this::healthClubManagerPanel, user, type
+        Network network = findUserNetworkForHealthClub();
+        ManageOrganizationPanel org = new ManageOrganizationPanel(systemAdmin, this::healthClubManagerPanel, user, type, network
         );
         jSplitPane.setRightComponent(org);
     }
@@ -399,7 +426,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void organizationAdminPanel() {   //create org admin for health club
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        OrganizationAdminPanel orgAdmin = new OrganizationAdminPanel(systemAdmin, this::healthClubManagerPanel, user, type);
+        Network network = findUserNetworkForHealthClub();
+        OrganizationAdminPanel orgAdmin = new OrganizationAdminPanel(systemAdmin, this::healthClubManagerPanel, user, type, network);
         jSplitPane.setRightComponent(orgAdmin);
     }
 
@@ -449,19 +477,36 @@ public class Main1JFrame extends javax.swing.JFrame {
         return null;
     }
 
+    private Enterprise findUserRestaurant() {
+        String user = usernameField.getText();
+        List<Network> network = systemAdmin.getListOfNetwork();
+        for (int i = 0; i < network.size(); i++) {
+            List<Restaurant> restaurant = network.get(i).getEnterpriseDirectory().getListOfRestaurants();
+            for (int j = 0; j < restaurant.size(); j++) {
+                List<Manager> manager = restaurant.get(j).getListOfManager();
+                for (int k = 0; k < manager.size(); k++) {
+                    if (manager.get(k).getUsername().equals(user)) {
+                        return restaurant.get(j);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private void renderViewTask1() {     // view task for restaurant manager
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForRestaurant();
-        ViewTaskPanelRestaurant resMan = new ViewTaskPanelRestaurant(systemAdmin, this::restaurantManagerPanel, user, type, network);
+        Restaurant restaurant = (Restaurant) findUserRestaurant();
+        ViewTaskPanelRestaurant resMan = new ViewTaskPanelRestaurant(systemAdmin, this::restaurantManagerPanel, user, type, restaurant);
         jSplitPane.setRightComponent(resMan);
     }
 
     private void renderRestaurantOrg() {   //create organisation panel for restaurant
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        System.out.println("user enterd for org is " + user);
-        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type
+        Network network = findUserNetworkForRestaurant();
+        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type,network
         );
         jSplitPane.setRightComponent(org);
     }
@@ -469,7 +514,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderRestaurantAdmin() { //create organisation admin under restauarant
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, user, type);
+         Network network = findUserNetworkForRestaurant();
+        ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, user, type,network);
         jSplitPane.setRightComponent(orgAdmin);
     }
 
@@ -526,18 +572,36 @@ public class Main1JFrame extends javax.swing.JFrame {
         return null;
     }
 
+    private Enterprise findUserHotel() {
+        String user = usernameField.getText();
+        List<Network> network = systemAdmin.getListOfNetwork();
+        for (int i = 0; i < network.size(); i++) {
+            List<Hotel> hotel = network.get(i).getEnterpriseDirectory().getListOfHotel();
+            for (int j = 0; j < hotel.size(); j++) {
+                List<Manager> manager = hotel.get(j).getListOfManager();
+                for (int k = 0; k < manager.size(); k++) {
+                    if (manager.get(k).getUsername().equals(user)) {
+                        return hotel.get(j);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private void renderViewTask2() {     // view hotel manager panel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForHotel();
-        ViewTaskForHotel hotelPanel = new ViewTaskForHotel(systemAdmin, this::hotelManagerPanel, user, type, network);
+        Hotel hotel = (Hotel) findUserHotel();
+        ViewTaskForHotel hotelPanel = new ViewTaskForHotel(systemAdmin, this::hotelManagerPanel, user, type, hotel);
         jSplitPane.setRightComponent(hotelPanel);
     }
 
     private void renderHotelOrg() {     // add an organisation for hotel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrganisationForHotel org = new ManageOrganisationForHotel(systemAdmin, this::hotelManagerPanel, user, type
+        Network network = findUserNetworkForHotel();
+        ManageOrganisationForHotel org = new ManageOrganisationForHotel(systemAdmin, this::hotelManagerPanel, user, type, network
         );
         jSplitPane.setRightComponent(org);
     }
@@ -545,7 +609,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderHotelAdmin() { //create organisation admin under  hotel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrganisationAdminForHotel orgAdmin = new ManageOrganisationAdminForHotel(systemAdmin, this::hotelManagerPanel, user, type);
+        Network network = findUserNetworkForHotel();
+        ManageOrganisationAdminForHotel orgAdmin = new ManageOrganisationAdminForHotel(systemAdmin, this::hotelManagerPanel, user, type, network);
         jSplitPane.setRightComponent(orgAdmin);
     }
 
@@ -597,17 +662,36 @@ public class Main1JFrame extends javax.swing.JFrame {
         return null;
     }
 
+    private Enterprise findUserEnterprise() {
+        String user = usernameField.getText();
+        List<Network> network = systemAdmin.getListOfNetwork();
+        for (int i = 0; i < network.size(); i++) {
+            List<BusinessEvent> event = network.get(i).getEnterpriseDirectory().getListOfEvents();
+            for (int j = 0; j < event.size(); j++) {
+                List<Manager> manager = event.get(j).getListOfManager();
+                for (int k = 0; k < manager.size(); k++) {
+                    if (manager.get(k).getUsername().equals(user)) {
+                        return event.get(j);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private void renderViewTask3() {     // view Business Event manager panel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForEvents();
-        ViewTaskPanelForEvent eventPanel = new ViewTaskPanelForEvent(systemAdmin, this::eventManagerPanel, user, type, network);
+        BusinessEvent event = (BusinessEvent) findUserEnterprise();
+        ViewTaskPanelForEvent eventPanel = new ViewTaskPanelForEvent(systemAdmin, this::eventManagerPanel, user, type, event);
+        jSplitPane.setRightComponent(eventPanel);
     }
 
     private void renderEventOrg() {     // add an organisation for event
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrganisationForEvents org = new ManageOrganisationForEvents(systemAdmin, this::eventManagerPanel, user, type
+        Network network = findUserNetworkForEvents();
+        ManageOrganisationForEvents org = new ManageOrganisationForEvents(systemAdmin, this::eventManagerPanel, user, type, network
         );
         jSplitPane.setRightComponent(org);
     }
@@ -615,7 +699,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderEventAdmin() { //create organisation admin under event
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        ManageOrganisationAdminForEvent orgAdmin = new ManageOrganisationAdminForEvent(systemAdmin, this::eventManagerPanel, user, type);
+        Network network = findUserNetworkForEvents();
+        ManageOrganisationAdminForEvent orgAdmin = new ManageOrganisationAdminForEvent(systemAdmin, this::eventManagerPanel, user, type, network);
         jSplitPane.setRightComponent(orgAdmin);
     }
 

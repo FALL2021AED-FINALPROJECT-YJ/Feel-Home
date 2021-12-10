@@ -1,26 +1,17 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CateringService {
-
-    private String name;
-    private String city;
-    private String contact;
-    private List<Manager> listOfManager;
+public class CateringService extends Organization {
 
     public CateringService(String name, String contact, String city) {
-        this.name = name;
-        this.contact = contact;
-        this.city = city;
-        listOfManager = new ArrayList<>();
+        super(name, contact, city);
     }
 
     public enum CateringType {
         STANDARD(50, "Standard", "Includes 1 starter and 1 entreee"),
         GOLD(100, "Gold", "Includes 1 starter and 2 entrée"),
-        PLATINUM(200, "Platinum", "Includes 2 starter,2 entree and 1 dessert");
+        PLATINUM(200, "Platinum", "Includes 2 starter, 2 entree and 1 dessert");
 
         private final int rate;
         private final String name;
@@ -76,7 +67,6 @@ public class CateringService {
     public Manager addManager(String name, String city, String user, String password1) {
         Manager manager = new Manager(name, user, password1);
         listOfManager.add(manager);
-        System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
 }

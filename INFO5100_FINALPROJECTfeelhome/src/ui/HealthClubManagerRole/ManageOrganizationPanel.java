@@ -3,10 +3,14 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Manager;
 import model.Network;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -19,16 +23,18 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String type;
     private String user;
+    private Network network;
 
-    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network network : systemAdmin.getListOfNetwork()) {
-            cityCombo.addItem(network.getName());
-        }
+        this.network = network;
+        cityNameTextField.setText(network.getName());
+        cityNameTextField.setEditable(false);
+        populateTable();
 
     }
 
@@ -41,7 +47,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        orgType = new javax.swing.JComboBox<>();
+        orgCombo = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
@@ -50,7 +56,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         contactField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
-        cityCombo = new javax.swing.JComboBox<>();
+        cityNameTextField = new javax.swing.JTextField();
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -79,11 +85,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("CONTACT");
 
-        orgType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        orgType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organization", "Physician", "Trainer", "Therapist" }));
-        orgType.addActionListener(new java.awt.event.ActionListener() {
+        orgCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organization", "Physician", "Trainer", "Therapist" }));
+        orgCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orgTypeActionPerformed(evt);
+                orgComboActionPerformed(evt);
             }
         });
 
@@ -130,14 +136,6 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
         });
 
-        cityCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a city" }));
-        cityCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityComboActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,10 +165,10 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cityCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(orgType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(orgCombo, 0, 218, Short.MAX_VALUE)
                             .addComponent(nameField)
-                            .addComponent(contactField)))
+                            .addComponent(contactField)
+                            .addComponent(cityNameTextField)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +193,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(orgType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orgCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -207,8 +205,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
+                    .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(addButton))
@@ -228,11 +226,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         Object row[] = new Object[20];
-        String networkName = cityCombo.getSelectedItem().toString();   //find the network from city-combobox
+        String networkName = network.getName();  //find the network 
         String name = nameField.getText();
         String contact = contactField.getText();
         Network network = systemAdmin.findNetwork(networkName);
-        String orgType1 = orgType.getSelectedItem().toString();      // org-type (physician org)     
+        String orgType1 = orgCombo.getSelectedItem().toString();      // org-type (physician org)     
         EnterpriseDirectory enterpriseDirc = network.getEnterpriseDirectory();
         List<HealthClub> healthClub = enterpriseDirc.getListOfHealthClub();
         for (int i = 0; i < healthClub.size(); i++) {
@@ -270,23 +268,19 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void cityComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityComboActionPerformed
-
-    }//GEN-LAST:event_cityComboActionPerformed
-
     private void contactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_contactFieldActionPerformed
 
-    private void orgTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgTypeActionPerformed
+    private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_orgTypeActionPerformed
+    }//GEN-LAST:event_orgComboActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JComboBox<String> cityCombo;
+    private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -298,6 +292,51 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> orgType;
+    private javax.swing.JComboBox<String> orgCombo;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {
+            if (health.findManager(user) != null) {
+                if (health.getListOfPhysicianOrg() != null) {
+                    row[0] = "Physician";
+                    for (PhysicianOrg physician : health.getListOfPhysicianOrg()) {
+                        row[0] = "Physician";
+                        row[1] = physician.getName();
+                        row[2] = physician.getContact();
+                        row[3] = network1.getName();
+                        model.addRow(row);
+                    }
+                }
+                if (health.getListOfTherapistOrg() != null) {
+                    row[0] = "Therapist";
+                    for (TherapistOrg therapist : health.getListOfTherapistOrg()) {
+                        row[0] = "Therapist";
+                        row[1] = therapist.getName();
+                        row[2] = therapist.getContact();
+                        row[3] = network.getName();
+                        model.addRow(row);
+                    }
+                }
+                if (health.getListOfTrainerOrg() != null) {
+                    row[0] = "Trainer";
+                    for (TrainerOrg trainer : health.getListOfTrainerOrg()) {
+                        row[0] = "Trainer";
+                        row[1] = trainer.getName();
+                        row[2] = trainer.getContact();
+                        row[3] = network.getName();
+                        model.addRow(row);
+                    }
+                }
+
+            }
+        }
+    }
+
 }

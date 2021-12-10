@@ -12,7 +12,6 @@ public class Hotel extends Enterprise {
     private List<LaundaryOrg> laundaryOrg;
     private List<TransportationOrg> transportationOrgList;
  
-
     public Hotel(String name, String contact) {
         super(name, contact);
         listOfManager = new ArrayList<>();
@@ -52,9 +51,7 @@ public class Hotel extends Enterprise {
             if (room.getRoomType().equals(roomType) && room.isAvailable(startDate, endDate)) {
                 availableRooms.add(room);
             }
-        }
-        
-        System.out.println("Available rooms : " + availableRooms + ", start : " + startDate + ", end : " + endDate);
+        }        
         return availableRooms;
     }
 
@@ -68,7 +65,6 @@ public class Hotel extends Enterprise {
             availableRooms.get(i).book(startDate, endDate);
         }
 
-        System.out.println("Booked rooms : " + availableRooms.subList(0, count) + ", start : " + startDate + ", end : " + endDate);
         // return booked room list
         return availableRooms.subList(0, count);
     }

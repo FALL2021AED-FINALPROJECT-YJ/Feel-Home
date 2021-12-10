@@ -29,7 +29,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" pref="210" max="-2" attributes="0"/>
                               <EmptySpace pref="30" max="32767" attributes="0"/>
-                              <Component id="orgType" min="-2" pref="232" max="-2" attributes="0"/>
+                              <Component id="orgCombo" min="-2" pref="232" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -37,12 +37,10 @@
                                   <Component id="jLabel3" min="-2" pref="91" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="addButton" min="-2" pref="102" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="contactField" alignment="1" min="-2" pref="232" max="-2" attributes="0"/>
-                                      <Component id="cityCombo" alignment="1" min="-2" pref="232" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="contactField" pref="232" max="32767" attributes="0"/>
+                                  <Component id="cityNameTextField" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -81,7 +79,7 @@
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                  <Component id="orgType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="orgCombo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -93,15 +91,10 @@
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <Component id="contactField" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="cityCombo" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <Component id="cityNameTextField" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Component id="addButton" min="-2" max="-2" attributes="0"/>
@@ -140,7 +133,7 @@
         <Property name="text" type="java.lang.String" value="ORGANIZATION TYPE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="orgType">
+    <Component class="javax.swing.JComboBox" name="orgCombo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="14" style="0"/>
@@ -194,21 +187,6 @@
         <Property name="text" type="java.lang.String" value="CITY"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cityCombo">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="14" style="0"/>
-        </Property>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="Select a city"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JButton" name="backButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -238,6 +216,8 @@
         </Property>
         <Property name="text" type="java.lang.String" value="MANAGE RESTAURANT ORGANISATION"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="cityNameTextField">
     </Component>
   </SubComponents>
 </Form>

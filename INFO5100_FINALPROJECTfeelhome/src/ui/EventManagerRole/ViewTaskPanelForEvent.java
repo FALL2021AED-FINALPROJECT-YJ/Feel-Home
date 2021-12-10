@@ -1,16 +1,21 @@
 package ui.EventManagerRole;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Booking;
 import model.BusinessEvent;
 import model.CateringService;
-import model.DecorOrg;
-import model.HealthClub;
+import model.Customer;
+import model.CustomerDirectory;
+import model.DecorServices;
 import model.Network;
-import model.PhotographyOrg;
-import model.PhysicianOrg;
+import model.Organization;
+import model.PhotographyService;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
+import model.service.BusinessEventService;
+import model.service.Service;
 
 public class ViewTaskPanelForEvent extends javax.swing.JPanel {
 
@@ -18,15 +23,15 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
-    private Network network;
+    private BusinessEvent businessEvent;
 
-    public ViewTaskPanelForEvent(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
+    public ViewTaskPanelForEvent(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, BusinessEvent businessEvent) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        this.network = network;
+        this.businessEvent = businessEvent;
         populateComboBox();
         populateTable();
     }
@@ -49,7 +54,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
         cateringField = new javax.swing.JTextField();
         decorField = new javax.swing.JTextField();
         photographyField = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        assignTaskBtn = new javax.swing.JButton();
 
         backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backBtn.setText("BACK");
@@ -68,11 +73,11 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
 
             },
             new String [] {
-                "CUSTOMER NAME", "STATUS", "CATERING", "DECOR", "PHOTOGRAPHY"
+                "BOOKING ID", "NAME", "STATUS", "CATERING", "DECOR", "PHOTOGRAPHY"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -89,60 +94,58 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
 
         jLabel4.setText("SELECT A PHOTOGRAPHY ORG");
 
-        cateringOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a catering org" }));
-
-        decorOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a decor org" }));
-
-        photographyOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a photography org" }));
-
-        jButton3.setText("ASSIGN TASK");
+        assignTaskBtn.setText("ASSIGN TASK");
+        assignTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignTaskBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(315, 315, 315)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(741, 741, 741)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cateringOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cateringField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(decorOrg, 0, 196, Short.MAX_VALUE)
-                            .addComponent(decorField))
-                        .addGap(99, 99, 99)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(photographyOrg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(photographyField)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(182, 182, 182))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cateringOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cateringField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(72, 72, 72)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(decorOrg, 0, 196, Short.MAX_VALUE)
+                                    .addComponent(decorField))))
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(photographyField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(photographyOrg, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(741, 741, 741)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(320, 320, 320)
+                        .addComponent(assignTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,8 +154,8 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
                 .addComponent(backBtn)
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1)
-                .addGap(45, 45, 45)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +176,9 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
                     .addComponent(cateringField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(decorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(photographyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(96, 96, 96))
+                .addGap(60, 60, 60)
+                .addComponent(assignTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -183,38 +186,147 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
         callOnCreateMethod.run();
     }//GEN-LAST:event_backBtnActionPerformed
 
+    private void assignTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignTaskBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Booking booking = (Booking) model.getValueAt(selectedRowIndex, 0);
+
+        BusinessEventService eventService = null;
+        for (Service service : booking.getServices()) {
+            if (businessEvent.getName().equals(service.getEnterprise().getName())) {
+                eventService = (BusinessEventService) service;
+                break;
+            }
+        }
+
+        if (eventService == null) {
+            JOptionPane.showMessageDialog(this, "Cannot find business event");
+            return;
+        }
+
+        CateringService cateringService = (CateringService) cateringOrg.getSelectedItem();
+        PhotographyService photographyService = (PhotographyService) photographyOrg.getSelectedItem();
+        DecorServices decorService = (DecorServices) decorOrg.getSelectedItem();
+
+        List<Organization> organizations = new ArrayList<>();
+        for (BusinessEventService.BusinessEventServiceType type : eventService.getBusinessEventServiceTypes().keySet()) {
+            switch (type) {
+                case CATERING:
+                    if (cateringService == null) {
+                        JOptionPane.showMessageDialog(this, "Please select catering organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(cateringService);
+                    }
+                    break;
+                case DECOR:
+                    if (decorService == null) {
+                        JOptionPane.showMessageDialog(this, "Please decor catering organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(decorService);
+                    }
+                    break;
+                case PHOTOGRAPHY:
+                    if (photographyService == null) {
+                        JOptionPane.showMessageDialog(this, "Please select photography organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(photographyService);
+                    }
+                    break;
+            }
+        }
+
+        for (Organization organization : organizations) {
+            eventService.addOrganization(organization);
+        }
+        eventService.setStatus(Service.Status.CONFIRMED);
+        JOptionPane.showMessageDialog(this, "Assigned all event services to the booking: " + booking.getId());
+        return;
+    }//GEN-LAST:event_assignTaskBtnActionPerformed
+
     private void populateTable() {
 
-    }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-    private void populateComboBox() {
-        List<BusinessEvent> list1 = network.getEnterpriseDirectory().getListOfEvents();
-        for (int i = 0; i < list1.size(); i++) {
-            List<CateringService> list2 = list1.get(i).getListOfCatering();
-            for (int j = 0; j < list2.size(); j++) {
-                cateringOrg.addItem(list2.get(j).getName());
-            }
-            List<DecorOrg> list3 = list1.get(i).getListOfDecors();
-            for (int j = 0; j < list3.size(); j++) {
-                decorOrg.addItem(list3.get(j).getName());
-            }
-            List<PhotographyOrg> list4 = list1.get(i).getListOfPhotographyServices();
-            for (int j = 0; j < list4.size(); j++) {
-                photographyOrg.addItem(list4.get(j).getName());
+        Object row[] = new Object[10];
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
+        for (Customer customer : customerDirec.getListOfCustomer()) {
+            for (Booking booking : customer.getBookingList()) {      //get booking details each customer
+                for (Service service : booking.getServices()) {       //get services under booking
+
+                    if (service.getEnterprise().getName().equals(businessEvent.getName())) {
+
+                        BusinessEventService businessEventService = (BusinessEventService) service;
+
+                        row[0] = booking;
+                        row[1] = customer;
+                        row[2] = businessEventService.getStatus();
+                        row[3] = "NO";
+                        row[4] = "NO";
+                        row[5] = "NO";
+                      
+                        for (BusinessEventService.BusinessEventServiceType type : businessEventService.getBusinessEventServiceTypes().keySet()) {
+                            switch (type) {
+                                case CATERING:
+                                    row[3] = "YES";
+                                    break;
+                                case DECOR:
+                                    row[4] = "YES";
+                                    break;
+                                case PHOTOGRAPHY:
+                                    row[5] = "YES";
+                                    break;
+                            }
+                        }
+                          model.addRow(row);
+                    }
+                }
             }
         }
 
     }
 
+    private void populateComboBox() {
+        cateringOrg.removeAllItems();
+        decorOrg.removeAllItems();
+        photographyOrg.removeAllItems();
+        
+        cateringOrg.addItem(null);
+        decorOrg.addItem(null);
+        photographyOrg.addItem(null);
+
+        for (CateringService catering : businessEvent.getListOfCatering()) {
+            if (catering != null) {
+                cateringOrg.addItem(catering);
+            }
+        }
+        for (DecorServices decor : businessEvent.getListOfDecors()) {
+            if (decor != null) {
+                decorOrg.addItem(decor);
+            }
+        }
+        for (PhotographyService photography : businessEvent.getListOfPhotographyServices()) {
+            if (photography != null) {
+                photographyOrg.addItem(photography);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton assignTaskBtn;
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField cateringField;
-    private javax.swing.JComboBox<String> cateringOrg;
+    private javax.swing.JComboBox<CateringService> cateringOrg;
     private javax.swing.JTextField decorField;
-    private javax.swing.JComboBox<String> decorOrg;
+    private javax.swing.JComboBox<DecorServices> decorOrg;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -222,6 +334,6 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField photographyField;
-    private javax.swing.JComboBox<String> photographyOrg;
+    private javax.swing.JComboBox<PhotographyService> photographyOrg;
     // End of variables declaration//GEN-END:variables
 }

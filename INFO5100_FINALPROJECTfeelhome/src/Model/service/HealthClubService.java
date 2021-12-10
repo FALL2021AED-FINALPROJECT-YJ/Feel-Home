@@ -23,21 +23,11 @@ public class HealthClubService extends Service {
         }
     }
 
-    private HealthClub healthClub;
     private List<HealthClubServiceType> healthClubServices;
 
     public HealthClubService(HealthClub healthClub, Date date) {
-        super(Service.ServiceType.HEALTH_CLUB, date);
+        super(healthClub, Service.ServiceType.HEALTH_CLUB, date);
         this.healthClubServices = new ArrayList<>();
-        this.healthClub = healthClub;
-    }
-
-    public HealthClub getHealthClub() {
-        return healthClub;
-    }
-
-    public void setHealthClub(HealthClub healthClub) {
-        this.healthClub = healthClub;
     }
 
     public List<HealthClubServiceType> getHealthClubServices() {
@@ -55,7 +45,7 @@ public class HealthClubService extends Service {
 
     public String toString() {
         StringBuilder sb = new StringBuilder("\nHealth club service details:");
-        sb.append("\n").append(TAB).append("Health club: ").append(healthClub);
+        sb.append("\n").append(TAB).append("Health club: ").append(enterprise);
         sb.append("\n").append(TAB).append("Date of appointment: ").append(getDate());
         sb.append("\n").append(TAB).append("Status: ").append(getStatus());
         sb.append("\n").append(TAB).append("Below are the details of services included for your appointment:");

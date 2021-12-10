@@ -1,15 +1,29 @@
 package ui.HotelManagerRole;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Booking;
+import model.CateringService;
+import model.Customer;
+import model.CustomerDirectory;
+import model.DecorServices;
 import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
 import model.Network;
+import model.Organization;
+import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
 import model.TrainerOrg;
 import model.TransportationOrg;
+import model.service.BusinessEventService;
+import model.service.HealthClubService;
+import model.service.HotelService;
+import model.service.Service;
 
 public class ViewTaskForHotel extends javax.swing.JPanel {
 
@@ -17,15 +31,15 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String user;
     private String type;
-    private Network network;
+    private Hotel hotel;
 
-    public ViewTaskForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type,Network network) {
+    public ViewTaskForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Hotel hotel) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        this.network = network;
+        this.hotel = hotel;
         populateComboBox();
         populateTable();
     }
@@ -41,24 +55,21 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         laundaryOrg = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         transportationOrg = new javax.swing.JComboBox<>();
-        laundaryField = new javax.swing.JTextField();
-        transportationField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        assignTask = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
 
+        jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CUSTOMER NAME", "STATUS", "LAUNDARY", "TRANSPORTATION"
+                "ORDER ID", "CUSTOMER NAME", "STATUS", "LAUNDARY", "TRANSPORTATION"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -67,17 +78,29 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jButton1.setText("DELETE");
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("SELECT A LAUNDARY ORG");
 
-        laundaryOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a laundary org" }));
+        laundaryOrg.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        laundaryOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laundaryOrgActionPerformed(evt);
+            }
+        });
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("SELECT A TRANSPORTATION ORG");
 
-        transportationOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a transportationOrg" }));
-
-        jButton2.setText("ASSIGN TASK");
+        assignTask.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        assignTask.setText("ASSIGN TASK");
+        assignTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignTaskActionPerformed(evt);
+            }
+        });
 
         backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backButton.setText("BACK");
@@ -87,12 +110,8 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("VIEW OTHER SERVICES");
-
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel3.setText("VIEW ORDER DETAILS FOR HOTEL");
-
-        jButton4.setText("MANAGE ROOMS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,17 +120,13 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(laundaryField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(transportationField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(123, 123, 123))
+                    .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,15 +143,8 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(164, 164, 164))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(312, 312, 312)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jButton3)
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(327, 327, 327)
+                .addComponent(assignTask, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -150,72 +158,147 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(laundaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(transportationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(191, 191, 191)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addGap(64, 64, 64))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addGap(72, 72, 72))))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(assignTask, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(98, 98, 98))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-      callOnCreateMethod.run();
+        callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void assignTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignTaskActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Booking booking = (Booking) model.getValueAt(selectedRowIndex, 0);
+
+        HotelService hotelService = null;
+        for (Service service : booking.getServices()) {
+            if (hotel.getName().equals(service.getEnterprise().getName())) {
+                hotelService = (HotelService) service;
+                break;
+            }
+        }
+
+        if (hotelService == null) {
+            JOptionPane.showMessageDialog(this, "Cannot find hotel");
+            return;
+        }
+
+        LaundaryOrg laundary = (LaundaryOrg) laundaryOrg.getSelectedItem();
+        TransportationOrg transportation = (TransportationOrg) transportationOrg.getSelectedItem();
+
+        List<Organization> organizations = new ArrayList<>();
+        for (HotelService.HotelServiceType type : hotelService.getHotelServices()) {
+            switch (type) {
+                case LAUNDARY:
+                    if (laundary == null) {
+                        JOptionPane.showMessageDialog(this, "Please select laundary organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(laundary);
+                    }
+                    break;
+                case TRANSPORTATION:
+                    if (transportation == null) {
+                        JOptionPane.showMessageDialog(this, "Please select transportation organization to be assinged for the booking.");
+                        return;
+                    } else {
+                        organizations.add(transportation);
+                    }
+                    break;
+            }
+        }
+
+        for (Organization organization : organizations) {
+            hotelService.addOrganization(organization);
+        }
+        hotelService.setStatus(Service.Status.CONFIRMED);
+        JOptionPane.showMessageDialog(this, "Assigned all hotel services to the booking: " + booking.getId());
+        return;
+
+
+    }//GEN-LAST:event_assignTaskActionPerformed
+
+    private void laundaryOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laundaryOrgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_laundaryOrgActionPerformed
+
     private void populateTable() {
-      
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        Object row[] = new Object[10];
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
+        for (Customer customer : customerDirec.getListOfCustomer()) {
+            for (Booking booking : customer.getBookingList()) {      //get booking details each customer
+                for (Service service : booking.getServices()) {       //get services under booking
+                    System.out.println("Enterprise : " + service.getEnterprise());
+                    if (hotel.getName().equals(service.getEnterprise().getName())) {
+                        HotelService hotelService = (HotelService) service;
+
+                        row[0] = booking;
+                        row[1] = customer;
+                        row[2] = hotelService.getStatus();
+                        row[3] = "NO";
+                        row[4] = "NO";
+
+                        for (HotelService.HotelServiceType type : hotelService.getHotelServices()) {
+                            switch (type) {
+                                case LAUNDARY:
+                                    row[3] = "YES";
+                                    break;
+                                case TRANSPORTATION:
+                                    row[4] = "YES";
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton assignTask;
     private javax.swing.JButton backButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField laundaryField;
-    private javax.swing.JComboBox<String> laundaryOrg;
-    private javax.swing.JTextField transportationField;
-    private javax.swing.JComboBox<String> transportationOrg;
+    private javax.swing.JComboBox<LaundaryOrg> laundaryOrg;
+    private javax.swing.JComboBox<TransportationOrg> transportationOrg;
     // End of variables declaration//GEN-END:variables
 
     private void populateComboBox() {
-         List<Hotel> list1 = network.getEnterpriseDirectory().getListOfHotel();
-        for (int i = 0; i < list1.size(); i++) {
-                List<LaundaryOrg> list2 = list1.get(i).getLaundaryOrg();
-                for (int j = 0; j < list2.size(); j++) {
-                    laundaryOrg.addItem(list2.get(j).getName());
-                } 
-                List<TransportationOrg> list3 = list1.get(i).getTransportationOrgList();
-                for (int j = 0; j < list3.size(); j++) {
-                    transportationOrg.addItem(list3.get(j).getName());
-                }
+        laundaryOrg.addItem(null);
+        transportationOrg.addItem(null);
+
+        for (LaundaryOrg laundary : hotel.getLaundaryOrg()) {
+            if (laundary != null) {
+                laundaryOrg.addItem(laundary);
             }
+        }
+        for (TransportationOrg transportation : hotel.getTransportationOrgList()) {
+            if (transportation != null) {
+                transportationOrg.addItem(transportation);
+            }
+        }
     }
 }

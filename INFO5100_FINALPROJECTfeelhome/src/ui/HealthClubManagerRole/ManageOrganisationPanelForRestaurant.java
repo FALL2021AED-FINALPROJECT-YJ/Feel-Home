@@ -3,9 +3,14 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.BusinessEvent;
+import model.CateringService;
+import model.DecorServices;
+import model.DeliverymanOrg;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Network;
+import model.PhotographyService;
 import model.Restaurant;
 import model.SystemAdmin;
 
@@ -15,16 +20,20 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String type;
     private String user;
+    private Network network;
 
-    public ManageOrganisationPanelForRestaurant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ManageOrganisationPanelForRestaurant(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
-        for (Network network : systemAdmin.getListOfNetwork()) {
-            cityCombo.addItem(network.getName());
-        }
+        this.network = network;
+
+        cityNameTextField.setText(network.getName());
+        cityNameTextField.setEditable(false);
+
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,16 +43,16 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        orgType = new javax.swing.JComboBox<>();
+        orgCombo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         contactField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        cityCombo = new javax.swing.JComboBox<>();
         backButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        cityNameTextField = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,8 +75,8 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("ORGANIZATION TYPE");
 
-        orgType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        orgType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation", "Deliveryman " }));
+        orgCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation", "Deliveryman " }));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("NAME");
@@ -81,9 +90,6 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel4.setText("CITY");
-
-        cityCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a city" }));
 
         backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backButton.setText("BACK");
@@ -120,17 +126,16 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addComponent(orgType, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(contactField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cityCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(contactField, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                    .addComponent(cityNameTextField)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -157,7 +162,7 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(orgType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -166,13 +171,10 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(contactField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(addButton)
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -185,13 +187,12 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
         Object row[] = new Object[20];
         String name = nameField.getText();
         String contact = contactField.getText();
-        String networkName = cityCombo.getSelectedItem().toString();   //find the network from city-combobox
+        String networkName = network.getName();   //find the network from city-combobox
         Network network = systemAdmin.findNetwork(networkName);
-        String orgType1 = orgType.getSelectedItem().toString();      // org-type (delivery org)    
+        String orgType1 = orgCombo.getSelectedItem().toString();      // org-type (delivery org)    
         EnterpriseDirectory enterpriseDirc = network.getEnterpriseDirectory();
         List<Restaurant> res = enterpriseDirc.getListOfRestaurants();
         for (int i = 0; i < res.size(); i++) {
@@ -214,7 +215,7 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JComboBox<String> cityCombo;
+    private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -224,6 +225,29 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> orgType;
+    private javax.swing.JComboBox<String> orgCombo;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        String orgType1 = orgCombo.getSelectedItem().toString();
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
+            if (restaurant.findManager(user) != null) {
+                if (restaurant.getListOfDeliveryManOrg() != null) {
+                    row[0] = "Deliveryman";
+                    for (DeliverymanOrg delivery : restaurant.getListOfDeliveryManOrg()) {
+                        row[0] = "Deliveryman";
+                        row[1] = delivery.getName();
+                        row[2] = delivery.getContact();
+                        row[3] = network1.getName();
+                        model.addRow(row);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,16 +1,21 @@
 package model.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import model.Enterprise;
 import model.Organization;
+import ui.main.DateUtils;
 
 public abstract class Service {
-    
+
     protected static final String TAB = "      ";
-    
+
     static enum ServiceType {
         BUSINESS_EVENT,
         RESTURANT,
-        HEALTH_CLUB
+        HEALTH_CLUB,
+        HOTEL,
     }
 
     public static enum Status {
@@ -20,14 +25,33 @@ public abstract class Service {
     private ServiceType serviceType;
     private int cost;
     private Date date;
-    private Organization organization;
+    protected Enterprise enterprise;
     private Status status;
     protected int totalCost;
+    private List<Organization> listOfOrg;
 
-    Service(ServiceType serviceType, Date date) {
+    Service(Enterprise enterprise, ServiceType serviceType, Date date) {
+        this.enterprise = enterprise;
         this.serviceType = serviceType;
-        this.date = date;
+        this.date = DateUtils.formatDate(date);
         this.status = Status.PENDING;
+        this.listOfOrg = new ArrayList<>();
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public void setEnterprise(Enterprise enterprise) {
+        this.enterprise = enterprise;
     }
 
     public int getTotalCost() {
@@ -46,14 +70,6 @@ public abstract class Service {
         this.serviceType = serviceType;
     }
 
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -68,6 +84,18 @@ public abstract class Service {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void addOrganization(Organization org) {
+        listOfOrg.add(org);
+    }
+
+    public List<Organization> getListOfOrg() {
+        return listOfOrg;
+    }
+
+    public void setListOfOrg(List<Organization> listOfOrg) {
+        this.listOfOrg = listOfOrg;
     }
 
     public abstract String toString();
