@@ -31,17 +31,20 @@ public class MedicalMainJPanel extends javax.swing.JPanel {
         lblsysadmin = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 153, 153));
+        setBackground(new java.awt.Color(255, 204, 204));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("MANAGE HOSPITALS");
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("MEDICAL SERVICE MANAGER");
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("CONFIRM BOOKINGS & ASSIGN ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -57,31 +60,33 @@ public class MedicalMainJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addComponent(jButton2)
-                .addGap(354, 1162, Short.MAX_VALUE))
+                .addGap(354, 883, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(158, 158, 158))
+                        .addComponent(lblsysadmin)
+                        .addGap(234, 234, 234))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(108, 108, 108))
-                    .addComponent(lblsysadmin, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(375, 375, 375))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(50, 50, 50))
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(374, 374, 374))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButton2)
-                .addGap(118, 118, 118)
+                .addGap(42, 42, 42)
                 .addComponent(lblsysadmin)
-                .addGap(56, 56, 56)
+                .addGap(82, 82, 82)
                 .addComponent(jButton1)
                 .addGap(43, 43, 43)
                 .addComponent(jButton3)
-                .addContainerGap(426, Short.MAX_VALUE))
+                .addContainerGap(467, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
