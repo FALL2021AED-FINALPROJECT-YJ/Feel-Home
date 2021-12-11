@@ -80,6 +80,11 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
         denyBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         denyBtn.setText("DENY ORDERS");
+        denyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                denyBtnActionPerformed(evt);
+            }
+        });
 
         backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backBtn.setText("BACK");
@@ -167,7 +172,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         }
         List<Organization> organizations = new ArrayList<>();
         DeliverymanOrg delivery = (DeliverymanOrg) deliveryOrg.getSelectedItem();
-        
+
         if (delivery == null) {
             JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged  ");
         } else {
@@ -176,6 +181,26 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_acceptBtnActionPerformed
+
+    private void denyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String orderId = (String) model.getValueAt(selectedRowIndex, 0);
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to accept or deny order");
+            return;
+        }
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
+        for (Customer customer : customerDirec.getListOfCustomer()) {
+            for (Booking booking : customer.getBookingList()) {
+                if (booking.getId().equals(orderId)) {
+                    booking.setId("");
+                    JOptionPane.showMessageDialog(this, "Order has been cancelled  ");
+                    return;
+                }
+            }
+        }
+    }//GEN-LAST:event_denyBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

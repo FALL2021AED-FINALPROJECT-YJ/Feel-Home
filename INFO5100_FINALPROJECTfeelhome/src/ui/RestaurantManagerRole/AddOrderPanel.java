@@ -3,8 +3,10 @@ package ui.RestaurantManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Customer;
 import model.EnterpriseDirectory;
 import model.Manager;
+import model.MenuItem;
 import model.Network;
 import model.Restaurant;
 import model.SystemAdmin;
@@ -15,13 +17,34 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private Runnable callOnCreateMethod;
     private String type;
     private String user;
-
-    public AddOrderPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    private Network network;
+    public AddOrderPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type,Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
+        this.network = network;
+
+        populateMenu();
+    }
+
+    public boolean validateMenu() {
+        if (menuField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : menu should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean priceField() {
+        if (priceField == null) {
+            JOptionPane.showMessageDialog(this, "price field should not b left blank");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -143,11 +166,10 @@ public class AddOrderPanel extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
 
         String item = menuField.getText();
         int price = Integer.parseInt(priceField.getText().trim());
-        
+
         List<Network> network = systemAdmin.getListOfNetwork(); //get all network
         for (int i = 0; i < network.size(); i++) {
             EnterpriseDirectory enterpriseDirec = network.get(i).getEnterpriseDirectory();
@@ -157,7 +179,7 @@ public class AddOrderPanel extends javax.swing.JPanel {
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(i).getUsername().equals(user)) {            //if manager is found in that restaurant then add item to that res...
                         res.get(i).addItem(item, price);
-
+                         populateMenu();  
                         JOptionPane.showMessageDialog(this, " Item added successfully");
                         return;
                     }
@@ -178,4 +200,22 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private javax.swing.JTextField menuField;
     private javax.swing.JTextField priceField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateMenu() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        Network network1 = systemAdmin.findNetwork(network.getName());
+        EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
+            if (restaurant.findManager(user) != null) {
+                for (MenuItem item : restaurant.getListOfItem()) {
+                    row[0] = item.getDetails();
+                    row[1] = item.getPrice();
+                    model.addColumn(row);
+                }
+            }
+        }
+
+    }
 }

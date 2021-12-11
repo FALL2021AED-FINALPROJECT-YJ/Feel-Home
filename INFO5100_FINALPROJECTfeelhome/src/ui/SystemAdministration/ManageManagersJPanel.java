@@ -26,6 +26,26 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         }
         populateTable();
     }
+    
+     public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+        public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
+    }
+  
+
+ 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -33,7 +53,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
 
         backButton = new javax.swing.JButton();
         lblsysadmin = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
@@ -62,11 +82,11 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblsysadmin.setText("MANAGE ENTERPRISE MANAGERS");
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -164,7 +184,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                             .addGap(280, 280, 280)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton4)
+                                    .addComponent(deleteBtn)
                                     .addGap(22, 22, 22))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +225,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,9 +259,51 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String networkName = (String) model.getValueAt(selectedRowIndex, 0);
+        String enterpriseType = (String) model.getValueAt(selectedRowIndex, 1);
+        String enterpriseName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        Network network = systemAdmin.findNetwork(networkName);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseType.equals("Business Event")) {
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+                for (Manager man : event.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        event.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                        populateTable();
+                    }
+                }
+            }
+        } else if (enterpriseType.equals("Restaurant")) {
+            for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
+                for (Manager man : res.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        res.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                               populateTable();
+                    }
+                }
+            }
+        } else if (enterpriseType.equals("Hotel")) {
+            for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+                for (Manager man : hotel.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        hotel.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                               populateTable();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
 
@@ -303,6 +365,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
                 hotel1.addManager(ManagerName, userName, password);
                 systemAdmin.addUser(userName, "Hotel");
+                System.out.println("Hotel added in city" + networkName);
                 JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
                 row[1] = "Hotel";
@@ -316,6 +379,9 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, " This username already exists ");
         }
+        nameField.setText("");
+        usernameField.setText("");
+        passwordField.setText("");
 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -328,7 +394,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkTypeActionPerformed
 
     private void enterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeActionPerformed
-        enterpriseName.removeAllItems();       
+        enterpriseName.removeAllItems();
         String networkName = networkType.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkName);
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
@@ -345,10 +411,12 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
                 enterpriseName.addItem(res.getName());
             }
-        } else {
+        } else if (enterpriseType1.equals("Hotel")) {
             for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
                 enterpriseName.addItem(hotel.getName());
             }
+        } else {
+            return;
         }
 
     }//GEN-LAST:event_enterpriseTypeActionPerformed
@@ -357,10 +425,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JComboBox<String> enterpriseName;
     private javax.swing.JComboBox<String> enterpriseType;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -396,10 +464,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                     model.addRow(row);
                 }
             }
-                for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {   //poplulate restauarant enterprise
+            for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {   //poplulate restauarant enterprise
                 row[1] = "Restaurant";
                 row[2] = res.getName();
-                for (Manager manager :res.getListOfManager()) {
+                for (Manager manager : res.getListOfManager()) {
                     row[0] = network.getName();
                     row[1] = "Restaurant";
                     row[2] = res.getName();
@@ -409,10 +477,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                     model.addRow(row);
                 }
             }
-                for (Hotel hotel : enterpriseDirec.getListOfHotel()) {   //poplulate hotel enterprise
+            for (Hotel hotel : enterpriseDirec.getListOfHotel()) {   //poplulate hotel enterprise
                 row[1] = "Hotel";
                 row[2] = hotel.getName();
-                for (Manager manager :hotel.getListOfManager()) {
+                for (Manager manager : hotel.getListOfManager()) {
                     row[0] = network.getName();
                     row[1] = "Hotel";
                     row[2] = hotel.getName();
@@ -422,10 +490,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                     model.addRow(row);
                 }
             }
-                 for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {   //poplulate hotel enterprise
+            for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {   //poplulate hotel enterprise
                 row[1] = "Health Club";
                 row[2] = health.getName();
-                for (Manager manager :health.getListOfManager()) {
+                for (Manager manager : health.getListOfManager()) {
                     row[0] = network.getName();
                     row[1] = "Health Club";
                     row[2] = health.getName();

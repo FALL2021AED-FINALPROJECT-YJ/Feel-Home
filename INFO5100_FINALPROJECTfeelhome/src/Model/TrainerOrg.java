@@ -16,5 +16,8 @@ public class TrainerOrg extends Organization {
         Trainer trainer = new Trainer(name, city, user, password1);
         listOfTrainer.add(trainer);
     }
-
+      public void deleteManager(Manager man) {
+     listOfManager.remove(man);
+    }
+  
 }

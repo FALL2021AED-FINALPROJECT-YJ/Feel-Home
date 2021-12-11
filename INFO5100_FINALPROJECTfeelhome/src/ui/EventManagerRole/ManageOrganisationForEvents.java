@@ -31,8 +31,24 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         cityNameTextField.setEditable(false);
 
         populateTable();
-
     }
+      public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+       public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
+    }
+     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -50,7 +66,7 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         contactField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         cityNameTextField = new javax.swing.JTextField();
 
@@ -100,7 +116,12 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("DELETE");
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         updateBtn.setText("UPDATE");
 
@@ -138,16 +159,16 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                                     .addComponent(contactField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                                     .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(278, 278, 278)
+                        .addGap(282, 282, 282)
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
+                        .addGap(72, 72, 72)
                         .addComponent(updateBtn)))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(deleteBtn)
                         .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,14 +181,14 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                 .addComponent(backButton)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addGap(36, 36, 36)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,9 +204,9 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                     .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addBtn)
-                    .addComponent(updateBtn))
-                .addContainerGap(71, Short.MAX_VALUE))
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -242,13 +263,58 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cityNameTextFieldActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String OrgType = (String) model.getValueAt(selectedRowIndex, 0);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 1);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+            if (event.findManager(user) != null) {
+                if (OrgType.equals("Catering") && event.getListOfCatering() != null) {
+                    for (CateringService catering : event.getListOfCatering()) {
+                        if (catering.getName().equals(OrgName)) {
+                            event.deleteCatering(catering);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else if (OrgType.equals("Photography") && event.getListOfPhotographyServices() != null) {
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        if (photo.getName().equals(OrgName)) {
+                            event.deletePhotography(photo);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else if (OrgType.equals("Decor") && event.getListOfDecors() != null) {
+                    for (DecorServices decor : event.getListOfDecors()) {
+                        if (decor.getName().equals(OrgName)) {
+                            event.deleteDecor(decor);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else {
+                    return;
+                }
+
+            }
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton backButton;
     private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -268,6 +334,9 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        if( enterpriseDirec == null) {
+            return;
+        }
         for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
             if (event.findManager(user) != null) {
                 if (event.getListOfCatering() != null) {

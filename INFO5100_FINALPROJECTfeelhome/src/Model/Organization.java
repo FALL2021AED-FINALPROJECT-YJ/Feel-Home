@@ -55,6 +55,7 @@ public abstract class Organization {
         return manager;
     }
     
+    
     public String toString() {
         return name;
     }

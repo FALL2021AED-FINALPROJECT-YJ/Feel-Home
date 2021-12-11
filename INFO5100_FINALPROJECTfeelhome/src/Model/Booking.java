@@ -16,12 +16,16 @@ public class Booking {
     private String status;
     private int cost;
     private Network network;
-    
+
     private List<Service> services;
-    
+
     private Hotel hotel;
     private RoomList roomlist;
     private String id;
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Booking(Hotel hotel, Network network) {
         this.services = new ArrayList<>();
@@ -69,7 +73,7 @@ public class Booking {
 
     public void addService(Service service) {
         this.services.add(service);
-        System.out.println("service added in service class is " +service.toString());
+        System.out.println("service added in service class is " + service.toString());
     }
 
     public Date getCheckin() {
@@ -138,4 +142,5 @@ public class Booking {
     public String toString() {
         return id;
     }
+
 }

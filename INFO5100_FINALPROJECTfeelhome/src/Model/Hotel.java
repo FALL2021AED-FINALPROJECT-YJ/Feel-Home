@@ -15,7 +15,6 @@ public class Hotel extends Enterprise {
     public Hotel(String name, String contact) {
         super(name, contact);
         listOfManager = new ArrayList<>();
-     
         roomListDirec = new RoomList();
         transportationOrgList = new ArrayList<>();
         laundaryOrg = new ArrayList<>();
@@ -104,6 +103,18 @@ public class Hotel extends Enterprise {
 
     public String toString() {
         return "Hotel:" + name + ", Rooms:" + roomListDirec;
+    }
+
+    public void deleteManager(Manager man) {
+       listOfManager.remove(man);
+    }
+
+    public void deleteLaundary(LaundaryOrg laundary) {
+       laundaryOrg.remove(laundary);
+    }
+
+    public void deleteTransportation(TransportationOrg transport) {
+             transportationOrgList.remove(transport);
     }
 
 }

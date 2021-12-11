@@ -26,4 +26,8 @@ public class PhysicianOrg extends Organization {
         System.out.println("Physisicna manager added is " + listOfPhysician.size());
     }
 
+    public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
 }

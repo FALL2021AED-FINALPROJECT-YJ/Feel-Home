@@ -35,6 +35,24 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         populateTable();
     }
 
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -49,7 +67,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cityCombo = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -80,11 +98,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         cityCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -168,7 +186,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                 .addGap(99, 99, 99))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(deleteBtn)
                 .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +216,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -225,9 +243,62 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String orgType = (String) model.getValueAt(selectedRowIndex, 1);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+            if (event.findManager(user) != null) {
+                if (orgType.equals("Catering") && event.getListOfCatering() != null) {
+                    for (CateringService catering : event.getListOfCatering()) {
+                        if (catering.getName().equals(OrgName)) {
+                            for (Manager man : catering.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    catering.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Decor") && event.getListOfDecors() != null) {
+                    for (DecorServices decor : event.getListOfDecors()) {
+                        if (decor.getName().equals(OrgName)) {
+                            for (Manager man : decor.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    decor.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        if (photo.getName().equals(OrgName)) {
+                            for (Manager man : photo.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    photo.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -237,10 +308,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
         if (systemAdmin.userExistsInSystem(username) == false) {
-            Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
-            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-            List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).findManager(user) != null) {    //if enterpirse manager found 
                     if (orgType.equals("Catering")) {
@@ -299,11 +371,15 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, " username already exists");
         }
+
 
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
+        orgName.removeAllItems();
         String orgType = orgCombo.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
@@ -341,7 +417,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     private javax.swing.JButton addBtn;
     private javax.swing.JButton backButton;
     private javax.swing.JComboBox<String> cityCombo;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -366,9 +442,12 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseDirec == null) {
+            return;
+        }
         for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
             if (event.findManager(user) != null) {
-                if (orgType1.equals("Catering")) {
+                if (event.getListOfCatering() != null) {
                     row[0] = "Catering";
                     for (CateringService catering : event.getListOfCatering()) {
                         for (Manager manager : catering.getListOfManager()) {       //add manager 
@@ -382,7 +461,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (orgType1.equals("Decor")) {
+                if (event.getListOfDecors() != null) {
                     row[0] = "Decor";
                     for (DecorServices decor : event.getListOfDecors()) {
                         for (Manager manager : decor.getListOfManager()) {       //add manager 
@@ -396,7 +475,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (orgType1.equals("Photography")) {
+                if (event.getListOfPhotographyServices() != null) {
                     row[0] = "Photography";
                     for (PhotographyService photo : event.getListOfPhotographyServices()) {
                         for (Manager manager : photo.getListOfManager()) {       //add manager 

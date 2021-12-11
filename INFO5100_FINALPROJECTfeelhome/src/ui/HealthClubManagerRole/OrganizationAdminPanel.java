@@ -37,6 +37,24 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         populateTable();
     }
 
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,7 +70,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         orgName = new javax.swing.JComboBox<>();
@@ -108,8 +126,13 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jButton2.setText("DELETE");
+        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backBtn.setText("BACK");
@@ -172,19 +195,18 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(backBtn)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backBtn))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 89, Short.MAX_VALUE)
+                .addGap(0, 459, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(426, 426, 426))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(deleteBtn)
                         .addGap(82, 82, 82))))
         );
         layout.setVerticalGroup(
@@ -195,7 +217,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                 .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(deleteBtn)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -236,6 +258,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
+
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).findManager(user) != null) {    //if health club manager found in network
                     if (orgType.equals("Physician")) {
@@ -292,8 +315,9 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, " username already exits");
         }
-
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
@@ -329,11 +353,68 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_networkTypeActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String orgType = (String) model.getValueAt(selectedRowIndex, 1);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
+            if (club.findManager(user) != null) {
+                if (orgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
+                    for (TherapistOrg therapist : club.getListOfTherapistOrg()) {
+                        if (therapist.getName().equals(OrgName)) {
+                            for (Manager man : therapist.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    therapist.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
+                    for (PhysicianOrg physician : club.getListOfPhysicianOrg()) {
+                        if (physician.getName().equals(OrgName)) {
+                            for (Manager man : physician.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    physician.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (TrainerOrg trainer : club.getListOfTrainerOrg()) {
+                        if (trainer.getName().equals(OrgName)) {
+                            for (Manager man : trainer.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    trainer.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backBtn;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -357,9 +438,12 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseDirec == null) {
+            return;
+        }
         for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {
             if (health.findManager(user) != null) {
-                if (orgType1.equals("Physician")) {
+                if (health.getListOfPhysicianOrg() != null) {
                     row[0] = "Physician";
                     for (PhysicianOrg physician : health.getListOfPhysicianOrg()) {
                         for (Manager manager : physician.getListOfManager()) {       //add manager 
@@ -373,7 +457,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (orgType1.equals("Therapist")) {
+                if (health.getListOfTherapistOrg() != null) {
                     row[0] = "Therapist";
                     for (TherapistOrg therapist : health.getListOfTherapistOrg()) {
                         for (Manager manager : therapist.getListOfManager()) {       //add manager 
@@ -387,7 +471,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (orgType1.equals("Trainer")) {
+                if (health.getListOfTrainerOrg() != null) {
                     row[0] = "Trainer";
                     for (TrainerOrg trainer : health.getListOfTrainerOrg()) {
                         for (Manager manager : trainer.getListOfManager()) {       //add manager 

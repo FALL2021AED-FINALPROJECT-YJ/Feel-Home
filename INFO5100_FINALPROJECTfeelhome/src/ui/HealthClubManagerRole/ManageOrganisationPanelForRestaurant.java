@@ -35,6 +35,23 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
 
         populateTable();
     }
+     public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+       public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
+    }
+     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -53,6 +70,7 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         addButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         cityNameTextField = new javax.swing.JTextField();
+        deleteBtn = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,6 +128,14 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel5.setText("MANAGE RESTAURANT ORGANISATION");
 
+        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,6 +172,10 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(108, 108, 108))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteBtn)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +189,9 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                         .addComponent(jLabel5)))
                 .addGap(50, 50, 50)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -176,8 +208,8 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
-                .addComponent(addButton)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,12 +243,38 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String OrgType = (String) model.getValueAt(selectedRowIndex, 0);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 1);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
+            if (res.findManager(user) != null) {
+                if (res.getListOfDeliveryManOrg() != null) {
+                    for (DeliverymanOrg del : res.getListOfDeliveryManOrg()) {
+                        if (del.getName().equals(OrgName)) {
+                            del.deleteDeliveryman(del);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
     private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -30,6 +30,24 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     }
 
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+       public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
+    }
+   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -238,7 +256,54 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String networkName = (String) model.getValueAt(selectedRowIndex, 0);
+        String enterpriseType = (String) model.getValueAt(selectedRowIndex, 2);
+        String enterpriseName = (String) model.getValueAt(selectedRowIndex, 1);
+        Network network = systemAdmin.findNetwork(networkName);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseType.equals("Business Event") && enterpriseDirec.getListOfEvents() != null) {
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+                if (event.getName().equals(enterpriseName)) {
+                    enterpriseDirec.deleteEnterpriseEvent(event);
+                    JOptionPane.showMessageDialog(this, "Enterprise deleted successfully");
+                    populateTable();
+                }
+            }
+        } else if (enterpriseType.equals("Hotel") && enterpriseDirec.getListOfHotel() != null) {
+            for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+                if (hotel.getName().equals(enterpriseName)) {
+                    enterpriseDirec.deleteEnterpriseHotel(hotel);
+                    JOptionPane.showMessageDialog(this, "Enterprise deleted successfully");
+                    populateTable();
+                }
+            }
+        } else if (enterpriseType.equals("Restaurant") && enterpriseDirec.getListOfRestaurants() != null) {
+            for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
+                if (res.getName().equals(enterpriseName)) {
+                    enterpriseDirec.deleteEnterpriseRestaurant(res);
+                    JOptionPane.showMessageDialog(this, "Enterprise deleted successfully");
+                    populateTable();
+                }
+            }
+        } else if (enterpriseType.equals("Transportation") && enterpriseDirec.getListOfHealthClub() != null) {
+            for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
+                if (club.getName().equals(enterpriseName)) {
+                    enterpriseDirec.deleteEnterpriseHealthClub(club);
+                    JOptionPane.showMessageDialog(this, "Enterprise deleted successfully");
+                    populateTable();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "not found");
+        }
+
+
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void enterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeActionPerformed
@@ -256,22 +321,22 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         String enterpriseType1 = enterpriseType.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkName);  //finiding network
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-        if (enterpriseType1.equals("Health Club")) {
+        if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
             enterpriseDirec.addHealthClub(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
 
             return;
-        } else if (enterpriseType1.equals("Restaurant")) {
+        } else if (enterpriseType1.equals("Restaurant") && enterpriseDirec != null) {
             enterpriseDirec.addRestaurant(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
 
             return;
-        } else if (enterpriseType1.equals("Business Event")) {
+        } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
             enterpriseDirec.addBusinessEvent(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
 
             return;
-        } else if (enterpriseType1.equals("Hotel")) {
+        } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
             enterpriseDirec.addHotel(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
             return;
@@ -316,6 +381,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         Object row[] = new Object[10];
         String networkItem = networkCombo.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkItem);
+
         List<BusinessEvent> eventList = network.getEnterpriseDirectory().getListOfEvents();
         if (eventList != null) {
             for (int i = 0; i < eventList.size(); i++) {

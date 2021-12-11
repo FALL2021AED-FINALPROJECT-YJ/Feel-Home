@@ -113,13 +113,24 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input: name should contain only alphabets");
+            return false;
+        }
+    }
+
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         String name = nameField.getText();
-        systemAdmin.addNetwork(name);
-        JOptionPane.showMessageDialog(this, "Network added successfully");
-        nameField.setText("");
-        populateTable();
+        if (validateName()) {
+            systemAdmin.addNetwork(name);
+            JOptionPane.showMessageDialog(this, "Network added successfully");
+            nameField.setText("");
+            populateTable();
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
 

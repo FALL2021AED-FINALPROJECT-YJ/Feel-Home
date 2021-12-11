@@ -94,7 +94,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
 
         jLabel4.setText("SELECT A PHOTOGRAPHY ORG");
 
-        assignTaskBtn.setText("ASSIGN TASK");
+        assignTaskBtn.setText("ASSIGN TAND CONFIRM TASK");
         assignTaskBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignTaskBtnActionPerformed(evt);
@@ -144,7 +144,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(320, 320, 320)
-                        .addComponent(assignTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(assignTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -325,7 +325,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
     private javax.swing.JTextField cateringField;
     private javax.swing.JComboBox<CateringService> cateringOrg;
     private javax.swing.JTextField decorField;
-    private javax.swing.JComboBox<DecorServices> decorOrg;
+    private javax.swing.JComboBox<model.DecorServices> decorOrg;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -334,6 +334,6 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField photographyField;
-    private javax.swing.JComboBox<PhotographyService> photographyOrg;
+    private javax.swing.JComboBox<model.PhotographyService> photographyOrg;
     // End of variables declaration//GEN-END:variables
 }

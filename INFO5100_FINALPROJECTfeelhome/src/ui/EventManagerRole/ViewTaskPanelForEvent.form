@@ -68,7 +68,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="320" max="-2" attributes="0"/>
-                      <Component id="assignTaskBtn" min="-2" pref="194" max="-2" attributes="0"/>
+                      <Component id="assignTaskBtn" min="-2" pref="241" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -221,7 +221,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="assignTaskBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ASSIGN TASK"/>
+        <Property name="text" type="java.lang.String" value="ASSIGN TAND CONFIRM TASK"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="assignTaskBtnActionPerformed"/>

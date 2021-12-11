@@ -37,4 +37,9 @@ public class DecorServices extends Organization {
             return name + "(" + description + ")";
         }
     }
+
+    public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
 }

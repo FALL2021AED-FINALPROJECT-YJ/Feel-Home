@@ -35,8 +35,24 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         cityNameTextField.setText(network.getName());
         cityNameTextField.setEditable(false);
         populateTable();
-
     }
+     public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+       public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
+    }
+     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -48,7 +64,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         nameField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         orgCombo = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -93,11 +109,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -142,7 +158,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(deleteBtn)
                 .addGap(118, 118, 118))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +205,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(deleteBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -214,9 +230,50 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String OrgType = (String) model.getValueAt(selectedRowIndex, 0);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 1);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
+            if (club.findManager(user) != null) {
+                if (OrgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
+                    for (PhysicianOrg physician : club.getListOfPhysicianOrg()) {
+                        if (physician.getName().equals(OrgName)) {
+                           club.deletePhysician(physician);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else if (OrgType.equals("Trainer") && club.getListOfTrainerOrg() != null) {
+                    for (TrainerOrg trainer :  club.getListOfTrainerOrg()) {
+                        if (trainer.getName().equals(OrgName)) {
+                           club.deleteTrainer(trainer);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else if (OrgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
+                    for (TherapistOrg therapist : club.getListOfTherapistOrg()) {
+                        if (therapist.getName().equals(OrgName)) {
+                           club.deleteTherapist(therapist);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else {
+                    return;
+                }
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+            }
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
@@ -282,8 +339,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JButton backButton;
     private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
