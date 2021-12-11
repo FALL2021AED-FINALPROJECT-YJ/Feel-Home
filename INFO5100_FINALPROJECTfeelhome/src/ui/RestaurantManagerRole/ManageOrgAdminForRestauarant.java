@@ -9,6 +9,8 @@ import model.DecorServices;
 import model.DeliverymanOrg;
 import model.EnterpriseDirectory;
 import model.HealthClub;
+import model.Hotel;
+import model.LaundaryOrg;
 import model.Manager;
 import model.Network;
 import model.PhotographyService;
@@ -17,6 +19,7 @@ import model.Restaurant;
 import model.SystemAdmin;
 import model.TherapistOrg;
 import model.TrainerOrg;
+import model.TransportationOrg;
 
 public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
 
@@ -35,6 +38,24 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         this.network = network;
         cityCombo.addItem(network.getName());
         populateTable();
+    }
+
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +79,7 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         addButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         orgCombo = new javax.swing.JComboBox<>();
+        deleteBtn = new javax.swing.JButton();
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -134,22 +156,18 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
             }
         });
 
+        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 91, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(342, 342, 342))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(187, 187, 187))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -177,6 +195,21 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                         .addGap(75, 75, 75)
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 91, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(187, 187, 187))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(374, 374, 374))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +220,9 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                 .addComponent(jLabel7)
                 .addGap(68, 68, 68)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -208,8 +243,8 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
                         .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(addButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -252,6 +287,8 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "username already exists");
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -274,11 +311,45 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_orgComboActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+
+        String orgType = (String) model.getValueAt(selectedRowIndex, 1);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
+            if (res.findManager(user) != null) {
+                if (res.getListOfDeliveryManOrg() != null) {
+                    for (DeliverymanOrg del : res.getListOfDeliveryManOrg()) {
+                        if (del.getName().equals(OrgName)) {
+                            for (Manager man : del.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    del.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backBtn;
     private javax.swing.JComboBox<String> cityCombo;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -302,9 +373,12 @@ public class ManageOrgAdminForRestauarant extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseDirec == null) {
+            return;
+        }
         for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
             if (restaurant.findManager(user) != null) {
-                if (orgType1.equals("Deliveryman")) {
+                if (restaurant.getListOfDeliveryManOrg() != null) {
                     row[0] = "Deliveryman";
                     for (DeliverymanOrg delivery : restaurant.getListOfDeliveryManOrg()) {
                         for (Manager manager : delivery.getListOfManager()) {       //add manager 

@@ -106,6 +106,19 @@ public class EnterpriseDirectory {
         return null;
     }
 
+    public void deleteEnterpriseEvent(BusinessEvent event) {
+        listOfEvents.remove(event);
+    }
 
+    public void deleteEnterpriseHealthClub(HealthClub health) {
+        listOfHealthClub.remove(health);
+    }
 
+    public void deleteEnterpriseRestaurant(Restaurant res) {
+        listOfRestaurants.remove(res);
+    }
+
+    public void deleteEnterpriseHotel(Hotel hotel) {
+        listOfHotel.remove(hotel);
+    }
 }

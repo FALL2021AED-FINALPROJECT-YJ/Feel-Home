@@ -69,4 +69,9 @@ public class CateringService extends Organization {
         listOfManager.add(manager);
         return manager;
     }
+
+    public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
 }

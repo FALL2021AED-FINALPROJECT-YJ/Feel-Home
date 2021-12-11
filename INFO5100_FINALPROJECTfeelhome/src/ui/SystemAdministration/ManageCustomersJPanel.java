@@ -1,4 +1,3 @@
-
 package ui.SystemAdministration;
 
 import javax.swing.JOptionPane;
@@ -17,6 +16,51 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         populateTable();
+    }
+
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
+    }
+
+    public boolean validateCity() {
+        if (cityField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : city should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean validateAddress() {
+        if (addressField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : address should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -223,7 +267,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         customer.setUserName(username);
         customer.setPassword(password);
         JOptionPane.showMessageDialog(this, "Customer added successfully");
-        systemAdmin.addUser(username,"Customer"); //add customer to map
+        systemAdmin.addUser(username, "Customer"); //add customer to map
 
         nameField.setText("");
         contactField.setText("");
@@ -243,7 +287,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
             row[7] = customer1.getPassword();
             model.addRow(row);
         }
-      
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

@@ -10,6 +10,7 @@ import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
+import model.LaundaryService;
 import model.Network;
 import model.PhotographyService;
 import model.SystemAdmin;
@@ -23,7 +24,7 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
     private String user;
     private Network network;
 
-    public ManageOrganisationForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network netwok) {
+    public ManageOrganisationForHotel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
@@ -35,6 +36,24 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
         cityNameTextField.setEditable(false);
 
         populateTable();
+    }
+
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean validateContactNum() {
+        if (contactField.getText().matches("[0-9]{10}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -63,11 +82,11 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "NETWORK NAME", "ENTERPRISE", "EMPLOYEE", "EMPLOYEE ID", "USERNAME", "PASSWORD"
+                "ORGANIZATION TYPE", "NAME", "CONTACT", "CITY"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,6 +145,11 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
 
         deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -183,8 +207,8 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
                         .addGap(55, 55, 55)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteBtn)
-                        .addGap(58, 58, 58)))
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -199,9 +223,9 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
                     .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addBtn)
-                    .addComponent(updateBtn))
-                .addContainerGap(114, Short.MAX_VALUE))
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -251,6 +275,44 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String OrgType = (String) model.getValueAt(selectedRowIndex, 0);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 1);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+            if (hotel.findManager(user) != null) {
+                if (OrgType.equals("Laundary") && hotel.getLaundaryOrg() != null) {
+                    for (LaundaryOrg laundary : hotel.getLaundaryOrg()) {
+                        if (laundary.getName().equals(OrgName)) {
+                            hotel.deleteLaundary(laundary);
+
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else if (hotel.getTransportationOrgList() != null) {
+                    for (TransportationOrg transport : hotel.getTransportationOrgList()) {
+                        if (transport.getName().equals(OrgName)) {
+                            hotel.deleteTransportation(transport);
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                        }
+                    }
+                } else {
+                    return;
+                }
+
+            }
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -277,6 +339,9 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        if (enterpriseDirec != null) {
+            return;
+        }
         for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
             if (hotel.findManager(user) != null) {
                 if (hotel.getLaundaryOrg() != null) {

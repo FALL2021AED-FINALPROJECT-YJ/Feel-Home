@@ -26,4 +26,8 @@ public class LaundaryOrg extends Organization {
         System.out.println("Deliveryman manager added is " + listOfLaundaryMan.size());
     }
 
+    public void deleteManager(Manager man) {
+       listOfManager.remove(man);
+    }
+
 }

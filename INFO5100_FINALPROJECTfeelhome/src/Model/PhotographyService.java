@@ -2,6 +2,7 @@ package model;
 
 public class PhotographyService extends Organization {
 
+   
     public static enum PhotographyType {
         STANDARD(50, "Standard", "Includes 1 candid photograher"),
         GOLD(100, "Gold", "Includes 1 candid photograher and 1 videographer"),
@@ -40,4 +41,8 @@ public class PhotographyService extends Organization {
         System.out.println("size of manager in health club is " + listOfManager.size() + " name is " + manager.getUsername());
         return manager;
     }
+     public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
 }

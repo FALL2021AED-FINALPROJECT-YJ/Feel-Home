@@ -20,7 +20,7 @@ public class BusinessEvent extends Enterprise {
         listOfDecors = new ArrayList<>();
 
     }
-  
+
     public Date getDate() {
         return date;
     }
@@ -28,7 +28,6 @@ public class BusinessEvent extends Enterprise {
     public void setDate(Date date) {
         this.date = date;
     }
-    
 
     public List<Manager> getListOfManager() {
         return listOfManager;
@@ -95,5 +94,21 @@ public class BusinessEvent extends Enterprise {
         DecorServices decor = new DecorServices(name, contact, city);
         listOfDecors.add(decor);
     }
-    
+
+    public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
+    public void deleteCatering(CateringService catering) {
+        listOfCatering.remove(catering);
+    }
+
+    public void deletePhotography(PhotographyService photo) {
+        listOfPhotographyServices.remove(photo);
+    }
+
+    public void deleteDecor(DecorServices decor) {
+        listOfDecors.remove(decor);
+    }
+
 }

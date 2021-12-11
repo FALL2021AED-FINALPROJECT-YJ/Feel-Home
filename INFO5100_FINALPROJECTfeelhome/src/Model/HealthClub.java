@@ -84,4 +84,20 @@ public class HealthClub extends Enterprise {
     public String toString() {
         return name;
     }
+
+    public void deleteManager(Manager man) {
+        listOfManager.remove(man);
+    }
+
+    public void deletePhysician(PhysicianOrg physician) {
+      listOfPhysicianOrg.remove(physician);
+    }
+
+    public void deleteTrainer(TrainerOrg trainer) {
+        listOfTrainerOrg.remove(trainer);
+    }
+
+    public void deleteTherapist(TherapistOrg therapist) {
+           listOfTherapistOrg.remove(therapist);
+    }
 }

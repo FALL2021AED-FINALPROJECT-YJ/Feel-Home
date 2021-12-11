@@ -506,7 +506,7 @@ public class Main1JFrame extends javax.swing.JFrame {
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
         Network network = findUserNetworkForRestaurant();
-        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type,network
+        ManageOrganisationPanelForRestaurant org = new ManageOrganisationPanelForRestaurant(systemAdmin, this::restaurantManagerPanel, user, type, network
         );
         jSplitPane.setRightComponent(org);
     }
@@ -514,8 +514,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderRestaurantAdmin() { //create organisation admin under restauarant
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-         Network network = findUserNetworkForRestaurant();
-        ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, user, type,network);
+        Network network = findUserNetworkForRestaurant();
+        ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, user, type, network);
         jSplitPane.setRightComponent(orgAdmin);
     }
 
@@ -529,7 +529,8 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void addOrderPanel() {
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        AddOrderPanel order = new AddOrderPanel(systemAdmin, this::restaurantManagerPanel, user, type);
+        Network network = findUserNetworkForRestaurant();
+        AddOrderPanel order = new AddOrderPanel(systemAdmin, this::restaurantManagerPanel, user, type, network);
         jSplitPane.setRightComponent(order);
     }
 
@@ -564,6 +565,7 @@ public class Main1JFrame extends javax.swing.JFrame {
                 List<Manager> manager = hotel.get(j).getListOfManager();
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(k).getUsername().equals(user)) {
+                        System.out.println("manager found is " + manager.get(k).getUsername() + " and city is " + network.get(i));
                         return network.get(i);
                     }
                 }
@@ -600,8 +602,9 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderHotelOrg() {     // add an organisation for hotel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForHotel();
-        ManageOrganisationForHotel org = new ManageOrganisationForHotel(systemAdmin, this::hotelManagerPanel, user, type, network
+        Network network1 = findUserNetworkForHotel();
+        System.out.println("network found is " + network1.getName());
+        ManageOrganisationForHotel org = new ManageOrganisationForHotel(systemAdmin, this::hotelManagerPanel, user, type, network1
         );
         jSplitPane.setRightComponent(org);
     }
@@ -609,8 +612,9 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderHotelAdmin() { //create organisation admin under  hotel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Network network = findUserNetworkForHotel();
-        ManageOrganisationAdminForHotel orgAdmin = new ManageOrganisationAdminForHotel(systemAdmin, this::hotelManagerPanel, user, type, network);
+        Network network1 = findUserNetworkForHotel();
+
+        ManageOrganisationAdminForHotel orgAdmin = new ManageOrganisationAdminForHotel(systemAdmin, this::hotelManagerPanel, user, type, network1);
         jSplitPane.setRightComponent(orgAdmin);
     }
 

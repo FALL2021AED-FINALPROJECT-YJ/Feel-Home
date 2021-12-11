@@ -39,6 +39,24 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         populateTable();
     }
 
+    public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+
+    public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -116,7 +134,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         });
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblsysadmin.setText("MANAGE HOTEL ORGANISATION");
+        lblsysadmin.setText("MANAGE HOTEL ORGANISATION ADMIN");
 
         deleteButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         deleteButton.setText("DELETE");
@@ -132,7 +150,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "NETWORK NAME", "ENTERPRISE", "EMPLOYEE", "EMPLOYEE ID", "USERNAME", "PASSWORD"
+                "NETWORK NAME", "ORGANIZATION TYPE", "ORGANIZATION NAME", "NAME", "USERNAME", "PASSWORD"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -246,7 +264,47 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     }//GEN-LAST:event_nameFieldActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        String orgType = (String) model.getValueAt(selectedRowIndex, 1);
+        String OrgName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+            if (hotel.findManager(user) != null) {
+                if (orgType.equals("Laundary") && hotel.getLaundaryOrg() != null) {
+                    for (LaundaryOrg laundary : hotel.getLaundaryOrg()) {
+                        if (laundary.getName().equals(OrgName)) {
+                            for (Manager man : laundary.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    laundary.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Transportation") && hotel.getTransportationOrgList() != null) {
+                    for (TransportationOrg transportation : hotel.getTransportationOrgList()) {
+                        if (transportation.getName().equals(OrgName)) {
+                            for (Manager man : transportation.getListOfManager()) {
+                                if (man.getUsername().equals(selectedUser)) {
+                                    transportation.deleteManager(man);
+                                    JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                    populateTable();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -361,12 +419,15 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         Object row[] = new Object[10];
-        String orgType1 = orgCombo.getSelectedItem().toString();
+
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseDirec == null) {
+            return;
+        }
         for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
             if (hotel.findManager(user) != null) {
-                if (orgType1.equals("Laundary")) {
+                if (hotel.getLaundaryOrg() != null) {
                     row[0] = "Laundary";
                     for (LaundaryOrg laundary : hotel.getLaundaryOrg()) {
                         for (Manager manager : laundary.getListOfManager()) {       //add manager 
@@ -380,7 +441,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                         }
                     }
                 }
-                if (orgType1.equals("Transportation")) {
+                if (hotel.getTransportationOrgList() != null) {
                     row[0] = "Transportation";
                     for (TransportationOrg transportation : hotel.getTransportationOrgList()) {
                         for (Manager manager : transportation.getListOfManager()) {       //add manager 

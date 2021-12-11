@@ -25,4 +25,8 @@ public class TransportationOrg extends Organization {
         listOfTransportation.add(transportation);
         System.out.println("Deliveryman manager added is " + listOfTransportation.size());
     }
+
+    public void deleteManager(Manager man) {
+       listOfManager.remove(man);
+    }
 }
