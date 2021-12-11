@@ -1,11 +1,13 @@
 package ui.SystemAdministration;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Hotel;
+import model.Manager;
 import model.Network;
 import model.Restaurant;
 import model.SystemAdmin;
@@ -24,14 +26,35 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         }
         populateTable();
     }
+    
+     public boolean validateName() {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
+            return false;
+        }
+    }
+        public boolean PasswordName() {
+        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            return false;
+        }
+    }
+  
+
+ 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        list1 = new java.awt.List();
         backButton = new javax.swing.JButton();
         lblsysadmin = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         addButton = new javax.swing.JButton();
@@ -49,8 +72,9 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         enterpriseName = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 204));
 
+        backButton.setBackground(new java.awt.Color(255, 255, 255));
         backButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backButton.setText("BACK");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -62,11 +86,12 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblsysadmin.setText("MANAGE ENTERPRISE MANAGERS");
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -89,6 +114,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -97,6 +123,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             }
         });
 
+        nameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFieldActionPerformed(evt);
@@ -109,6 +136,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("NETWORK");
 
+        networkType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
         networkType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,11 +144,14 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("UPDATE");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("MANAGER NAME");
+
+        usernameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("USERNAME");
@@ -128,6 +159,9 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("PASSWORD");
 
+        passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
+        enterpriseType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         enterpriseType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a enterprise", "Health Club", "Restaurant", "Hotel", "Business Event" }));
         enterpriseType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,37 +179,30 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(278, 278, 278))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(backButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(487, 487, 487)
-                            .addComponent(jButton4))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(72, 72, 72)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(302, 302, 302)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(34, 34, 34)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3))
+                        .addComponent(backButton)
+                        .addGap(812, 812, 812))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(73, 73, 73)
+                                .addComponent(jButton3)
+                                .addGap(223, 223, 223))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(enterpriseType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(nameField)
@@ -183,7 +210,18 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                                     .addComponent(passwordField)
                                     .addComponent(networkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(enterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deleteBtn)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(278, 278, 278))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,11 +230,11 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addComponent(backButton)
                 .addGap(3, 3, 3)
                 .addComponent(lblsysadmin)
-                .addGap(53, 53, 53)
+                .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(45, 45, 45)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -221,17 +259,59 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(jButton3))
-                .addGap(45, 45, 45))
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(83, 83, 83))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        if (selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String networkName = (String) model.getValueAt(selectedRowIndex, 0);
+        String enterpriseType = (String) model.getValueAt(selectedRowIndex, 1);
+        String enterpriseName = (String) model.getValueAt(selectedRowIndex, 2);
+        String selectedUser = (String) model.getValueAt(selectedRowIndex, 4);
+        Network network = systemAdmin.findNetwork(networkName);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        if (enterpriseType.equals("Business Event")) {
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+                for (Manager man : event.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        event.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                        populateTable();
+                    }
+                }
+            }
+        } else if (enterpriseType.equals("Restaurant")) {
+            for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
+                for (Manager man : res.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        res.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                               populateTable();
+                    }
+                }
+            }
+        } else if (enterpriseType.equals("Hotel")) {
+            for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+                for (Manager man : hotel.getListOfManager()) {
+                    if (man.getName().equals(selectedUser)) {
+                        hotel.deleteManager(man);
+                        JOptionPane.showMessageDialog(this, "Deleted successfully");
+                               populateTable();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
 
@@ -239,8 +319,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        Object row[] = new Object[20];
+        Object row[] = new Object[10];
         String ManagerName = nameField.getText();
         String userName = usernameField.getText();
         String password = passwordField.getText();
@@ -253,61 +332,64 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             if (enterpriseType1.equals("Health Club")) {
                 HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
                 healthclubName1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Health Club";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Health Club");   //store users with enterpirse type  
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else if (enterpriseType1.equals("Business Event")) {
                 BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
                 event1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Business Event");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "BusinessEvent";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Business Event");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else if (enterpriseType1.equals("Restaurant")) {
                 Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
                 res1.addManager(userName, userName, password);
                 System.out.println(res1.getListOfManager().size() + " manager in restaurant");
+                systemAdmin.addUser(userName, "Restaurant");
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Restaurant";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Restaurant");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             } else {
                 Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
                 hotel1.addManager(ManagerName, userName, password);
+                systemAdmin.addUser(userName, "Hotel");
+                System.out.println("Hotel added in city" + networkName);
+                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
-                row[1] = enterpriseType1;
+                row[1] = "Hotel";
                 row[2] = enterpriseName1;
                 row[3] = ManagerName;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                systemAdmin.addUser(userName, "Hotel");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 return;
             }
-        } else 
-        {
-              JOptionPane.showMessageDialog(this, " This username already exists ");
+        } else {
+            JOptionPane.showMessageDialog(this, " This username already exists ");
         }
+        nameField.setText("");
+        usernameField.setText("");
+        passwordField.setText("");
 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -320,7 +402,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkTypeActionPerformed
 
     private void enterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeActionPerformed
-      enterpriseName.removeAllItems();
+        enterpriseName.removeAllItems();
         String networkName = networkType.getSelectedItem().toString();
         Network network = systemAdmin.findNetwork(networkName);
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
@@ -337,10 +419,12 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
             for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {
                 enterpriseName.addItem(res.getName());
             }
-        } else {
+        } else if (enterpriseType1.equals("Hotel")) {
             for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
                 enterpriseName.addItem(hotel.getName());
             }
+        } else {
+            return;
         }
 
     }//GEN-LAST:event_enterpriseTypeActionPerformed
@@ -349,10 +433,10 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JComboBox<String> enterpriseName;
     private javax.swing.JComboBox<String> enterpriseType;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -362,6 +446,7 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblsysadmin;
+    private java.awt.List list1;
     private javax.swing.JTextField nameField;
     private javax.swing.JComboBox<String> networkType;
     private javax.swing.JTextField passwordField;
@@ -369,6 +454,66 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        Object row[] = new Object[10];
+        for (Network network : systemAdmin.getListOfNetwork()) {        //populate network
+            row[0] = network.getName();
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();  //populate enterpirse name
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {   //poplulate events enterprise
+                row[1] = "Business Event";
+                row[2] = event.getName();
+                for (Manager manager : event.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Business Event";
+                    row[2] = event.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+            for (Restaurant res : enterpriseDirec.getListOfRestaurants()) {   //poplulate restauarant enterprise
+                row[1] = "Restaurant";
+                row[2] = res.getName();
+                for (Manager manager : res.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Restaurant";
+                    row[2] = res.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+            for (Hotel hotel : enterpriseDirec.getListOfHotel()) {   //poplulate hotel enterprise
+                row[1] = "Hotel";
+                row[2] = hotel.getName();
+                for (Manager manager : hotel.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Hotel";
+                    row[2] = hotel.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
+            for (HealthClub health : enterpriseDirec.getListOfHealthClub()) {   //poplulate hotel enterprise
+                row[1] = "Health Club";
+                row[2] = health.getName();
+                for (Manager manager : health.getListOfManager()) {
+                    row[0] = network.getName();
+                    row[1] = "Health Club";
+                    row[2] = health.getName();
+                    row[3] = manager.getName();
+                    row[4] = manager.getUsername();
+                    row[5] = manager.getPassword();
+                    model.addRow(row);
+                }
+            }
 
+        }
     }
+
 }

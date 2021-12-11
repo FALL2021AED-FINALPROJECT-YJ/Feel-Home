@@ -29,8 +29,9 @@ public class SystemAdministrationJPanel extends javax.swing.JPanel {
         lblsysadmin = new javax.swing.JLabel();
         btnmanagemanagers = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 204));
 
+        btnmanagenetworks.setBackground(new java.awt.Color(255, 255, 255));
         btnmanagenetworks.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnmanagenetworks.setText("MANAGE NETWORKS");
         btnmanagenetworks.addActionListener(new java.awt.event.ActionListener() {
@@ -39,6 +40,7 @@ public class SystemAdministrationJPanel extends javax.swing.JPanel {
             }
         });
 
+        enterpriseBtn.setBackground(new java.awt.Color(255, 255, 255));
         enterpriseBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         enterpriseBtn.setText("MANAGE ENTERPRICES");
         enterpriseBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -47,6 +49,7 @@ public class SystemAdministrationJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnmanagecustomers.setBackground(new java.awt.Color(255, 255, 255));
         btnmanagecustomers.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnmanagecustomers.setText("MANAGE CUSTOMERS");
         btnmanagecustomers.addActionListener(new java.awt.event.ActionListener() {
@@ -58,6 +61,7 @@ public class SystemAdministrationJPanel extends javax.swing.JPanel {
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("SYSTEM ADMINISTRATOR");
 
+        btnmanagemanagers.setBackground(new java.awt.Color(255, 255, 255));
         btnmanagemanagers.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnmanagemanagers.setText("MANAGE MANAGERS");
         btnmanagemanagers.addActionListener(new java.awt.event.ActionListener() {
@@ -71,33 +75,33 @@ public class SystemAdministrationJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(279, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(266, 266, 266))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(enterpriseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnmanagenetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnmanagemanagers, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnmanagecustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(395, 395, 395))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(381, 381, 381)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(enterpriseBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(btnmanagenetworks, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(btnmanagemanagers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(btnmanagecustomers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(271, 271, 271)
+                        .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addGap(117, 117, 117)
                 .addComponent(lblsysadmin)
-                .addGap(66, 66, 66)
-                .addComponent(btnmanagenetworks)
-                .addGap(56, 56, 56)
-                .addComponent(enterpriseBtn)
-                .addGap(65, 65, 65)
-                .addComponent(btnmanagemanagers)
-                .addGap(73, 73, 73)
-                .addComponent(btnmanagecustomers)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(btnmanagenetworks, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(enterpriseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(btnmanagemanagers, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnmanagecustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(269, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
