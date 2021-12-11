@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import model.Booking;
+import model.BusinessEvent;
 import model.CateringService.CateringType;
-import model.DecorOrg.DecorType;
-import model.PhotographyOrg.PhotographyType;
+import model.DecorServices.DecorType;
+import model.PhotographyService;
+import model.PhotographyService.PhotographyType;
 import model.SystemAdmin;
 import model.service.BusinessEventService;
+import ui.main.DateUtils;
 
 public class BookEventsJPanel extends javax.swing.JPanel {
 
@@ -23,6 +26,10 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.username = username;
         this.booking = booking;
+
+        for (BusinessEvent eventOrg : booking.getNetwork().getEnterpriseDirectory().getListOfEvents()) {
+            orgComboBox.addItem(eventOrg);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -45,13 +52,16 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         priceField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         dateField = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
+        orgComboBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        totalPrice = new javax.swing.JButton();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 204));
 
+        backBtn.setBackground(new java.awt.Color(255, 255, 255));
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backBtn.setText("BACK");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +89,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             }
         });
 
+        bookEventBtn.setBackground(new java.awt.Color(255, 255, 255));
         bookEventBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bookEventBtn.setText("BOOK EVENT");
         bookEventBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -118,85 +129,93 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("DATE ");
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel3.setText("TOTAL PRICE ");
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel4.setText("BUSINESS EVENTS ");
+
+        totalPrice.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        totalPrice.setText("TOTAL PRICE");
+        totalPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalPriceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(backBtn)
-                .addContainerGap(922, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblbookservices)
-                        .addGap(380, 380, 380))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(339, 339, 339)
+                        .addComponent(lblbookservices))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(photoRadioBtn)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel4)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(141, 141, 141)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(decorRadioBtn)
-                                    .addComponent(jLabel1)
-                                    .addComponent(cateringRadioBtn)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGap(72, 72, 72)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bookEventBtn)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(photgraphyCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cateringCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(decorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(146, 146, 146))))
+                                .addComponent(photoRadioBtn)
+                                .addComponent(jLabel5)
+                                .addComponent(cateringRadioBtn)
+                                .addComponent(jLabel1)
+                                .addComponent(decorRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(totalPrice))
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(orgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cateringCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(decorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bookEventBtn))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(backBtn)
-                .addGap(8, 8, 8)
+                .addGap(22, 22, 22)
                 .addComponent(lblbookservices)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(39, 39, 39)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(orgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(photoRadioBtn)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(63, 63, 63)
+                    .addComponent(jLabel5)
+                    .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(cateringRadioBtn)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cateringCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(63, 63, 63)
+                    .addComponent(jLabel1)
+                    .addComponent(cateringCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addComponent(decorRadioBtn)
-                .addGap(31, 31, 31)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(decorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalPrice)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addComponent(bookEventBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(63, 63, 63))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -209,14 +228,24 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_photoRadioBtnActionPerformed
 
     private void bookEventBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookEventBtnActionPerformed
-        Date date = dateField.getDate();
+
+        BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
+        int totalPrice = 0;
+
+        if (businessEvent == null) {
+            JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
+            return;
+        }
+
+        Date date = DateUtils.formatDate(dateField.getDate());
         Date checkin = booking.getCheckin();
         Date checkout = booking.getCheckout();
         if (date.compareTo(checkin) < 0 || date.compareTo(checkout) > 0) {
-            JOptionPane.showMessageDialog(this, "Selected date should be witihin check-in date (" + checkin
+            JOptionPane.showMessageDialog(this, "Selected date should be within check-in date (" + checkin
                     + ") and checkout date (" + checkout + ")");
             return;
         }
+
         boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
         boolean decorRadioBtnSelected = decorRadioBtn.isSelected();
         boolean cateringRadioBtnSelected = cateringRadioBtn.isSelected();
@@ -226,31 +255,37 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             return;
         }
 
-        BusinessEventService service = new BusinessEventService(date);
+        BusinessEventService service = new BusinessEventService(businessEvent, date);
         if (photoRadioBtnSelected) {
             PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
+            totalPrice = photography.getRate();
+            priceField.setText(String.valueOf(totalPrice));
         }
 
         if (decorRadioBtnSelected) {
             DecorType decor = (DecorType) decorCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
+            totalPrice = decor.getRate();
+            priceField.setText(String.valueOf(totalPrice));
         }
 
         if (cateringRadioBtnSelected) {
             CateringType catering = (CateringType) cateringCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
+            totalPrice = catering.getRate();
+            priceField.setText(String.valueOf(totalPrice));
         }
-       
+
         booking.addService(service);
+
+        JOptionPane.showMessageDialog(this, "Business event service added successfully.");
+
+        callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_bookEventBtnActionPerformed
 
     private void cateringComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cateringComboActionPerformed
-        if (cateringRadioBtn.isSelected()) {
-            for (CateringType catering : CateringType.values()) {
-                cateringCombo.addItem(catering);
-            }
-        }
+
     }//GEN-LAST:event_cateringComboActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -258,7 +293,12 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void cateringRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cateringRadioBtnActionPerformed
+        if (cateringRadioBtn.isSelected()) {
+            for (CateringType catering : CateringType.values()) {
+                cateringCombo.addItem(catering);
+            }
 
+        }
     }//GEN-LAST:event_cateringRadioBtnActionPerformed
 
     private void decorRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decorRadioBtnActionPerformed
@@ -268,6 +308,44 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_decorRadioBtnActionPerformed
+
+    private void totalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPriceActionPerformed
+
+        BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
+        int totalPrice = 0;
+
+        if (businessEvent == null) {
+            JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
+            return;
+        }
+        boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
+        boolean decorRadioBtnSelected = decorRadioBtn.isSelected();
+        boolean cateringRadioBtnSelected = cateringRadioBtn.isSelected();
+       Date date = DateUtils.formatDate(dateField.getDate());
+
+        BusinessEventService service = new BusinessEventService(businessEvent, date);
+        if (photoRadioBtnSelected) {
+            PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
+            totalPrice = photography.getRate();
+            priceField.setText(String.valueOf(totalPrice));
+        }
+
+        if (decorRadioBtnSelected) {
+            DecorType decor = (DecorType) decorCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
+            totalPrice += decor.getRate();
+            priceField.setText(String.valueOf(totalPrice));
+        }
+
+        if (cateringRadioBtnSelected) {
+            CateringType catering = (CateringType) cateringCombo.getSelectedItem();
+            service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
+            totalPrice += catering.getRate();
+            priceField.setText(String.valueOf(totalPrice));
+        }
+
+    }//GEN-LAST:event_totalPriceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -280,13 +358,15 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton decorRadioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JLabel lblbookservices;
+    private javax.swing.JComboBox<BusinessEvent> orgComboBox;
     private javax.swing.JComboBox<PhotographyType> photgraphyCombo;
     private javax.swing.JRadioButton photoRadioBtn;
     private javax.swing.JTextField priceField;
+    private javax.swing.JButton totalPrice;
     // End of variables declaration//GEN-END:variables
 }
