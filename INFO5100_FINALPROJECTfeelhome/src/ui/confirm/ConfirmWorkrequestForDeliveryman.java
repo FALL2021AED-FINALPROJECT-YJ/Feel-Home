@@ -5,13 +5,11 @@ import model.SystemAdmin;
 public class ConfirmWorkrequestForDeliveryman extends javax.swing.JPanel {
 
     private SystemAdmin systemAdmin;
-    private Runnable callOnCreateMethod;
     private String user;
     private String type;
 
-    public ConfirmWorkrequestForDeliveryman(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type) {
+    public ConfirmWorkrequestForDeliveryman(SystemAdmin systemAdmin, String user, String type) {
         initComponents();
-        this.callOnCreateMethod = callOnCreateMethod;
         this.systemAdmin = systemAdmin;
         this.user = user;
         this.type = type;
