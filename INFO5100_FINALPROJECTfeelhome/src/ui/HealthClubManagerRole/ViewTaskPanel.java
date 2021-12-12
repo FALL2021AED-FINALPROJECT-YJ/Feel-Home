@@ -33,6 +33,11 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         this.healthClub = healthClub;
         populateComboBox();
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
+        assignWork.setBackground(new java.awt.Color(244, 120, 140));
+        assignWork.setOpaque(true);
 
     }
 
@@ -46,7 +51,7 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         therapistOrg = new javax.swing.JComboBox<>();
         physicianOrg = new javax.swing.JComboBox<>();
         trainerOrg = new javax.swing.JComboBox<>();
-        assignwork = new javax.swing.JButton();
+        assignWork = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -83,11 +88,11 @@ public class ViewTaskPanel extends javax.swing.JPanel {
 
         trainerOrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        assignwork.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        assignwork.setText("ASSIGN AND CONFIRM TASK");
-        assignwork.addActionListener(new java.awt.event.ActionListener() {
+        assignWork.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        assignWork.setText("ASSIGN AND CONFIRM TASK");
+        assignWork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignworkActionPerformed(evt);
+                assignWorkActionPerformed(evt);
             }
         });
 
@@ -158,7 +163,7 @@ public class ViewTaskPanel extends javax.swing.JPanel {
                 .addGap(272, 272, 272))
             .addGroup(layout.createSequentialGroup()
                 .addGap(303, 303, 303)
-                .addComponent(assignwork)
+                .addComponent(assignWork)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -186,7 +191,7 @@ public class ViewTaskPanel extends javax.swing.JPanel {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addComponent(assignwork, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(assignWork, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(71, 71, 71))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -195,8 +200,8 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void assignworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignworkActionPerformed
-            int selectedRowIndex = jTable1.getSelectedRow();
+    private void assignWorkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignWorkActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
         if (selectedRowIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
             return;
@@ -218,7 +223,7 @@ public class ViewTaskPanel extends javax.swing.JPanel {
             return;
         }
 
-        TherapistOrg therapist= (TherapistOrg) therapistOrg.getSelectedItem();
+        TherapistOrg therapist = (TherapistOrg) therapistOrg.getSelectedItem();
         PhysicianOrg physician = (PhysicianOrg) physicianOrg.getSelectedItem();
         TrainerOrg trainer = (TrainerOrg) trainerOrg.getSelectedItem();
 
@@ -234,7 +239,7 @@ public class ViewTaskPanel extends javax.swing.JPanel {
                     }
                     break;
                 case PHYSICIAN:
-                    if (physician== null) {
+                    if (physician == null) {
                         JOptionPane.showMessageDialog(this, "Please select physician organization to be assinged for the booking.");
                         return;
                     } else {
@@ -257,14 +262,14 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         }
         healthClubService.setStatus(Service.Status.CONFIRMED);
         JOptionPane.showMessageDialog(this, "Assigned all healthclub services to the booking: " + booking.getId());
-        
+
         return;
 
-    }//GEN-LAST:event_assignworkActionPerformed
+    }//GEN-LAST:event_assignWorkActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton assignwork;
+    private javax.swing.JButton assignWork;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

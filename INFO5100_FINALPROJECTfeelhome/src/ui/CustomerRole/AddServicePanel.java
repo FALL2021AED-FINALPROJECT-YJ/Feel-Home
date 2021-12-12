@@ -27,6 +27,7 @@ public class AddServicePanel extends javax.swing.JPanel {
         this.backButton4 = backButton;
         this.username = username;
         this.booking = booking;
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

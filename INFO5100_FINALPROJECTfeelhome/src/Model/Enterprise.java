@@ -5,6 +5,10 @@ public class Enterprise {
     protected String name;
     protected String contact;
 
+    public Enterprise() {
+        
+    }
+    
     public Enterprise(String name, String contact) {
         this.name = name;
         this.contact = contact;

@@ -13,6 +13,14 @@ public class RoomList {
         listOfRooms = new ArrayList<>();
     }
 
+    public int getNextRoomNumber() {
+        return nextRoomNumber;
+    }
+
+    public void setNextRoomNumber(int nextRoomNumber) {
+        this.nextRoomNumber = nextRoomNumber;
+    }
+
     public List<Room> getListOfRooms() {
         return listOfRooms;
     }
@@ -28,5 +36,9 @@ public class RoomList {
         Room room = new Room(type, nextRoomNumber);
         nextRoomNumber++;
         listOfRooms.add(room);
+    }
+
+    public String toString() {
+        return listOfRooms.toString();
     }
 }

@@ -29,7 +29,7 @@ public class ManageOrganisationPanelForRestaurant extends javax.swing.JPanel {
         this.user = user;
         this.type = type;
         this.network = network;
-
+       setBackground(new java.awt.Color(255, 204, 204));
         cityNameTextField.setText(network.getName());
         cityNameTextField.setEditable(false);
 

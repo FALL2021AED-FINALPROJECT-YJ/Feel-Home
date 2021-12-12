@@ -31,8 +31,10 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         cityNameTextField.setEditable(false);
 
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
     }
-      public boolean validateName() {
+
+    public boolean validateName() {
         if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
             return true;
         } else {
@@ -40,15 +42,15 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
             return false;
         }
     }
-       public boolean validateContactNum() {
+
+    public boolean validateContactNum() {
         if (contactField.getText().matches("[0-9]{10}")) {
             return true;
         } else {
-              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
             return false;
         }
     }
-     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,6 +86,11 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -124,6 +131,11 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         });
 
         updateBtn.setText("UPDATE");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         cityNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,8 +241,8 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                 row[2] = contact;
                 row[3] = networkName;
                 model.addRow(row);
-                JOptionPane.showMessageDialog(this, " Organisation added successfully");
-                return;                               //healthclub found
+                JOptionPane.showMessageDialog(this, "Catering Organisation added successfully");
+                return;
             } else if (orgType1.equals("Decor")) {
                 events.get(i).addDecorService(name, contact, networkName);
                 row[0] = orgType1;
@@ -238,7 +250,7 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                 row[2] = contact;
                 row[3] = networkName;
                 model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation successfully");
+                JOptionPane.showMessageDialog(this, "Decor Organisation successfully");
                 return;
             } else {
                 events.get(i).addPhotographyService(name, contact, networkName);
@@ -247,12 +259,10 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
                 row[2] = contact;
                 row[3] = networkName;
                 model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation added successfully");
+                JOptionPane.showMessageDialog(this, "Photography Organisation added successfully");
                 return;
             }
         }
-
-
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -308,6 +318,67 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
 
     }//GEN-LAST:event_deleteBtnActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String orgName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String orgContact = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String orgCity = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+
+        nameField.setText(orgName);
+        contactField.setText(orgContact);
+        cityNameTextField.setText(orgCity);
+
+        cityNameTextField.setEnabled(false);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() == 1) {
+            String orgType = orgCombo.getSelectedItem().toString();
+            String orgname = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+                if (orgType.equals("Catering") && event.getListOfCatering() != null) {
+                    for (CateringService catering : event.getListOfCatering()) {
+                        if (catering.getName().equals(orgname)) {
+                            catering.setName(nameField.getText());
+                            catering.setContact(contactField.getText());
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                            return;
+                        }
+                    }
+                } else if (orgType.equals("Decor") && event.getListOfDecors() != null) {
+                    for (DecorServices decor : event.getListOfDecors()) {
+                        if (decor.getName().equals(orgname)) {
+                            decor.setName(nameField.getText());
+                            decor.setContact(contactField.getText());
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                            return;
+                        }
+                    }
+                } else if (orgType.equals("Photography") && event.getListOfPhotographyServices() != null) {
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        if (photo.getName().equals(orgname)) {
+                            photo.setName(nameField.getText());
+                            photo.setContact(contactField.getText());
+                            JOptionPane.showMessageDialog(this, "Deleted successfully");
+                            populateTable();
+                            return;
+                        }
+                    }
+                }
+            }
+
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -334,7 +405,7 @@ public class ManageOrganisationForEvents extends javax.swing.JPanel {
         String orgType1 = orgCombo.getSelectedItem().toString();
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
-        if( enterpriseDirec == null) {
+        if (enterpriseDirec == null) {
             return;
         }
         for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {

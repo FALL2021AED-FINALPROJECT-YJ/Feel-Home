@@ -34,6 +34,13 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         for (RoomType type : RoomType.values()) {
             roomTypeComboBox.addItem(type);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
+        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addButton.setBackground(new java.awt.Color(244, 120, 140));
+        addButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -44,10 +51,10 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         roomTypeComboBox = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        addBtn = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -80,25 +87,25 @@ public class ManageRoomPanel extends javax.swing.JPanel {
 
         roomTypeComboBox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jButton1.setText("DELETE");
+        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
 
-        backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        backBtn.setText("BACK");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel2.setText("MANAGE ROOMS");
 
-        addBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        addBtn.setText("ADD");
-        addBtn.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        addButton.setText("ADD");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -110,7 +117,7 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(102, 102, 102)
@@ -122,44 +129,45 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(roomTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addComponent(addBtn)
+                                .addComponent(addButton)
                                 .addGap(0, 153, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(145, 145, 145))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(backBtn)
+                .addComponent(backButton)
                 .addGap(7, 7, 7)
                 .addComponent(jLabel2)
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(deleteBtn)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(roomTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addBtn))
+                    .addComponent(addButton))
                 .addContainerGap(297, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
-    }//GEN-LAST:event_backBtnActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         RoomType selectedItem = (RoomType) roomTypeComboBox.getSelectedItem();
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
-        List<Hotel> list = enterpriseDirec.getListOfHotel();         // find hotel for which manager belongs
+        List<Hotel> list = enterpriseDirec.getListOfHotel();
+        
         for (int i = 0; i < list.size(); i++) {
             List<Manager> manager = list.get(i).getListOfManager();
             for (int j = 0; j < manager.size(); j++) {
@@ -182,13 +190,13 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                 }
             }
         }
-    }//GEN-LAST:event_addBtnActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBtn;
-    private javax.swing.JButton backBtn;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

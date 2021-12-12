@@ -19,6 +19,11 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         this.systemAdmin = systemAdmin;
         initComponents();
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+          backButton.setBackground(new java.awt.Color(244, 120, 140));
+         backButton.setOpaque(true);
+         addButton.setBackground(new java.awt.Color(244, 120, 140));
+         addButton.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")

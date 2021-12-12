@@ -15,7 +15,7 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.callOnCreateMethod2 = callOnCreateMethod2;
-        
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
 

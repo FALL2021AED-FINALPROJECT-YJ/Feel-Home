@@ -51,7 +51,7 @@ public class DbUtils {
             conn.close();
             return system;
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            System.out.print(ex);
         }
         return null;
     }

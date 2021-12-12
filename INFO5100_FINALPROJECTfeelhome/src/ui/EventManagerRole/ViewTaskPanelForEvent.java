@@ -33,6 +33,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
         this.businessEvent = businessEvent;
         populateComboBox();
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

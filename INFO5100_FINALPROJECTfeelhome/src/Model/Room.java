@@ -1,8 +1,5 @@
 package model;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -37,15 +34,20 @@ public class Room {
         }
     }
 
-    private Set<Date> bookings = new HashSet<>();
-    private RoomType roomType;
+    private Set<Date> bookings;
+    public RoomType roomType;
     private int roomNo;
+
 
     public Room(RoomType roomType, int roomNumber) {
         this.roomType = roomType;
         this.roomNo = roomNumber;
+        this.bookings = new HashSet<>();
     }
 
+
+    
+    
     public Set<Date> getBookings() {
         return bookings;
     }
@@ -53,7 +55,7 @@ public class Room {
     public void setBookings(Set<Date> bookings) {
         this.bookings = bookings;
     }
-
+    
     public RoomType getRoomType() {
         return roomType;
     }
@@ -61,7 +63,7 @@ public class Room {
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
-
+    
     public void setRoomNo(int no) {
         this.roomNo = no;
     }
