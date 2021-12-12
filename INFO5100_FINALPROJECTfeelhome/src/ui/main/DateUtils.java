@@ -15,4 +15,8 @@ public final class DateUtils {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).with(LocalTime.MIN);
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
+    
+    public static Date now() {
+        return formatDate(new Date());
+    }
 }

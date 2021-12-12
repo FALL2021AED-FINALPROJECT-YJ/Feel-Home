@@ -5,25 +5,15 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
-import model.CateringService;
 import model.Customer;
 import model.CustomerDirectory;
-import model.DecorServices;
-import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
-import model.Network;
 import model.Organization;
-import model.PhotographyService;
-import model.PhysicianOrg;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
 import model.TransportationOrg;
-import model.service.BusinessEventService;
-import model.service.HealthClubService;
-import model.service.HotelService;
-import model.service.Service;
+import model.services.HotelService;
+import model.services.Service;
 
 public class ViewTaskForHotel extends javax.swing.JPanel {
 
@@ -229,9 +219,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         }
         hotelService.setStatus(Service.Status.CONFIRMED);
         JOptionPane.showMessageDialog(this, "Assigned all hotel services to the booking: " + booking.getId());
-        return;
-
-
+        populateTable();
     }//GEN-LAST:event_assignTaskActionPerformed
 
     private void laundaryOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laundaryOrgActionPerformed
@@ -240,8 +228,8 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
-        Object row[] = new Object[10];
         CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
         for (Customer customer : customerDirec.getListOfCustomer()) {
             for (Booking booking : customer.getBookingList()) {      //get booking details each customer
@@ -250,6 +238,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                     if (hotel.getName().equals(service.getEnterprise().getName())) {
                         HotelService hotelService = (HotelService) service;
 
+                        Object row[] = new Object[10];
                         row[0] = booking;
                         row[1] = customer;
                         row[2] = hotelService.getStatus();
@@ -266,6 +255,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                                     break;
                             }
                         }
+                        model.addRow(row);
                     }
                 }
             }

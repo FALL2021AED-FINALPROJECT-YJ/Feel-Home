@@ -341,8 +341,7 @@ public class Main1JFrame extends javax.swing.JFrame {
 
     private void hotelService(Booking booking) {    //laundary and transport service panel fpr customer
         String user = usernameField.getText();
-        Hotel hotel = (Hotel) findUserHotel();
-        HotelServicePanel hotelPanel = new HotelServicePanel(systemAdmin, this::addServices, user, booking, hotel);
+        HotelServicePanel hotelPanel = new HotelServicePanel(systemAdmin, this::addServices, user, booking);
         jSplitPane.setRightComponent(hotelPanel);
     }
 
@@ -574,7 +573,7 @@ public class Main1JFrame extends javax.swing.JFrame {
         return null;
     }
 
-    private Enterprise findUserHotel() {
+    private Enterprise findManagerHotel() {
         String user = usernameField.getText();
         List<Network> network = systemAdmin.getListOfNetwork();
         for (int i = 0; i < network.size(); i++) {
@@ -594,7 +593,7 @@ public class Main1JFrame extends javax.swing.JFrame {
     private void renderViewTask2() {     // view hotel manager panel
         String user = usernameField.getText();
         String type = systemAdmin.findUser(user);
-        Hotel hotel = (Hotel) findUserHotel();
+        Hotel hotel = (Hotel) findManagerHotel();
         ViewTaskForHotel hotelPanel = new ViewTaskForHotel(systemAdmin, this::hotelManagerPanel, user, type, hotel);
         jSplitPane.setRightComponent(hotelPanel);
     }

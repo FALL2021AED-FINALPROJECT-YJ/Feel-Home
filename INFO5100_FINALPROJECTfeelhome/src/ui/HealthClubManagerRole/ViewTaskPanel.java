@@ -5,25 +5,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
-import model.BusinessEvent;
-import model.CateringService;
 import model.Customer;
 import model.CustomerDirectory;
-import model.DecorServices;
 import model.HealthClub;
-import model.Network;
 import model.Organization;
-import model.PhotographyService;
-import model.Physician;
 import model.PhysicianOrg;
 import model.SystemAdmin;
-import model.Therapist;
 import model.TherapistOrg;
-import model.Trainer;
 import model.TrainerOrg;
-import model.service.BusinessEventService;
-import model.service.HealthClubService;
-import model.service.Service;
+import model.services.HealthClubService;
+import model.services.Service;
 
 public class ViewTaskPanel extends javax.swing.JPanel {
 
@@ -266,8 +257,9 @@ public class ViewTaskPanel extends javax.swing.JPanel {
         }
         healthClubService.setStatus(Service.Status.CONFIRMED);
         JOptionPane.showMessageDialog(this, "Assigned all healthclub services to the booking: " + booking.getId());
+        
         return;
- 
+
     }//GEN-LAST:event_assignworkActionPerformed
 
 

@@ -7,7 +7,7 @@ import model.Booking;
 import model.MenuItem;
 import model.Restaurant;
 import model.SystemAdmin;
-import model.service.RestaurantService;
+import model.services.RestaurantService;
 import ui.main.DateUtils;
 
 public class RestuarantServicePanel extends javax.swing.JPanel {

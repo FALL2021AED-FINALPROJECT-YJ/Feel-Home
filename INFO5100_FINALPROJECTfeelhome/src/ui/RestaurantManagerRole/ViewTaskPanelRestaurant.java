@@ -11,8 +11,8 @@ import model.DeliverymanOrg;
 import model.Organization;
 import model.Restaurant;
 import model.SystemAdmin;
-import model.service.RestaurantService;
-import model.service.Service;
+import model.services.RestaurantService;
+import model.services.Service;
 
 public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
 
@@ -163,23 +163,15 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         Booking booking = (Booking) model.getValueAt(selectRowIndex, 0);
-        RestaurantService restaurantService = null;
-        for (Service service : booking.getServices()) {
-            if (restaurant.getName().equals(service.getEnterprise().getName())) {
-                restaurantService = (RestaurantService) service;
-                break;
-            }
-        }
+
         List<Organization> organizations = new ArrayList<>();
         DeliverymanOrg delivery = (DeliverymanOrg) deliveryOrg.getSelectedItem();
 
         if (delivery == null) {
             JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged  ");
         } else {
-            organizations.add(delivery);     // assign to  deliverymanorg           
+            organizations.add(delivery);     
         }
-
-
     }//GEN-LAST:event_acceptBtnActionPerformed
 
     private void denyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyBtnActionPerformed
