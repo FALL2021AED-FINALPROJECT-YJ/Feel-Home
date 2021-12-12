@@ -10,12 +10,11 @@ import model.CateringService;
 import model.Customer;
 import model.CustomerDirectory;
 import model.DecorServices;
-import model.Network;
 import model.Organization;
 import model.PhotographyService;
 import model.SystemAdmin;
-import model.service.BusinessEventService;
-import model.service.Service;
+import model.services.BusinessEventService;
+import model.services.Service;
 
 public class ViewTaskPanelForEvent extends javax.swing.JPanel {
 
@@ -248,14 +247,14 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
         }
         eventService.setStatus(Service.Status.CONFIRMED);
         JOptionPane.showMessageDialog(this, "Assigned all event services to the booking: " + booking.getId());
-        return;
+        populateTable();
     }//GEN-LAST:event_assignTaskBtnActionPerformed
 
     private void populateTable() {
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
-        Object row[] = new Object[10];
         CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
         for (Customer customer : customerDirec.getListOfCustomer()) {
             for (Booking booking : customer.getBookingList()) {      //get booking details each customer
@@ -264,14 +263,14 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
                     if (service.getEnterprise().getName().equals(businessEvent.getName())) {
 
                         BusinessEventService businessEventService = (BusinessEventService) service;
-
+                        Object row[] = new Object[10];
                         row[0] = booking;
                         row[1] = customer;
                         row[2] = businessEventService.getStatus();
                         row[3] = "NO";
                         row[4] = "NO";
                         row[5] = "NO";
-                      
+
                         for (BusinessEventService.BusinessEventServiceType type : businessEventService.getBusinessEventServiceTypes().keySet()) {
                             switch (type) {
                                 case CATERING:
@@ -285,7 +284,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
                                     break;
                             }
                         }
-                          model.addRow(row);
+                        model.addRow(row);
                     }
                 }
             }
@@ -297,7 +296,7 @@ public class ViewTaskPanelForEvent extends javax.swing.JPanel {
         cateringOrg.removeAllItems();
         decorOrg.removeAllItems();
         photographyOrg.removeAllItems();
-        
+
         cateringOrg.addItem(null);
         decorOrg.addItem(null);
         photographyOrg.addItem(null);

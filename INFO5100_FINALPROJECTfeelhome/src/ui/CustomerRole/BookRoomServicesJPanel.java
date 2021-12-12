@@ -3,10 +3,8 @@ package ui.CustomerRole;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Booking;
 import model.Customer;
-import model.CustomerDirectory;
 import model.Hotel;
 import model.Network;
 import model.Room;
@@ -231,7 +229,7 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         hotel.bookRooms(checkinDate, checkoutdate, roomCount, roomType);
         Customer customer = systems.getCustomerDirec().findCustomerUsername(username);
         Booking booking = customer.addBooking(hotel, network);  //add bookings in customer class
-        booking.getRoomlist().createRoom(roomType);     // add rooms in booking class 
+        booking.getHotelService().getRoomlist().createRoom(roomType);     // add rooms in booking class 
         booking.setCheckin(checkinDate);
         booking.setCheckout(checkoutdate);
         booking.setStatus("Booked");

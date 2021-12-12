@@ -196,7 +196,7 @@ public class ManageBooking extends javax.swing.JPanel {
         Customer customer = customDirec.findCustomerUsername(username);
         System.out.println("customer found is " + customer.getName() + " username is " + username);
         for (Booking bookingList : customer.getBookingList()) {
-            row[0] = bookingList.getHotel().getName();
+            row[0] = bookingList.getHotelService().getEnterprise();
             row[1] = bookingList.getId();
             row[2] = bookingList.getCost();
             row[3] = bookingList.getStatus();

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import model.Booking;
 import model.HealthClub;
 import model.SystemAdmin;
-import model.service.HealthClubService;
+import model.services.HealthClubService;
 import ui.main.DateUtils;
 
 public class HealthClubServicesJPanel extends javax.swing.JPanel {

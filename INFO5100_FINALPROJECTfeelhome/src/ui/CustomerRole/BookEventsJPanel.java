@@ -7,10 +7,9 @@ import model.Booking;
 import model.BusinessEvent;
 import model.CateringService.CateringType;
 import model.DecorServices.DecorType;
-import model.PhotographyService;
 import model.PhotographyService.PhotographyType;
 import model.SystemAdmin;
-import model.service.BusinessEventService;
+import model.services.BusinessEventService;
 import ui.main.DateUtils;
 
 public class BookEventsJPanel extends javax.swing.JPanel {
@@ -27,6 +26,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         this.username = username;
         this.booking = booking;
 
+        orgComboBox.addItem(null);
         for (BusinessEvent eventOrg : booking.getNetwork().getEnterpriseDirectory().getListOfEvents()) {
             orgComboBox.addItem(eventOrg);
         }
@@ -236,7 +236,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     private void bookEventBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookEventBtnActionPerformed
 
         BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
-        int totalPrice = 0;
 
         if (businessEvent == null) {
             JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
@@ -261,32 +260,30 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             return;
         }
 
+        int price = 0;
         BusinessEventService service = new BusinessEventService(businessEvent, date);
         if (photoRadioBtnSelected) {
             PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
-            totalPrice = photography.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += photography.getRate();
         }
 
         if (decorRadioBtnSelected) {
             DecorType decor = (DecorType) decorCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
-            totalPrice = decor.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += decor.getRate();
         }
 
         if (cateringRadioBtnSelected) {
             CateringType catering = (CateringType) cateringCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
-            totalPrice = catering.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += catering.getRate();
         }
 
+        priceField.setText(String.valueOf(price));
         booking.addService(service);
 
         JOptionPane.showMessageDialog(this, "Business event service added successfully.");
-
         callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_bookEventBtnActionPerformed
 
@@ -318,7 +315,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     private void totalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPriceActionPerformed
 
         BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
-        int totalPrice = 0;
 
         if (businessEvent == null) {
             JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
@@ -327,30 +323,29 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
         boolean decorRadioBtnSelected = decorRadioBtn.isSelected();
         boolean cateringRadioBtnSelected = cateringRadioBtn.isSelected();
-       Date date = DateUtils.formatDate(dateField.getDate());
+        Date date = DateUtils.formatDate(dateField.getDate());
 
+        int price = 0;
         BusinessEventService service = new BusinessEventService(businessEvent, date);
         if (photoRadioBtnSelected) {
             PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
-            totalPrice = photography.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += photography.getRate();
         }
 
         if (decorRadioBtnSelected) {
             DecorType decor = (DecorType) decorCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
-            totalPrice += decor.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += decor.getRate();
         }
 
         if (cateringRadioBtnSelected) {
             CateringType catering = (CateringType) cateringCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
-            totalPrice += catering.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += catering.getRate();
         }
-
+        
+        priceField.setText(String.valueOf(price));
     }//GEN-LAST:event_totalPriceActionPerformed
 
 

@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import model.Booking;
-import model.Hotel;
 import model.SystemAdmin;
-import model.service.HotelService;
+import model.services.HotelService;
 import ui.main.DateUtils;
 
 public class HotelServicePanel extends javax.swing.JPanel {
@@ -15,15 +14,13 @@ public class HotelServicePanel extends javax.swing.JPanel {
     private Consumer<Booking> callOnCreateMethod1;
     private String username;
     private Booking booking;
-    private Hotel hotel;
 
-    public HotelServicePanel(SystemAdmin systems, Consumer<Booking> callOnCreateMethod1, String username, Booking booking, Hotel hotel) {
+    public HotelServicePanel(SystemAdmin systems, Consumer<Booking> callOnCreateMethod1, String username, Booking booking) {
         initComponents();
         this.systems = systems;
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.username = username;
         this.booking = booking;
-        this.hotel = hotel;
     }
 
     @SuppressWarnings("unchecked")
@@ -148,8 +145,7 @@ public class HotelServicePanel extends javax.swing.JPanel {
             return;
         }
 
-        HotelService hotelService = new HotelService(hotel, dateField.getDate());
-        System.out.println("hotelservice added is " +hotelService);
+        HotelService hotelService = booking.getHotelService();
         int price = 0;
         if (laundaryBtnSelected) {
             hotelService.addService(HotelService.HotelServiceType.LAUNDARY);
@@ -160,10 +156,10 @@ public class HotelServicePanel extends javax.swing.JPanel {
             price += HotelService.HotelServiceType.TRANSPORTATION.getPrice();
         }
 
+        hotelService.setDate(date);
         priceField.setText(String.valueOf(price));
-        booking.addService(hotelService);
         JOptionPane.showMessageDialog(this, "Your hotel services are been added.");
-//        callOnCreateMethod1.accept(booking);
+        callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_placeRequestActionPerformed
 
 

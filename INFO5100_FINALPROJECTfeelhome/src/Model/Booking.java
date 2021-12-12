@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import model.service.Service;
+import model.services.HotelService;
+import model.services.Service;
 import ui.main.DateUtils;
 
 public class Booking {
@@ -18,9 +19,6 @@ public class Booking {
     private Network network;
 
     private List<Service> services;
-
-    private Hotel hotel;
-    private RoomList roomlist;
     private String id;
 
     public void setId(String id) {
@@ -29,9 +27,8 @@ public class Booking {
 
     public Booking(Hotel hotel, Network network) {
         this.services = new ArrayList<>();
-        this.hotel = hotel;
+        this.services.add(new HotelService(hotel));
         this.network = network;
-        this.roomlist = new RoomList();
         this.id = UUID.randomUUID().toString();
     }
 
@@ -49,14 +46,6 @@ public class Booking {
 
     public void setCost(int cost) {
         this.cost = cost;
-    }
-
-    public RoomList getRoomlist() {
-        return roomlist;
-    }
-
-    public void setRoomlist(RoomList roomlist) {
-        this.roomlist = roomlist;
     }
 
     public String getId() {
@@ -108,23 +97,25 @@ public class Booking {
         this.network = network;
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
+    public HotelService getHotelService() {
+        for (Service service : services) {
+            if (service instanceof HotelService) {
+                return (HotelService) service;
+            }
+        }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+        throw new RuntimeException("Booking should always have an hotel service");
     }
 
     public String prettyPrint() {
         StringBuilder sb = new StringBuilder("Below are your booking details -\n");
         sb.append("\n").append("Hotel booking details are as follows:");
-        sb.append("\n").append(TAB).append("Hotel Name: ").append(hotel.getName());
+//        sb.append("\n").append(TAB).append("Hotel Name: ").append(hotelService.getName());
         sb.append("\n").append(TAB).append("City: ").append(network.getName());
         sb.append("\n").append(TAB).append("Checkin date: ").append(checkin);
         sb.append("\n").append(TAB).append("Checkout date: ").append(checkout);
 
-        List<Room> listOfRooms = roomlist.getListOfRooms();
+        List<Room> listOfRooms = getHotelService().getRoomlist().getListOfRooms();
         int hotelCost = 0;
         sb.append("\n").append(TAB).append(String.format("Below are the details of the %d rooms booked:", listOfRooms.size()));
         for (Room room : listOfRooms) {
