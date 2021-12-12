@@ -9,22 +9,34 @@ public class SystemAdmin {
 
     private List<Network> listOfNetwork;
     private CustomerDirectory customerDirec;
-    private Map<String, String> map;
+    private Map<String, String> mapType;
+    private Map<String, String> userNamePasswordMap;
 
-    public SystemAdmin() {
+    public SystemAdmin(String userName, String password) {
         listOfNetwork = new ArrayList<>();
         listOfNetwork.add(new Network("Seattle"));
         listOfNetwork.add(new Network("Boston"));
         customerDirec = new CustomerDirectory();
-        map = new HashMap<>();
+        mapType = new HashMap<>();
+        userNamePasswordMap = new HashMap<>();
+        userNamePasswordMap.put(userName, password);
+        mapType.put(userName, "admin");
     }
 
-    public Map<String, String> getMap() {
-        return map;
+    public Map<String, String> getUserNamePasswordMap() {
+        return userNamePasswordMap;
     }
 
-    public void setMap(Map<String, String> map) {
-        this.map = map;
+    public void setUserNamePasswordMap(Map<String, String> userNamePasswordMap) {
+        this.userNamePasswordMap = userNamePasswordMap;
+    }
+
+    public Map<String, String> getMapType() {
+        return mapType;
+    }
+
+    public void setMapType(Map<String, String> mapType) {
+        this.mapType = mapType;
     }
 
     public List<Network> getListOfNetwork() {
@@ -58,21 +70,25 @@ public class SystemAdmin {
     }
 
     public void addUser(String username, String type) {
-        map.put(username, type);
+        mapType.put(username, type);
     }
 
-    public String findUser(String username) {
-        if (map.containsKey(username)) {
-            return map.get(username);
+    public String findUserType(String username) {
+        if (mapType.containsKey(username)) {
+            return mapType.get(username);
         }
         return null;
     }
-    public boolean userExistsInSystem(String username){
-           if (map.containsKey(username)) {
-            return true;
-        }
-        return false;
-    }
-    
 
+    public boolean userExistsInSystem(String username) {
+        return mapType.containsKey(username);
+    }
+
+    public boolean validateUserNamePassword(String userName, String password) {
+        return userNamePasswordMap.containsKey(userName) && userNamePasswordMap.get(userName).equals(password);
+    }
+
+    public static SystemAdmin createSystemAdmin() {
+        return new SystemAdmin("admin", "admin");
+    }
 }
