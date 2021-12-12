@@ -3,40 +3,34 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.BusinessEvent;
-import model.CateringService;
-import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
-import model.Manager;
 import model.Network;
-import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
-import model.Trainer;
 import model.TrainerOrg;
 
 public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     private SystemAdmin systemAdmin;
     private Runnable callOnCreateMethod;
-    private String type;
     private String user;
     private Network network;
 
-    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
+    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
-        this.type = type;
         this.network = network;
         cityNameTextField.setText(network.getName());
         cityNameTextField.setEditable(false);
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
     }
-     public boolean validateName() {
+
+    public boolean validateName() {
         if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
             return true;
         } else {
@@ -44,15 +38,15 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             return false;
         }
     }
-       public boolean validateContactNum() {
+
+    public boolean validateContactNum() {
         if (contactField.getText().matches("[0-9]{10}")) {
             return true;
         } else {
-              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
             return false;
         }
     }
-     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -245,15 +239,15 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 if (OrgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
                     for (PhysicianOrg physician : club.getListOfPhysicianOrg()) {
                         if (physician.getName().equals(OrgName)) {
-                           club.deletePhysician(physician);
+                            club.deletePhysician(physician);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
                     }
                 } else if (OrgType.equals("Trainer") && club.getListOfTrainerOrg() != null) {
-                    for (TrainerOrg trainer :  club.getListOfTrainerOrg()) {
+                    for (TrainerOrg trainer : club.getListOfTrainerOrg()) {
                         if (trainer.getName().equals(OrgName)) {
-                           club.deleteTrainer(trainer);
+                            club.deleteTrainer(trainer);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
@@ -261,7 +255,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 } else if (OrgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
                     for (TherapistOrg therapist : club.getListOfTherapistOrg()) {
                         if (therapist.getName().equals(OrgName)) {
-                           club.deleteTherapist(therapist);
+                            club.deleteTherapist(therapist);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
@@ -280,49 +274,27 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        Object row[] = new Object[20];
         String networkName = network.getName();  //find the network 
         String name = nameField.getText();
         String contact = contactField.getText();
         Network network = systemAdmin.findNetwork(networkName);
-        String orgType1 = orgCombo.getSelectedItem().toString();      // org-type (physician org)     
+        String orgType1 = orgCombo.getSelectedItem().toString();
         EnterpriseDirectory enterpriseDirc = network.getEnterpriseDirectory();
         List<HealthClub> healthClub = enterpriseDirc.getListOfHealthClub();
         for (int i = 0; i < healthClub.size(); i++) {
             healthClub.get(i).findManager(user);      //find healthclub for which manager is working for
             if (orgType1.equals("Physician")) {
                 healthClub.get(i).addPhysicianOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, " Organisation added successfully");
-                return;                               //healthclub found
-            } else if (type.equals("Trainer")) {
+                JOptionPane.showMessageDialog(this, "Physician Organisation added successfully");
+            } else if (orgType1.equals("Trainer")) {
                 healthClub.get(i).addTraineOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation successfully");
-                return;
+                JOptionPane.showMessageDialog(this, "Trainer Organisation successfully");
             } else {
                 healthClub.get(i).addTherapistOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation added successfully");
-                return;
+                JOptionPane.showMessageDialog(this, "Therapist Organisation added successfully");
             }
         }
-
-
+        populateTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void contactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactFieldActionPerformed

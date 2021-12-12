@@ -16,6 +16,16 @@ public class RestaurantManagerPanel extends javax.swing.JPanel {
         this.callOnCreateMethod2 = callOnCreateMethod2;
         this.callOnCreateMethod3 = callOnCreateMethod3;
         this.callOnCreateMethod4 = callOnCreateMethod4;
+        setBackground(new java.awt.Color(255, 204, 204));
+
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setOpaque(true);
+        orgButton.setBackground(new java.awt.Color(244, 120, 140));
+        orgButton.setOpaque(true);
+        orgAdminBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgAdminBtn.setOpaque(true);
+        addMenu.setBackground(new java.awt.Color(244, 120, 140));
+        addMenu.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -108,7 +118,7 @@ public class RestaurantManagerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_orgAdminBtnActionPerformed
 
     private void addMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMenuActionPerformed
-               callOnCreateMethod4.run();
+        callOnCreateMethod4.run();
     }//GEN-LAST:event_addMenuActionPerformed
 
 

@@ -16,6 +16,15 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addButton.setBackground(new java.awt.Color(244, 120, 140));
+        addButton.setOpaque(true);
+        updateButton.setBackground(new java.awt.Color(244, 120, 140));
+        updateButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
 
     public boolean validateName() {
@@ -70,7 +79,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         backButton = new javax.swing.JButton();
         lblsysadmin = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         contactField = new javax.swing.JTextField();
@@ -101,11 +110,11 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("PHONE NUMBER");
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deleteBtn.setText("DELETE");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -124,6 +133,11 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -147,6 +161,11 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
 
         updateButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         updateButton.setText("UPDATE");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("CITY");
@@ -163,10 +182,11 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton4))))
+                                .addComponent(deleteBtn)
+                                .addGap(9, 9, 9))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -216,9 +236,9 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
                 .addComponent(lblsysadmin)
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jButton4)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteBtn)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,50 +269,91 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String username = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec();
+        if (customerDirec.getListOfCustomer() != null) {
+            for (Customer customer : customerDirec.getListOfCustomer()) {
+                if (customer.getUserName().equals(username)) {
+                    systemAdmin.deleteCustomer(customer);
+                    JOptionPane.showMessageDialog(this, "Customer deleted successfully");
+                    return;
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         String name = nameField.getText();
         String contact = contactField.getText();
         String city = cityField.getText();
+        String address = addressField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        if (systemAdmin.userExistsInSystem(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists.");
+            return;
+        }
 
         Customer customer = systemAdmin.getCustomerDirec().addCustomer();  //add customer to directory in system
         customer.setName(name);
         customer.setContact(contact);
         customer.setCity(city);
+        customer.setAddress(address);
         customer.setUserName(username);
         customer.setPassword(password);
+        populateTable();
         JOptionPane.showMessageDialog(this, "Customer added successfully");
-        systemAdmin.addUser(username, "Customer"); //add customer to map
+
+        systemAdmin.addUser(username, password, "Customer");
 
         nameField.setText("");
         contactField.setText("");
         cityField.setText("");
         usernameField.setText("");
         passwordField.setText("");
-
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); //populate table
-        model.setRowCount(0);
-        Object row[] = new Object[10];
-        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec();
-        for (Customer customer1 : customerDirec.getListOfCustomer()) {
-            row[0] = customer1.getName();
-            row[1] = customer1.getContact();
-            row[2] = customer1.getCity();
-            row[6] = customer1.getUserName();
-            row[7] = customer1.getPassword();
-            model.addRow(row);
-        }
-
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() == 1) {
+            String user = usernameField.getText();
+            Customer customer = systemAdmin.findCustomer(user);
+            customer.setAddress(addressField.getText());
+            customer.setName(nameField.getText());
+            customer.setContact(contactField.getText());
+            customer.setCity(cityField.getText());
+            JOptionPane.showMessageDialog(this, "updated Successfully");
+            populateTable();
+
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String customerName = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String customerContact = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String customerCity = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String customerAddress = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+
+        nameField.setText(customerName);
+        contactField.setText(customerContact);
+        cityField.setText(customerCity);
+        addressField.setText(customerAddress);
+        usernameField.setEnabled(false);
+        passwordField.setEnabled(false);
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,7 +362,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
     private javax.swing.JButton backButton;
     private javax.swing.JTextField cityField;
     private javax.swing.JTextField contactField;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -321,12 +382,13 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         Object row[] = new Object[10];
-        for (Customer customer1 : systemAdmin.getCustomerDirec().getListOfCustomer()) {
-            row[0] = customer1.getName();
-            row[1] = customer1.getContact();
-            row[2] = customer1.getCity();
-            row[6] = customer1.getUserName();
-            row[7] = customer1.getPassword();
+        for (Customer customer : systemAdmin.getCustomerDirec().getListOfCustomer()) {
+            row[0] = customer.getName();
+            row[1] = customer.getContact();
+            row[2] = customer.getCity();
+            row[3] = customer.getAddress();
+            row[4] = customer.getUserName();
+            row[5] = customer.getPassword();
             model.addRow(row);
         }
     }

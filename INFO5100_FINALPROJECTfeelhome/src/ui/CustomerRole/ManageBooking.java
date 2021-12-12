@@ -26,6 +26,7 @@ public class ManageBooking extends javax.swing.JPanel {
         this.username = username;
 
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

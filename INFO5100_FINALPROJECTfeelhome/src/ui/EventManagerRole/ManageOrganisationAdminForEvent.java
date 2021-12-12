@@ -33,6 +33,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         this.network = network;
         cityCombo.addItem(network.getName());
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     public boolean validateName() {
@@ -134,6 +135,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         orgCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -154,6 +160,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
         updateBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         updateBtn.setText("UPDATE");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         orgName.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         orgName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select organisation Name" }));
@@ -312,7 +323,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
-        if (systemAdmin.userExistsInSystem(username) == false) {
+        if (!systemAdmin.userExistsInSystem(username)) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).findManager(user) != null) {    //if enterpirse manager found 
                     if (orgType.equals("Catering")) {
@@ -327,7 +338,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Catering");
+                                systemAdmin.addUser(username, password, "Catering");
                                 JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
                                 return;
                             }
@@ -346,7 +357,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Decor");
+                                systemAdmin.addUser(username, password, "Decor");
                                 JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
                                 return;
                             }
@@ -363,7 +374,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Photography");
+                                systemAdmin.addUser(username, password, "Photography");
                                 JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
                                 return;
                             }
@@ -411,6 +422,69 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String managerName = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        String managerUsername = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        String managerPassword = model.getValueAt(jTable1.getSelectedRow(), 5).toString();
+
+        nameField.setText(managerName);
+        usernameField.setText(managerUsername);
+        passwordField.setText(managerPassword);
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() == 1) {
+            String orgType = orgCombo.getSelectedItem().toString();
+            String orgname = orgName.getSelectedItem().toString();
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
+                if (orgType.equals("Catering") && event.getListOfCatering() != null) {
+                    for (CateringService catering : event.getListOfCatering()) {
+                        for (Manager man : catering.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Decor") && event.getListOfDecors() != null) {
+                    for (DecorServices decor : event.getListOfDecors()) {
+
+                        for (Manager man : decor.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Photography") && event.getListOfPhotographyServices() != null) {
+                    for (PhotographyService photo : event.getListOfPhotographyServices()) {
+                        for (Manager man : photo.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

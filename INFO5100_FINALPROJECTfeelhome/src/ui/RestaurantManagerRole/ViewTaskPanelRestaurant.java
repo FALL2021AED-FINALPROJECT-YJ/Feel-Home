@@ -31,6 +31,13 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         this.restaurant = restaurant;
         populateComboBox();
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        acceptBtn.setBackground(new java.awt.Color(244, 120, 140));
+        acceptBtn.setOpaque(true);
+        denyBtn.setBackground(new java.awt.Color(244, 120, 140));
+        denyBtn.setOpaque(true);
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+         backBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -170,7 +177,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         if (delivery == null) {
             JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged  ");
         } else {
-            organizations.add(delivery);     
+            organizations.add(delivery);
         }
     }//GEN-LAST:event_acceptBtnActionPerformed
 

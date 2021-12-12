@@ -3,14 +3,10 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.BusinessEvent;
-import model.CateringService;
-import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Manager;
 import model.Network;
-import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
@@ -35,6 +31,13 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             networkType.addItem(city.getName());
         }
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        updateButton.setBackground(new java.awt.Color(244, 120, 140));
+        updateButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
+        deleteButton.setBackground(new java.awt.Color(244, 120, 140));
+        deleteButton.setOpaque(true);
     }
 
     public boolean validateName() {
@@ -70,12 +73,13 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
-        deleteBtn = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         orgName = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         networkType = new javax.swing.JComboBox<>();
+        updateButton = new javax.swing.JButton();
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -126,19 +130,19 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        deleteBtn.setText("DELETE");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        backBtn.setText("BACK");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -157,6 +161,9 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                 networkTypeActionPerformed(evt);
             }
         });
+
+        updateButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        updateButton.setText("UPDATE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -194,30 +201,28 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(backBtn))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 459, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(391, 391, 391)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(426, 426, 426))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(deleteBtn)
-                        .addGap(82, 82, 82))))
+                        .addGap(34, 34, 34)
+                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deleteButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(backButton)))))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(backBtn)
+                .addComponent(backButton)
                 .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deleteBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteButton)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -236,15 +241,17 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                     .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(87, 87, 87)
-                .addComponent(addButton)
-                .addGap(106, 106, 106))
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(133, 133, 133))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
-    }//GEN-LAST:event_backBtnActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -254,7 +261,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (systemAdmin.userExistsInSystem(username) == false) {
+        if (!systemAdmin.userExistsInSystem(username)) {
             Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
@@ -273,8 +280,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Physician");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Physician");
+                                JOptionPane.showMessageDialog(this, "Successfully added Physician organization");
                                 return;
                             }
                         }
@@ -290,8 +297,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Trainer");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Trainer");
+                                JOptionPane.showMessageDialog(this, "Successfully added Trainer organization");
                                 return;
                             }
                         }
@@ -307,8 +314,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Therapist");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Therapist");
+                                JOptionPane.showMessageDialog(this, "Successfully added Therapist organization");
                                 return;
                             }
                         }
@@ -353,7 +360,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_networkTypeActionPerformed
 
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int selectedRowIndex = jTable1.getSelectedRow();
         if (selectedRowIndex < 0) {
@@ -408,13 +415,13 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                 }
             }
         }
-    }//GEN-LAST:event_deleteBtnActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton backBtn;
-    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -428,6 +435,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 

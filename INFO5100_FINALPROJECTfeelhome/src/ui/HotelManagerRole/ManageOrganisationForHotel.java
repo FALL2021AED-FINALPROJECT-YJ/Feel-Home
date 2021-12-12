@@ -31,9 +31,18 @@ public class ManageOrganisationForHotel extends javax.swing.JPanel {
         this.user = user;
         this.type = type;
         this.network = network;
-
+      setBackground(new java.awt.Color(255, 204, 204));
         cityNameTextField.setText(network.getName());
         cityNameTextField.setEditable(false);
+        
+            deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addBtn.setOpaque(true);
+        updateBtn.setBackground(new java.awt.Color(244, 120, 140));
+        updateBtn.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
 
         populateTable();
     }

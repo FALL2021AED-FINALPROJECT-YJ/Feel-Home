@@ -3,21 +3,12 @@ package ui.HotelManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.BusinessEvent;
-import model.CateringService;
-import model.DecorServices;
 import model.EnterpriseDirectory;
-import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
-import model.LaundaryService;
 import model.Manager;
 import model.Network;
-import model.PhotographyService;
-import model.PhysicianOrg;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
 import model.TransportationOrg;
 
 public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
@@ -37,6 +28,15 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         this.network = network;
         cityCombo.addItem(network.getName());
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        deleteButton.setBackground(new java.awt.Color(244, 120, 140));
+        deleteButton.setOpaque(true);
+        addButton.setBackground(new java.awt.Color(244, 120, 140));
+        addButton.setOpaque(true);
+        updateButton.setBackground(new java.awt.Color(244, 120, 140));
+        updateButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
 
     public boolean validateName() {
@@ -68,7 +68,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cityCombo = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JTextField();
@@ -113,8 +113,8 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
 
         cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("UPDATE");
+        updateButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        updateButton.setText("UPDATE");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("ORGANIZATION NAME");
@@ -188,7 +188,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(42, 42, 42)
-                                        .addComponent(jButton3)
+                                        .addComponent(updateButton)
                                         .addGap(169, 169, 169))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -254,7 +254,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addButton)
-                            .addComponent(jButton3))
+                            .addComponent(updateButton))
                         .addGap(128, 128, 128))))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -319,7 +319,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (systemAdmin.userExistsInSystem(username) == false) {
+        if (!systemAdmin.userExistsInSystem(username)) {
             Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<Hotel> list = enterpriseDirec.getListOfHotel();
@@ -337,7 +337,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Laundary");
+                                systemAdmin.addUser(username, password, "Laundary");
                                 JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
                                 return;
                             }
@@ -354,7 +354,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Transportation");
+                                systemAdmin.addUser(username, password, "Transportation");
                                 JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
                                 return;
                             }
@@ -398,7 +398,6 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     private javax.swing.JButton backButton;
     private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -412,6 +411,7 @@ public class ManageOrganisationAdminForHotel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 

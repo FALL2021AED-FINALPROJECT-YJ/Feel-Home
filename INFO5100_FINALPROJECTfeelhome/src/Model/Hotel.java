@@ -11,7 +11,11 @@ public class Hotel extends Enterprise {
     private List<Manager> listOfManager;
     private List<LaundaryOrg> laundaryOrg;
     private List<TransportationOrg> transportationOrgList;
- 
+
+    public Hotel() {
+
+    }
+
     public Hotel(String name, String contact) {
         super(name, contact);
         listOfManager = new ArrayList<>();
@@ -50,7 +54,7 @@ public class Hotel extends Enterprise {
             if (room.getRoomType().equals(roomType) && room.isAvailable(startDate, endDate)) {
                 availableRooms.add(room);
             }
-        }        
+        }
         return availableRooms;
     }
 
@@ -106,15 +110,15 @@ public class Hotel extends Enterprise {
     }
 
     public void deleteManager(Manager man) {
-       listOfManager.remove(man);
+        listOfManager.remove(man);
     }
 
     public void deleteLaundary(LaundaryOrg laundary) {
-       laundaryOrg.remove(laundary);
+        laundaryOrg.remove(laundary);
     }
 
     public void deleteTransportation(TransportationOrg transport) {
-             transportationOrgList.remove(transport);
+        transportationOrgList.remove(transport);
     }
 
 }

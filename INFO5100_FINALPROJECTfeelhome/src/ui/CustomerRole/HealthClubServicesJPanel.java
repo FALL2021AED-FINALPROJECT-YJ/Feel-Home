@@ -26,6 +26,7 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         for (HealthClub healthClub : booking.getNetwork().getEnterpriseDirectory().getListOfHealthClub()) {
             healthClubCombo.addItem(healthClub);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

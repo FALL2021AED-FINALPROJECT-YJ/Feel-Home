@@ -21,10 +21,10 @@ public class Booking {
     private List<Service> services;
     private String id;
 
-    public void setId(String id) {
-        this.id = id;
+    public Booking() {
+        
     }
-
+    
     public Booking(Hotel hotel, Network network) {
         this.services = new ArrayList<>();
         this.services.add(new HotelService(hotel));
@@ -48,6 +48,10 @@ public class Booking {
         this.cost = cost;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getId() {
         return id;
     }

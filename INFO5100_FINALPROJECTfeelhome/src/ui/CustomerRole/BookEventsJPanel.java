@@ -30,6 +30,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         for (BusinessEvent eventOrg : booking.getNetwork().getEnterpriseDirectory().getListOfEvents()) {
             orgComboBox.addItem(eventOrg);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

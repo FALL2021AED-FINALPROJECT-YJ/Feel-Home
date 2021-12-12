@@ -10,6 +10,7 @@ import model.Network;
 import model.Room;
 import model.Room.RoomType;
 import model.SystemAdmin;
+import ui.main.DateUtils;
 
 public class BookRoomServicesJPanel extends javax.swing.JPanel {
 
@@ -28,6 +29,7 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         for (RoomType type : RoomType.values()) {
             roomtypeComboBox.addItem(type);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")
@@ -217,6 +219,16 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         int roomCount = Integer.parseInt(roomField.getText());
         RoomType roomType = (RoomType) roomtypeComboBox.getSelectedItem();
 
+        if (checkinDate.compareTo(DateUtils.now()) < 0 || checkoutdate.compareTo(DateUtils.now()) < 0) {
+            JOptionPane.showMessageDialog(this, "Checkin and checkout dates cannot be in the past.");
+            return;
+        }
+        
+        if (checkinDate.compareTo(checkoutdate) > 0) {
+            JOptionPane.showMessageDialog(this, "Checkout date should be after checkin date.");
+            return;
+        }
+        
         Network network = systems.findNetwork(city);
 
         Hotel hotel = network.getEnterpriseDirectory().findHotel(hotelCombo.getSelectedItem().toString());

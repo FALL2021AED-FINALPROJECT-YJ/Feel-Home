@@ -21,6 +21,7 @@ public class HotelServicePanel extends javax.swing.JPanel {
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.username = username;
         this.booking = booking;
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

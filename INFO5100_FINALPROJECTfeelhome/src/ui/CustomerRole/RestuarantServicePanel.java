@@ -27,6 +27,7 @@ public class RestuarantServicePanel extends javax.swing.JPanel {
         for (Restaurant res : booking.getNetwork().getEnterpriseDirectory().getListOfRestaurants()) {
             restaurantCombo.addItem(res);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
     }
 
     @SuppressWarnings("unchecked")

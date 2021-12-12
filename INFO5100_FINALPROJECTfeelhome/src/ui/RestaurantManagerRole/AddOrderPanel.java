@@ -18,15 +18,21 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private String type;
     private String user;
     private Network network;
-    public AddOrderPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type,Network network) {
+
+    public AddOrderPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
         this.type = type;
         this.network = network;
-
+        setBackground(new java.awt.Color(255, 204, 204));
         populateMenu();
+        addBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addBtn.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
+
     }
 
     public boolean validateMenu() {
@@ -71,7 +77,7 @@ public class AddOrderPanel extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -179,7 +185,7 @@ public class AddOrderPanel extends javax.swing.JPanel {
                 for (int k = 0; k < manager.size(); k++) {
                     if (manager.get(i).getUsername().equals(user)) {            //if manager is found in that restaurant then add item to that res...
                         res.get(i).addItem(item, price);
-                         populateMenu();  
+                        populateMenu();
                         JOptionPane.showMessageDialog(this, " Item added successfully");
                         return;
                     }
@@ -204,15 +210,16 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private void populateMenu() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        Object row[] = new Object[10];
+
         Network network1 = systemAdmin.findNetwork(network.getName());
         EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
         for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
             if (restaurant.findManager(user) != null) {
+                Object row[] = new Object[2];
                 for (MenuItem item : restaurant.getListOfItem()) {
                     row[0] = item.getDetails();
                     row[1] = item.getPrice();
-                    model.addColumn(row);
+                    model.addRow(row);
                 }
             }
         }

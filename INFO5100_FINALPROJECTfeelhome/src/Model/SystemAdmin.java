@@ -20,7 +20,7 @@ public class SystemAdmin {
         mapType = new HashMap<>();
         userNamePasswordMap = new HashMap<>();
         userNamePasswordMap.put(userName, password);
-        mapType.put(userName, "admin");
+        addUser(userName, password, "admin");
     }
 
     public Map<String, String> getUserNamePasswordMap() {
@@ -69,8 +69,9 @@ public class SystemAdmin {
         return null;
     }
 
-    public void addUser(String username, String type) {
+    public void addUser(String username, String password, String type) {
         mapType.put(username, type);
+        userNamePasswordMap.put(username, password);
     }
 
     public String findUserType(String username) {
@@ -90,5 +91,19 @@ public class SystemAdmin {
 
     public static SystemAdmin createSystemAdmin() {
         return new SystemAdmin("admin", "admin");
+    }
+
+    public void deleteCustomer(Customer customer) {
+        customerDirec.getListOfCustomer().remove(customer);
+        mapType.remove(customer.getUserName());
+    }
+
+    public Customer findCustomer(String user) {
+        for (Customer custom : customerDirec.getListOfCustomer()) {
+            if (custom.getUserName().equals(user)) {
+                return custom;
+            }
+        }
+        return null;
     }
 }
