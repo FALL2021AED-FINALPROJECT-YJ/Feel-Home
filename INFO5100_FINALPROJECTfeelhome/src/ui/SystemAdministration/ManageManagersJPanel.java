@@ -1,6 +1,5 @@
 package ui.SystemAdministration;
 
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.BusinessEvent;
@@ -11,6 +10,7 @@ import model.Manager;
 import model.Network;
 import model.Restaurant;
 import model.SystemAdmin;
+import ui.main.Validator;
 
 public class ManageManagersJPanel extends javax.swing.JPanel {
 
@@ -330,77 +330,79 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         Object row[] = new Object[10];
-        String ManagerName = nameField.getText();
+        String name = nameField.getText();
         String userName = usernameField.getText();
         String password = passwordField.getText();
         String networkName = networkType.getSelectedItem().toString();
         String enterpriseType1 = enterpriseType.getSelectedItem().toString();   //type of enterprises eg:healthclub
         String enterpriseName1 = enterpriseName.getSelectedItem().toString();
+
+        if (!Validator.validateName(this, name) || !Validator.validateUserName(this, userName)
+                || !Validator.validatePassword(this, password)) {
+            return;
+        }
+
         if (!systemAdmin.userExistsInSystem(userName)) {
             Network network = systemAdmin.findNetwork(networkName);  //finiding network
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
                 HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
-                healthclubName1.addManager(ManagerName, userName, password);
+                healthclubName1.addManager(name, userName, password);
                 systemAdmin.getUserNamePasswordMap();
                 systemAdmin.addUser(userName, password, "Health Club");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
                 row[1] = "Health Club";
                 row[2] = enterpriseName1;
-                row[3] = ManagerName;
+                row[3] = name;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
                 return;
             } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
                 BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
-                event1.addManager(ManagerName, userName, password);
+                event1.addManager(name, userName, password);
                 systemAdmin.addUser(userName, password, "Business Event");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
                 row[1] = "BusinessEvent";
                 row[2] = enterpriseName1;
-                row[3] = ManagerName;
+                row[3] = name;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                return;
             } else if (enterpriseType1.equals("Restaurant") && enterpriseDirec != null) {
                 Restaurant res1 = enterpriseDirec.findRestaurant(enterpriseName1);
                 res1.addManager(userName, userName, password);
-                System.out.println(res1.getListOfManager().size() + " manager in restaurant");
                 systemAdmin.addUser(userName, password, "Restaurant");
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
+
                 row[0] = networkName;
                 row[1] = "Restaurant";
                 row[2] = enterpriseName1;
-                row[3] = ManagerName;
+                row[3] = name;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                return;
             } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
                 Hotel hotel1 = enterpriseDirec.findHotel(enterpriseName1);
-                hotel1.addManager(ManagerName, userName, password);
+                hotel1.addManager(name, userName, password);
                 systemAdmin.addUser(userName, password, "Hotel");
-                System.out.println("Hotel added in city" + networkName);
-                JOptionPane.showMessageDialog(this, " Manager added successfully");
                 row[0] = networkName;
                 row[1] = "Hotel";
                 row[2] = enterpriseName1;
-                row[3] = ManagerName;
+                row[3] = name;
                 row[4] = userName;
                 row[5] = password;
                 model.addRow(row);
-                return;
             }
         } else {
-            JOptionPane.showMessageDialog(this, " This username already exists ");
+            JOptionPane.showMessageDialog(this, String.format("This username '%s' already exists", userName));
         }
+        JOptionPane.showMessageDialog(this, "Manager added successfully");
         nameField.setText("");
         usernameField.setText("");
         passwordField.setText("");
+        enterpriseName.setSelectedIndex(0);
+        enterpriseType.setSelectedIndex(0);
+        networkType.setSelectedIndex(0);
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -441,82 +443,94 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
 
-        if (jTable1.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Please select a row to update");
-            return;
+        if (jTable1.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
         }
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        if (jTable1.getSelectedRowCount() == 1) {
 
-            String networkName = networkType.getSelectedItem().toString();
-            String enterpriseType1 = enterpriseType.getSelectedItem().toString();
-            String enterpriseName1 = enterpriseName.getSelectedItem().toString();
-            String managerUserName = usernameField.getText();
+        String networkName = networkType.getSelectedItem().toString();
+        String enterpriseType1 = enterpriseType.getSelectedItem().toString();
+        String enterpriseName1 = enterpriseName.getSelectedItem().toString();
+        String managerUserName = usernameField.getText();
 
-            Network network = systemAdmin.findNetwork(networkName);  //finiding network
-            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        String password = passwordField.getText();
+        String name = nameField.getText();
 
-//            if (usernameField.getText().equals(passwordField.getText())) {          // since username and password should be equal
-            if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
-                HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
-                for (Manager man : healthclubName1.getListOfManager()) {
-                    if (man.getUsername().equals(managerUserName)) {
-                        man.setName(nameField.getText());
-//                            man.setUsername(usernameField.getText());
-//                            man.setPassword( passwordField.getText());
-                        populateTable();
-                        JOptionPane.showMessageDialog(this, " Updated successfully ");
-                        return;
-                    }
+        Network network = systemAdmin.findNetwork(networkName);  //finiding network
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+
+        if (enterpriseType1.equals("Health Club")) {
+            HealthClub healthclubName1 = enterpriseDirec.findHealthClub(enterpriseName1);
+            for (Manager man : healthclubName1.getListOfManager()) {
+                if (man.getUsername().equals(managerUserName)) {
+
+                    man.setName(name);
+                    man.setPassword(password);
+
+                    systemAdmin.updateUser(managerUserName, password);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, " Updated successfully ");
+                    return;
                 }
-            } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
-                BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
-                for (Manager man : event1.getListOfManager()) {
-                    if (man.getUsername().equals(managerUserName)) {
-                        man.setName(nameField.getText());
-//                            man.setUsername(usernameField.getText());
-//                            man.setPassword( passwordField.getText());
-                        populateTable();
-                        JOptionPane.showMessageDialog(this, " Updated successfully ");
-                        return;
-                    }
-                }
-            } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
-                Hotel hotel = enterpriseDirec.findHotel(enterpriseName1);
-                for (Manager man : hotel.getListOfManager()) {
-                    if (man.getUsername().equals(managerUserName)) {
-                        man.setName(nameField.getText());
-//                            man.setUsername(usernameField.getText());
-//                            man.setPassword( passwordField.getText());
-                        populateTable();
-                        JOptionPane.showMessageDialog(this, " Updated successfully ");
-                        return;
-                    }
-                }
-            } else if (enterpriseType1.equals("Restaurant") && enterpriseDirec != null) {
-                Restaurant res = enterpriseDirec.findRestaurant(enterpriseName1);
-                for (Manager man : res.getListOfManager()) {
-                    if (man.getUsername().equals(managerUserName)) {
-                        man.setName(nameField.getText());
-//                            man.setUsername(usernameField.getText());
-//                            man.setPassword(passwordField.getText());
-                        populateTable();
-                        JOptionPane.showMessageDialog(this, " Updated successfully ");
-                        return;
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Username and password should match");
             }
+        } else if (enterpriseType1.equals("Business Event")) {
+            BusinessEvent event1 = enterpriseDirec.findEvent(enterpriseName1);
+            for (Manager man : event1.getListOfManager()) {
+                if (man.getUsername().equals(managerUserName)) {
+
+                    man.setName(name);
+                    man.setPassword(password);
+
+                    systemAdmin.updateUser(managerUserName, password);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, " Updated successfully ");
+                    return;
+                }
+            }
+        } else if (enterpriseType1.equals("Hotel")) {
+            Hotel hotel = enterpriseDirec.findHotel(enterpriseName1);
+            for (Manager man : hotel.getListOfManager()) {
+                if (man.getUsername().equals(managerUserName)) {
+
+                    man.setName(name);
+                    man.setPassword(password);
+
+                    systemAdmin.updateUser(managerUserName, password);
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, " Updated successfully ");
+                    return;
+                }
+            }
+        } else if (enterpriseType1.equals("Restaurant")) {
+            Restaurant res = enterpriseDirec.findRestaurant(enterpriseName1);
+            for (Manager man : res.getListOfManager()) {
+                if (man.getUsername().equals(managerUserName)) {
+                    man.setName(name);
+                    man.setPassword(password);
+
+                    systemAdmin.updateUser(managerUserName, password);
+
+                    populateTable();
+                    JOptionPane.showMessageDialog(this, "Updated successfully ");
+                    return;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid enterprise [" + enterpriseType1 + "]");
         }
 
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() != 1) {
+            return;
+        }
+
         String networkName = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
-        String enterpriseType1 = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
-        String enterpriseName1 = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+
+        String eType = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String eName = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+
         String managerName = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
         String managerUserName = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
         String managerPassword = model.getValueAt(jTable1.getSelectedRow(), 5).toString();
@@ -525,7 +539,9 @@ public class ManageManagersJPanel extends javax.swing.JPanel {
         usernameField.setText(managerUserName);
         passwordField.setText(managerPassword);
 
-
+        networkType.setSelectedItem(networkName);
+        enterpriseName.setSelectedItem(eName);
+        enterpriseType.setSelectedItem(eType);
     }//GEN-LAST:event_jTable1MouseClicked
 
 

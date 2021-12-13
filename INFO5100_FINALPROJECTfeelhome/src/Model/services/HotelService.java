@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Hotel;
 import model.RoomList;
+import ui.main.DateUtils;
 
 public class HotelService extends Service {
 
@@ -20,14 +21,13 @@ public class HotelService extends Service {
         public int getPrice() {
             return price;
         }
-
     }
 
     private RoomList roomlist;
     private List<HotelServiceType> hotelServices;
 
     public HotelService(Hotel hotel) {
-        super(hotel, Service.ServiceType.HOTEL, null);
+        super(hotel, Service.ServiceType.HOTEL, DateUtils.now());
         this.hotelServices = new ArrayList<>();
         this.roomlist = new RoomList();
     }
@@ -58,12 +58,17 @@ public class HotelService extends Service {
         sb.append("\n").append(TAB).append("Hotel: ").append(enterprise);
         sb.append("\n").append(TAB).append("Date of appointment: ").append(getDate());
         sb.append("\n").append(TAB).append("Status: ").append(getStatus());
-        sb.append("\n").append(TAB).append("Below are the details of services included for your appointment:");
-        for (HotelService.HotelServiceType service : hotelServices) {
-            sb.append("\n").append(TAB).append(TAB)
-                    .append(String.format("Service type: %s, Cost: %d", service.toString(), service.getPrice()));
+
+        if (hotelServices == null || hotelServices.isEmpty()) {
+            sb.append("\n").append(TAB).append("No services selected for this booking.");
+        } else {
+            sb.append("\n").append(TAB).append("Below are the details of services included for your booking:");
+            for (HotelService.HotelServiceType service : hotelServices) {
+                sb.append("\n").append(TAB).append(TAB)
+                        .append(String.format("Service type: %s, Cost: $%d", service.toString(), service.getPrice()));
+            }
+            sb.append("\n").append(TAB).append("Total cost for hotel: $").append(totalCost);
         }
-        sb.append("\n").append(TAB).append("Total cost: ").append(totalCost);
         return sb.toString();
     }
 

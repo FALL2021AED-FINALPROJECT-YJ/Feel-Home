@@ -11,6 +11,7 @@ import model.DeliverymanOrg;
 import model.Organization;
 import model.Restaurant;
 import model.SystemAdmin;
+import model.services.BusinessEventService;
 import model.services.RestaurantService;
 import model.services.Service;
 
@@ -37,7 +38,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         denyBtn.setBackground(new java.awt.Color(244, 120, 140));
         denyBtn.setOpaque(true);
         backBtn.setBackground(new java.awt.Color(244, 120, 140));
-         backBtn.setOpaque(true);
+        backBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -78,7 +79,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         jLabel1.setText("SELECT A ORGANIZATION FOR DELIVERYMAN");
 
         acceptBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        acceptBtn.setText("ACCEPT ORDERS");
+        acceptBtn.setText("ACCEPT ORDER");
         acceptBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptBtnActionPerformed(evt);
@@ -86,7 +87,7 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
         });
 
         denyBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        denyBtn.setText("DENY ORDERS");
+        denyBtn.setText("DENY ORDER");
         denyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 denyBtnActionPerformed(evt);
@@ -165,40 +166,76 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
         int selectRowIndex = jTable1.getSelectedRow();
         if (selectRowIndex < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
+            JOptionPane.showMessageDialog(this, "Please select a booking to assign request.");
             return;
         }
+
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         Booking booking = (Booking) model.getValueAt(selectRowIndex, 0);
 
-        List<Organization> organizations = new ArrayList<>();
-        DeliverymanOrg delivery = (DeliverymanOrg) deliveryOrg.getSelectedItem();
-
-        if (delivery == null) {
-            JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged  ");
-        } else {
-            organizations.add(delivery);
+        RestaurantService resService = null;
+        for (Service service : booking.getServices()) {
+            if (restaurant.getName().equals(service.getEnterprise().getName())) {
+                resService = (RestaurantService) service;
+                break;
+            }
         }
+
+        if (resService == null) {
+            throw new RuntimeException("Restaurant service not found, something went wrong.");
+        }
+
+        if (!resService.getStatus().equals(Service.Status.PENDING)) {
+            JOptionPane.showMessageDialog(this, String.format("Booking '%s' should be 'PENDING' state to be accepted.",
+                    booking.getId()));
+            return;
+        }
+
+        DeliverymanOrg delivery = (DeliverymanOrg) deliveryOrg.getSelectedItem();
+        if (delivery == null) {
+            JOptionPane.showMessageDialog(this, "Please select delivery organization to be assinged.");
+            return;
+        }
+
+        resService.addOrganization(delivery);
+        resService.setStatus(Service.Status.CONFIRMED);
+
+        JOptionPane.showMessageDialog(this, String.format("Booking %s is assigned to delivery ord '%s'",
+                booking.getId(), delivery));
+
+        populateTable();
     }//GEN-LAST:event_acceptBtnActionPerformed
 
     private void denyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyBtnActionPerformed
-        int selectedRowIndex = jTable1.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String orderId = (String) model.getValueAt(selectedRowIndex, 0);
-        if (selectedRowIndex < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a row to accept or deny order");
+        int selectRowIndex = jTable1.getSelectedRow();
+        if (selectRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a booking to deny request.");
             return;
         }
-        CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
-        for (Customer customer : customerDirec.getListOfCustomer()) {
-            for (Booking booking : customer.getBookingList()) {
-                if (booking.getId().equals(orderId)) {
-                    booking.setId("");
-                    JOptionPane.showMessageDialog(this, "Order has been cancelled  ");
-                    return;
-                }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Booking booking = (Booking) model.getValueAt(selectRowIndex, 0);
+
+        RestaurantService resService = null;
+        for (Service service : booking.getServices()) {
+            if (service instanceof RestaurantService) {
+                resService = (RestaurantService) service;
+                break;
             }
         }
+
+        if (resService == null) {
+            throw new RuntimeException("Restaurant service not found, something went wrong.");
+        }
+        if (!resService.getStatus().equals(Service.Status.PENDING)) {
+            JOptionPane.showMessageDialog(this, String.format("Booking '%s' should be 'PENDING' state to be accepted.",
+                    booking.getId()));
+            return;
+        }
+
+        resService.setStatus(Service.Status.REJECTED);
+        JOptionPane.showMessageDialog(this, String.format("Booking '%s' is denied.", booking.getId()));
+        populateTable();
     }//GEN-LAST:event_denyBtnActionPerformed
 
 
@@ -216,23 +253,21 @@ public class ViewTaskPanelRestaurant extends javax.swing.JPanel {
     private void populateTable() {
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
         Object row[] = new Object[10];
         CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
         for (Customer customer : customerDirec.getListOfCustomer()) {
             for (Booking booking : customer.getBookingList()) {      //get booking details each customer
                 for (Service service : booking.getServices()) {       //get services under booking
-
                     if (service.getEnterprise().getName().equals(restaurant.getName())) {
-
                         RestaurantService restaurantService = (RestaurantService) service;
-
                         row[0] = booking;
                         row[1] = customer;
                         row[2] = booking.getStatus();
                         row[3] = customer.getAddress();
                         row[4] = restaurantService.getStatus();
                         model.addRow(row);
-
                     }
                 }
             }

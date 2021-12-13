@@ -9,7 +9,7 @@ public class DecorServices extends Organization {
     public enum DecorType {
         STANDARD(50, "Standard", "Includes ballon decoration"),
         GOLD(100, "Gold", "Includes flower decoration and fire-works"),
-        PLATINUM(200, "Premiume", "Includes flower decoration,fire-works and customised cake");
+        PLATINUM(200, "Platinum", "Includes flower decoration,fire-works and customised cake");
 
         private final int rate;
         private final String name;

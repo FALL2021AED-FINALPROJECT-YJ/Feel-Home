@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class MenuItem {
 
     private String details;
@@ -29,7 +27,6 @@ public class MenuItem {
     }
 
     public String toString() {
-        return details;
+        return details + " ($" + price + ")";
     }
-
 }

@@ -3,7 +3,6 @@ package ui.RestaurantManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Customer;
 import model.EnterpriseDirectory;
 import model.Manager;
 import model.MenuItem;
@@ -176,19 +175,17 @@ public class AddOrderPanel extends javax.swing.JPanel {
         String item = menuField.getText();
         int price = Integer.parseInt(priceField.getText().trim());
 
-        List<Network> network = systemAdmin.getListOfNetwork(); //get all network
-        for (int i = 0; i < network.size(); i++) {
-            EnterpriseDirectory enterpriseDirec = network.get(i).getEnterpriseDirectory();
-            List<Restaurant> res = enterpriseDirec.getListOfRestaurants();                // get all restaurants
-            for (int j = 0; j < res.size(); j++) {
-                List<Manager> manager = res.get(i).getListOfManager(); //get all managers
-                for (int k = 0; k < manager.size(); k++) {
-                    if (manager.get(i).getUsername().equals(user)) {            //if manager is found in that restaurant then add item to that res...
-                        res.get(i).addItem(item, price);
-                        populateMenu();
-                        JOptionPane.showMessageDialog(this, " Item added successfully");
-                        return;
-                    }
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        List<Restaurant> resList = enterpriseDirec.getListOfRestaurants();                // get all restaurants
+        for (Restaurant res : resList) {
+            List<Manager> managers = res.getListOfManager();
+            for (Manager manager : managers) {
+                if (manager.getUsername().equals(user)) {            //if manager is found in that restaurant then add item to that res...
+                    res.addItem(item, price);
+
+                    populateMenu();
+                    JOptionPane.showMessageDialog(this, "Item added successfully");
+                    return;
                 }
             }
         }
@@ -210,12 +207,11 @@ public class AddOrderPanel extends javax.swing.JPanel {
     private void populateMenu() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-
-        Network network1 = systemAdmin.findNetwork(network.getName());
-        EnterpriseDirectory enterpriseDirec = network1.getEnterpriseDirectory();
+        
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         for (Restaurant restaurant : enterpriseDirec.getListOfRestaurants()) {
             if (restaurant.findManager(user) != null) {
-                Object row[] = new Object[2];
+                Object row[] = new Object[10];
                 for (MenuItem item : restaurant.getListOfItem()) {
                     row[0] = item.getDetails();
                     row[1] = item.getPrice();

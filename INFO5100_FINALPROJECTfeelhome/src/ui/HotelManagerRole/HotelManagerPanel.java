@@ -18,11 +18,11 @@ public class HotelManagerPanel extends javax.swing.JPanel {
         this.callOnCreateMethod3 = callOnCreateMethod3;
         this.callOnCreateMethod4 = callOnCreateMethod4;
         setBackground(new java.awt.Color(255, 204, 204));
-         viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
         viewTask.setOpaque(true);
-       orgBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgBtn.setBackground(new java.awt.Color(244, 120, 140));
         orgBtn.setOpaque(true);
-         orgAdminBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgAdminBtn.setBackground(new java.awt.Color(244, 120, 140));
         orgAdminBtn.setOpaque(true);
         manageRooms.setBackground(new java.awt.Color(244, 120, 140));
         manageRooms.setOpaque(true);

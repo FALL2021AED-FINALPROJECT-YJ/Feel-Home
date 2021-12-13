@@ -1,6 +1,5 @@
 package model.services;
 
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +41,17 @@ public class BusinessEventService extends Service {
         sb.append("\n").append(TAB).append("Organization conducting event: ").append(enterprise);
         sb.append("\n").append(TAB).append("Date of event: ").append(getDate());
         sb.append("\n").append(TAB).append("Status: ").append(getStatus());
-        sb.append("\n").append(TAB).append("Below are the details of services included for the business event:");
-        for (Map.Entry<BusinessEventServiceType, Integer> entry : businessEventServiceTypes.entrySet()) {
-            sb.append("\n").append(TAB).append(TAB)
-                    .append(String.format("Service type: %s, Cost: %d", entry.getKey(), entry.getValue()));
+
+        if (businessEventServiceTypes == null || businessEventServiceTypes.isEmpty()) {
+            sb.append("\n").append(TAB).append("No services selected for this booking.");
+        } else {
+            sb.append("\n").append(TAB).append("Below are the details of services included for the business event:");
+            for (Map.Entry<BusinessEventServiceType, Integer> entry : businessEventServiceTypes.entrySet()) {
+                sb.append("\n").append(TAB).append(TAB)
+                        .append(String.format("Service type: %s, Cost: $%d", entry.getKey(), entry.getValue()));
+            }
+            sb.append("\n").append(TAB).append("Total cost for business event: $").append(totalCost);
         }
-        sb.append("\n").append(TAB).append("Total cost: ").append(totalCost);
         return sb.toString();
     }
 }

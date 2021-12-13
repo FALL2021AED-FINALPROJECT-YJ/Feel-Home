@@ -33,12 +33,10 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         populateComboBox();
         populateTable();
         setBackground(new java.awt.Color(255, 204, 204));
-         viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
         viewTask.setOpaque(true);
         backButton.setBackground(new java.awt.Color(244, 120, 140));
         backButton.setOpaque(true);
-         deleteButton.setBackground(new java.awt.Color(244, 120, 140));
-        deleteButton.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +45,6 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        deleteButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         laundaryOrg = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -74,9 +71,6 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        deleteButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        deleteButton.setText("DELETE");
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("SELECT A LAUNDARY ORG");
@@ -134,9 +128,6 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(deleteButton)
-                        .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(164, 164, 164))))
             .addGroup(layout.createSequentialGroup()
@@ -153,9 +144,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteButton)
-                .addGap(54, 54, 54)
+                .addGap(89, 89, 89)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -193,6 +182,12 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
         if (hotelService == null) {
             JOptionPane.showMessageDialog(this, "Cannot find hotel");
+            return;
+        }
+
+        if (!hotelService.getStatus().equals(Service.Status.PENDING)) {
+            JOptionPane.showMessageDialog(this, String.format("Booking '%s' should be 'PENDING' state to be accepted.",
+                    booking.getId()));
             return;
         }
 
@@ -272,7 +267,6 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

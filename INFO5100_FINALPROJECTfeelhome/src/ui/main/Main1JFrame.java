@@ -1,7 +1,6 @@
 package ui.main;
 
 import db.DbUtils;
-import java.awt.Color;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Booking;
@@ -29,7 +28,7 @@ import ui.EventManagerRole.ManageOrganisationForEvents;
 import ui.EventManagerRole.ViewTaskPanelForEvent;
 import ui.HealthClubManagerRole.ViewTaskPanel;
 import ui.HealthClubManagerRole.HealthClubManagerPanel;
-import ui.HealthClubManagerRole.ManageOrganisationPanelForRestaurant;
+import ui.RestaurantManagerRole.ManageOrganisationPanelForRestaurant;
 import ui.HealthClubManagerRole.OrganizationAdminPanel;
 import ui.HealthClubManagerRole.ManageOrganizationPanel;
 import ui.HotelManagerRole.HotelManagerPanel;
@@ -46,8 +45,8 @@ import ui.SystemAdministration.ManageEnterpriseJPanel;
 import ui.SystemAdministration.ManageManagersJPanel;
 import ui.SystemAdministration.ManageNetworkJPanel;
 import ui.SystemAdministration.SystemAdministrationJPanel;
-import ui.confirm.ConfirmWorkRequestsJPanel;
-import ui.confirm.ConfirmWorkrequestForDeliveryman;
+import ui.confirm.ConfirmWorkRequestsForEventPanel;
+
 
 public class Main1JFrame extends javax.swing.JFrame {
 
@@ -76,10 +75,23 @@ public class Main1JFrame extends javax.swing.JFrame {
         logoutBtn = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
         WorkArea = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ControlPanel.setBackground(new java.awt.Color(255, 102, 102));
+        ControlPanel.setBackground(new java.awt.Color(255, 153, 153));
         ControlPanel.setPreferredSize(new java.awt.Dimension(138, 813));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -111,61 +123,111 @@ public class Main1JFrame extends javax.swing.JFrame {
         ControlPanelLayout.setHorizontalGroup(
             ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ControlPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(ControlPanelLayout.createSequentialGroup()
                 .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usernameField)
+                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(ControlPanelLayout.createSequentialGroup()
                         .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(ControlPanelLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
+                                .addGap(53, 53, 53)
                                 .addComponent(jLabel1))
                             .addGroup(ControlPanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel2)))
-                        .addContainerGap(14, Short.MAX_VALUE))))
-            .addGroup(ControlPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ControlPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(passwordField)
+                                .addGap(63, 63, 63)
+                                .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         ControlPanelLayout.setVerticalGroup(
             ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ControlPanelLayout.createSequentialGroup()
-                .addGap(176, 176, 176)
+                .addGap(165, 165, 165)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(loginBtn)
-                .addGap(18, 18, 18)
-                .addComponent(logoutBtn)
-                .addContainerGap(372, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(330, Short.MAX_VALUE))
         );
 
         jSplitPane.setLeftComponent(ControlPanel);
 
-        WorkArea.setBackground(new java.awt.Color(255, 153, 153));
+        WorkArea.setBackground(new java.awt.Color(255, 204, 204));
+        WorkArea.setLayout(null);
 
-        javax.swing.GroupLayout WorkAreaLayout = new javax.swing.GroupLayout(WorkArea);
-        WorkArea.setLayout(WorkAreaLayout);
-        WorkAreaLayout.setHorizontalGroup(
-            WorkAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 927, Short.MAX_VALUE)
-        );
-        WorkAreaLayout.setVerticalGroup(
-            WorkAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 813, Short.MAX_VALUE)
-        );
+        jLabel3.setBackground(new java.awt.Color(0, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Algerian", 1, 48)); // NOI18N
+        jLabel3.setText("WELCOME TO FEEL-HOME SERVICES");
+        WorkArea.add(jLabel3);
+        jLabel3.setBounds(85, 62, 892, 58);
+
+        jLabel6.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        jLabel6.setText("ABOUT US");
+        WorkArea.add(jLabel6);
+        jLabel6.setBounds(470, 144, 93, 22);
+
+        jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel4.setText("we provide different types of services other than booking rooms ");
+        WorkArea.add(jLabel4);
+        jLabel4.setBounds(284, 195, 566, 22);
+
+        jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel7.setText("customers can book for any kind of BUSINESS EVENTS");
+        WorkArea.add(jLabel7);
+        jLabel7.setBounds(305, 232, 469, 22);
+
+        jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel8.setText("customers can also join our HEALTH CLUB");
+        WorkArea.add(jLabel8);
+        jLabel8.setBounds(349, 274, 365, 22);
+
+        jLabel9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel9.setText("customers can have food and beverages fom our RESTAURANT");
+        WorkArea.add(jLabel9);
+        jLabel9.setBounds(284, 316, 544, 22);
+
+        jLabel10.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel10.setText("customers can also add services like LAUNDRY, TRANSPORTATION");
+        WorkArea.add(jLabel10);
+        jLabel10.setBounds(255, 358, 574, 22);
+
+        jLabel11.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel11.setText("we also provide MEDICAL ASSISTANCE in case of emergency");
+        WorkArea.add(jLabel11);
+        jLabel11.setBounds(300, 400, 520, 22);
+
+        jLabel5.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        jLabel5.setText("CONTACT US");
+        WorkArea.add(jLabel5);
+        jLabel5.setBounds(477, 465, 121, 22);
+
+        jLabel14.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel14.setText("+1 234-638-9566");
+        WorkArea.add(jLabel14);
+        jLabel14.setBounds(477, 507, 136, 22);
+
+        jLabel13.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel13.setText("feelhome@hotmail.com");
+        WorkArea.add(jLabel13);
+        jLabel13.setBounds(459, 538, 205, 22);
+
+        jLabel12.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel12.setText("HAVE A WONDERFULL TIME WITH US");
+        WorkArea.add(jLabel12);
+        jLabel12.setBounds(288, 688, 543, 43);
+        WorkArea.add(jLabel16);
+        jLabel16.setBounds(910, 340, 0, 150);
 
         jSplitPane.setRightComponent(WorkArea);
 
@@ -173,7 +235,7 @@ public class Main1JFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane)
+            .addComponent(jSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1293, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +277,33 @@ public class Main1JFrame extends javax.swing.JFrame {
                 case "Business Event":
                     eventManagerPanel();
                     break;
-
+                case "Catering":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Decor":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Photography":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Deliveryman":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Laundary":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Transportation":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Physician":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Therapist":
+                    confirmWorkRequestForEvent();
+                    break;
+                case "Trainer":
+                    confirmWorkRequestForEvent();
+                    break;
                 default:
                     JOptionPane.showMessageDialog(this, "Type not supported.");
                     return;
@@ -230,12 +318,15 @@ public class Main1JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+
+        System.out.println("Logout called.");
         DbUtils.getInstance().storeSystem(systemAdmin);
         jSplitPane.setRightComponent(WorkArea);
         loginBtn.setEnabled(true);
         logoutBtn.setEnabled(false);
         usernameField.setText("");
         passwordField.setText("");
+        System.out.println("Logout success.");
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void renderNetworkPanel() {
@@ -278,7 +369,20 @@ public class Main1JFrame extends javax.swing.JFrame {
     private javax.swing.JPanel ControlPanel;
     private javax.swing.JPanel WorkArea;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JButton loginBtn;
     private javax.swing.JButton logoutBtn;
@@ -413,12 +517,6 @@ public class Main1JFrame extends javax.swing.JFrame {
         jSplitPane.setRightComponent(new HealthClubManagerPanel(systemAdmin, this::viewTaskPanel, this::createOrganization, this::organizationAdminPanel));
     }
 
-    private void renderconfirmWorkRequest() {
-        String type = systemAdmin.findUserType(userName);
-        ConfirmWorkRequestsJPanel workRequest1 = new ConfirmWorkRequestsJPanel(systemAdmin, userName, type);
-        jSplitPane.setRightComponent(workRequest1);
-    }
-
     private void renderRestaurantManager(String username) {
         List<Network> network = systemAdmin.getListOfNetwork();
         for (int i = 0; i < network.size(); i++) {
@@ -488,12 +586,6 @@ public class Main1JFrame extends javax.swing.JFrame {
         Network network = findUserNetworkForRestaurant();
         ManageOrgAdminForRestauarant orgAdmin = new ManageOrgAdminForRestauarant(systemAdmin, this::restaurantManagerPanel, userName, type, network);
         jSplitPane.setRightComponent(orgAdmin);
-    }
-
-    private void renderDeliverymanPanel() {
-        String type = systemAdmin.findUserType(userName);
-        ConfirmWorkrequestForDeliveryman deliveryPanel = new ConfirmWorkrequestForDeliveryman(systemAdmin, userName, type);
-        jSplitPane.setRightComponent(deliveryPanel);
     }
 
     private void addOrderPanel() {
@@ -640,6 +732,15 @@ public class Main1JFrame extends javax.swing.JFrame {
             }
         }
         return null;
+    }
+
+    private void confirmWorkRequestForEvent() {
+        List<Network> network = systemAdmin.getListOfNetwork();
+        String type = systemAdmin.findUserType(userName);
+        for (int i = 0; i < network.size(); i++) {
+            ConfirmWorkRequestsForEventPanel workRequest = new ConfirmWorkRequestsForEventPanel(systemAdmin, userName, type);
+            jSplitPane.setRightComponent(workRequest);
+        }
     }
 
     private void renderViewTask3() {     // view Business Event manager panel

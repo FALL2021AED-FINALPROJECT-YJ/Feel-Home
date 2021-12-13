@@ -31,6 +31,12 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             orgComboBox.addItem(eventOrg);
         }
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        totalPrice.setBackground(new java.awt.Color(244, 120, 140));
+        totalPrice.setOpaque(true);
+        bookEventBtn.setBackground(new java.awt.Color(244, 120, 140));
+        bookEventBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,9 +101,9 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             }
         });
 
-        decorCombo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        decorCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
-        photgraphyCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        photgraphyCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("TYPE OF PACKAGE ");
@@ -194,7 +200,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(orgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -204,7 +210,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(cateringRadioBtn)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -228,6 +234,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
 
     private void photoRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoRadioBtnActionPerformed
         if (photoRadioBtn.isSelected()) {
+            photgraphyCombo.removeAllItems();
             for (PhotographyType photo : PhotographyType.values()) {
                 photgraphyCombo.addItem(photo);
             }
@@ -298,6 +305,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
 
     private void cateringRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cateringRadioBtnActionPerformed
         if (cateringRadioBtn.isSelected()) {
+            cateringCombo.removeAllItems();
             for (CateringType catering : CateringType.values()) {
                 cateringCombo.addItem(catering);
             }
@@ -307,6 +315,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
 
     private void decorRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decorRadioBtnActionPerformed
         if (decorRadioBtn.isSelected()) {
+            decorCombo.removeAllItems();
             for (DecorType decor : DecorType.values()) {
                 decorCombo.addItem(decor);
             }
@@ -345,7 +354,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
             price += catering.getRate();
         }
-        
+
         priceField.setText(String.valueOf(price));
     }//GEN-LAST:event_totalPriceActionPerformed
 

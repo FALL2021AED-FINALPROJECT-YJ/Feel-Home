@@ -105,10 +105,6 @@ public class Hotel extends Enterprise {
         transportationOrgList.add(to);
     }
 
-    public String toString() {
-        return "Hotel:" + name + ", Rooms:" + roomListDirec;
-    }
-
     public void deleteManager(Manager man) {
         listOfManager.remove(man);
     }

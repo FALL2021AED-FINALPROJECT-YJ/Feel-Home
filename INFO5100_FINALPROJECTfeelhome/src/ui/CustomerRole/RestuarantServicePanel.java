@@ -28,6 +28,10 @@ public class RestuarantServicePanel extends javax.swing.JPanel {
             restaurantCombo.addItem(res);
         }
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        placeOrder.setBackground(new java.awt.Color(244, 120, 140));
+        placeOrder.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")

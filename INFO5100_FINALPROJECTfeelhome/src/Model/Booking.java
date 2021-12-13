@@ -66,7 +66,6 @@ public class Booking {
 
     public void addService(Service service) {
         this.services.add(service);
-        System.out.println("service added in service class is " + service.toString());
     }
 
     public Date getCheckin() {
@@ -114,28 +113,32 @@ public class Booking {
     public String prettyPrint() {
         StringBuilder sb = new StringBuilder("Below are your booking details -\n");
         sb.append("\n").append("Hotel booking details are as follows:");
-//        sb.append("\n").append(TAB).append("Hotel Name: ").append(hotelService.getName());
         sb.append("\n").append(TAB).append("City: ").append(network.getName());
         sb.append("\n").append(TAB).append("Checkin date: ").append(checkin);
         sb.append("\n").append(TAB).append("Checkout date: ").append(checkout);
-
+        
         List<Room> listOfRooms = getHotelService().getRoomlist().getListOfRooms();
-        int hotelCost = 0;
+        int roomCost = 0;
         sb.append("\n").append(TAB).append(String.format("Below are the details of the %d rooms booked:", listOfRooms.size()));
         for (Room room : listOfRooms) {
-            hotelCost += room.getRoomType().getRate();
+            roomCost += room.getRoomType().getRate();
             sb.append("\n").append(TAB).append(TAB).append("Room number: ")
                     .append(room.getRoomNo()).append(", Room type: ").append(room.getRoomType());
         }
-        sb.append("\n").append(TAB).append("Total cost for your stay: ").append(hotelCost);
+        sb.append("\n").append(TAB).append("Total cost for your stay: $").append(roomCost);
+        
+        int totalCost = roomCost;
         for (Service service : services) {
+            totalCost += service.getTotalCost();
             sb.append("\n").append(service).append("\n");
         }
+        
+        sb.append("\nTotal cost of the booking including all services: $").append(getTotalCost()).append("\n");
+     
         return sb.toString();
     }
 
     public String toString() {
         return id;
     }
-
 }

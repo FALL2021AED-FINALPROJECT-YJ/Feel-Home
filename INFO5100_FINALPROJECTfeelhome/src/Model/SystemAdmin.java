@@ -98,6 +98,12 @@ public class SystemAdmin {
         mapType.remove(customer.getUserName());
     }
 
+    public void updateUser(String username, String password) {
+        if (userNamePasswordMap.containsKey(username)) {
+            userNamePasswordMap.put(username, password);
+        }
+    }
+
     public Customer findCustomer(String user) {
         for (Customer custom : customerDirec.getListOfCustomer()) {
             if (custom.getUserName().equals(user)) {

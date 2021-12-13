@@ -1,6 +1,5 @@
 package model.services;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +48,16 @@ public class HealthClubService extends Service {
         sb.append("\n").append(TAB).append("Health club: ").append(enterprise);
         sb.append("\n").append(TAB).append("Date of appointment: ").append(getDate());
         sb.append("\n").append(TAB).append("Status: ").append(getStatus());
-        sb.append("\n").append(TAB).append("Below are the details of services included for your appointment:");
-        for (HealthClubServiceType service : healthClubServices) {
-            sb.append("\n").append(TAB).append(TAB)
-                    .append(String.format("Service type: %s, Cost: %d", service.toString(), service.getPrice()));
+        if (healthClubServices == null || healthClubServices.isEmpty()) {
+            sb.append("\n").append(TAB).append("No services selected for this booking.");
+        } else {
+            sb.append("\n").append(TAB).append("Below are the details of services included for your appointment:");
+            for (HealthClubServiceType service : healthClubServices) {
+                sb.append("\n").append(TAB).append(TAB)
+                        .append(String.format("Service type: %s, Cost: $%d", service.toString(), service.getPrice()));
+            }
+            sb.append("\n").append(TAB).append("Total cost for health club: $").append(totalCost);
         }
-        sb.append("\n").append(TAB).append("Total cost: ").append(totalCost);
         return sb.toString();
     }
 }
