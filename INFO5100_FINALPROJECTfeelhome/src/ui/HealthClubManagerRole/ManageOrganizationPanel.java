@@ -3,56 +3,41 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.BusinessEvent;
-import model.CateringService;
-import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
-import model.Manager;
 import model.Network;
-import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
-import model.Trainer;
 import model.TrainerOrg;
 
 public class ManageOrganizationPanel extends javax.swing.JPanel {
 
     private SystemAdmin systemAdmin;
     private Runnable callOnCreateMethod;
-    private String type;
     private String user;
     private Network network;
 
-    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, String type, Network network) {
+    public ManageOrganizationPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod, String user, Network network) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod = callOnCreateMethod;
         this.user = user;
-        this.type = type;
         this.network = network;
         cityNameTextField.setText(network.getName());
         cityNameTextField.setEditable(false);
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+
+        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addButton.setBackground(new java.awt.Color(244, 120, 140));
+        addButton.setOpaque(true);
+        updateButton.setBackground(new java.awt.Color(244, 120, 140));
+        updateButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
-     public boolean validateName() {
-        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
-            return false;
-        }
-    }
-       public boolean validateContactNum() {
-        if (contactField.getText().matches("[0-9]{10}")) {
-            return true;
-        } else {
-              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
-            return false;
-        }
-    }
-     
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -67,14 +52,12 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         contactField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         cityNameTextField = new javax.swing.JTextField();
-
-        setBackground(new java.awt.Color(255, 204, 204));
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -91,6 +74,11 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -122,7 +110,6 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("CITY");
 
-        addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -131,9 +118,13 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("UPDATE");
+        updateButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        updateButton.setText("UPDATE");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("MANAGE ORGANIZATION FOR HEALTH CLUB");
@@ -148,7 +139,6 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("ORGANIZATION TYPE ");
 
-        backButton.setBackground(new java.awt.Color(255, 255, 255));
         backButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backButton.setText("BACK");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -168,13 +158,10 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(backButton)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 998, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(336, 336, 336)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118)
+                        .addComponent(updateButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -188,16 +175,19 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(orgCombo, 0, 218, Short.MAX_VALUE)
+                            .addComponent(nameField)
+                            .addComponent(contactField)
+                            .addComponent(cityNameTextField)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(orgCombo, 0, 218, Short.MAX_VALUE)
-                                .addComponent(nameField)
-                                .addComponent(contactField)
-                                .addComponent(cityNameTextField)))))
+                            .addComponent(backButton)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 998, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -205,13 +195,13 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(backButton)
-                .addGap(9, 9, 9)
+                .addGap(7, 7, 7)
                 .addComponent(jLabel1)
-                .addGap(40, 40, 40)
+                .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(deleteBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(orgCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -229,8 +219,8 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                     .addComponent(cityNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(addButton))
+                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -250,15 +240,15 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 if (OrgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
                     for (PhysicianOrg physician : club.getListOfPhysicianOrg()) {
                         if (physician.getName().equals(OrgName)) {
-                           club.deletePhysician(physician);
+                            club.deletePhysician(physician);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
                     }
                 } else if (OrgType.equals("Trainer") && club.getListOfTrainerOrg() != null) {
-                    for (TrainerOrg trainer :  club.getListOfTrainerOrg()) {
+                    for (TrainerOrg trainer : club.getListOfTrainerOrg()) {
                         if (trainer.getName().equals(OrgName)) {
-                           club.deleteTrainer(trainer);
+                            club.deleteTrainer(trainer);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
@@ -266,7 +256,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
                 } else if (OrgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
                     for (TherapistOrg therapist : club.getListOfTherapistOrg()) {
                         if (therapist.getName().equals(OrgName)) {
-                           club.deleteTherapist(therapist);
+                            club.deleteTherapist(therapist);
                             JOptionPane.showMessageDialog(this, "Deleted successfully");
                             populateTable();
                         }
@@ -285,49 +275,32 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        Object row[] = new Object[20];
         String networkName = network.getName();  //find the network 
         String name = nameField.getText();
+
+        if (name == null || name.length() < 2) {
+            JOptionPane.showMessageDialog(this, "Organization name should be at least 2 characters long.");
+            return;
+        }
+
         String contact = contactField.getText();
-        Network network = systemAdmin.findNetwork(networkName);
-        String orgType1 = orgCombo.getSelectedItem().toString();      // org-type (physician org)     
+        String orgType1 = orgCombo.getSelectedItem().toString();
         EnterpriseDirectory enterpriseDirc = network.getEnterpriseDirectory();
         List<HealthClub> healthClub = enterpriseDirc.getListOfHealthClub();
         for (int i = 0; i < healthClub.size(); i++) {
             healthClub.get(i).findManager(user);      //find healthclub for which manager is working for
             if (orgType1.equals("Physician")) {
                 healthClub.get(i).addPhysicianOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, " Organisation added successfully");
-                return;                               //healthclub found
-            } else if (type.equals("Trainer")) {
+                JOptionPane.showMessageDialog(this, "Physician Organisation added successfully");
+            } else if (orgType1.equals("Trainer")) {
                 healthClub.get(i).addTraineOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation successfully");
-                return;
+                JOptionPane.showMessageDialog(this, "Trainer Organisation successfully");
             } else {
                 healthClub.get(i).addTherapistOrg(name, contact, networkName);
-                row[0] = orgType1;
-                row[1] = name;
-                row[2] = contact;
-                row[3] = networkName;
-                model.addRow(row);
-                JOptionPane.showMessageDialog(this, "Organisation added successfully");
-                return;
+                JOptionPane.showMessageDialog(this, "Therapist Organisation added successfully");
             }
         }
-
-
+        populateTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void contactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactFieldActionPerformed
@@ -338,6 +311,71 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_orgComboActionPerformed
 
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (jTable1.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        String orgType = orgCombo.getSelectedItem().toString();
+        String orgname = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
+            if (orgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
+                for (PhysicianOrg phy : club.getListOfPhysicianOrg()) {
+                    if (phy.getName().equals(orgname)) {
+                        phy.setName(nameField.getText());
+                        phy.setContact(contactField.getText());
+                        JOptionPane.showMessageDialog(this, "Updated successfully");
+                        populateTable();
+                        return;
+                    }
+                }
+            } else if (orgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
+                for (TherapistOrg therapist : club.getListOfTherapistOrg()) {
+                    if (therapist.getName().equals(orgname)) {
+                        therapist.setName(nameField.getText());
+                        therapist.setContact(contactField.getText());
+                        JOptionPane.showMessageDialog(this, "Updated successfully");
+                        populateTable();
+                        return;
+                    }
+                }
+            } else if (orgType.equals("Trainer") && club.getListOfTrainerOrg() != null) {
+                for (TrainerOrg trainer : club.getListOfTrainerOrg()) {
+                    if (trainer.getName().equals(orgname)) {
+                        trainer.setName(nameField.getText());
+                        trainer.setContact(contactField.getText());
+                        JOptionPane.showMessageDialog(this, "Updated successfully");
+                        populateTable();
+                        return;
+                    }
+                }
+            }
+
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() != 1) {
+            return;
+        }
+
+        String orgType = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String orgName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String orgContact = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String orgCity = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+
+        nameField.setText(orgName);
+        contactField.setText(orgContact);
+        cityNameTextField.setText(orgCity);
+        orgCombo.setSelectedItem(orgType);
+        cityNameTextField.setEnabled(false);
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
@@ -345,7 +383,6 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JTextField cityNameTextField;
     private javax.swing.JTextField contactField;
     private javax.swing.JButton deleteBtn;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -355,6 +392,7 @@ public class ManageOrganizationPanel extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
     private javax.swing.JComboBox<String> orgCombo;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {

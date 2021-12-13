@@ -3,18 +3,15 @@ package ui.HealthClubManagerRole;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.BusinessEvent;
-import model.CateringService;
-import model.DecorServices;
 import model.EnterpriseDirectory;
 import model.HealthClub;
 import model.Manager;
 import model.Network;
-import model.PhotographyService;
 import model.PhysicianOrg;
 import model.SystemAdmin;
 import model.TherapistOrg;
 import model.TrainerOrg;
+import ui.main.Validator;
 
 public class OrganizationAdminPanel extends javax.swing.JPanel {
 
@@ -31,14 +28,22 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         this.user = user;
         this.type = type;
         this.network = network;
-        for (Network city : systemAdmin.getListOfNetwork()) {
-            networkType.addItem(city.getName());
-        }
+        networkName.setText(network.getName());
+        networkName.setEditable(false);
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        updateButton.setBackground(new java.awt.Color(244, 120, 140));
+        updateButton.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
+        deleteButton.setBackground(new java.awt.Color(244, 120, 140));
+        deleteButton.setOpaque(true);
+        addButton.setBackground(new java.awt.Color(244, 120, 140));
+        addButton.setOpaque(true);
     }
 
     public boolean validateName() {
-        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}") && nameField.getText() != null) {
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
@@ -47,10 +52,10 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     }
 
     public boolean PasswordName() {
-        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+        if (passwordField.getText().matches("[a-zA-Z]{3,}") && passwordField.getText() != null) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain more than 3 or more letters");
             return false;
         }
     }
@@ -70,14 +75,13 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
-        deleteBtn = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         orgName = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        networkType = new javax.swing.JComboBox<>();
-
-        setBackground(new java.awt.Color(255, 204, 204));
+        updateButton = new javax.swing.JButton();
+        networkName = new javax.swing.JTextField();
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -96,13 +100,18 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("ORGANIZATION TYPE");
 
         orgCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organization", "Physician", "Trainer", "Therapist" }));
+        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Physician", "Trainer", "Therapist" }));
         orgCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 orgComboActionPerformed(evt);
@@ -120,7 +129,6 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel4.setText("PASSWORD");
 
-        addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -129,20 +137,19 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        deleteBtn.setText("DELETE");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
-        backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        backBtn.setText("BACK");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -154,11 +161,11 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel6.setText("NETWORK");
 
-        networkType.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        networkType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
-        networkType.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        updateButton.setText("UPDATE");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                networkTypeActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
@@ -166,22 +173,22 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(402, 402, 402))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(orgCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(networkType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addComponent(networkName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -194,41 +201,42 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(87, 87, 87))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(391, 391, 391)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(backBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(deleteBtn)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                            .addComponent(deleteButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(backButton)))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(backBtn)
-                .addGap(51, 51, 51)
+                .addGap(15, 15, 15)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteButton)
                 .addGap(18, 18, 18)
-                .addComponent(deleteBtn)
-                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(networkName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,15 +248,17 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                     .addComponent(orgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(87, 87, 87)
-                .addComponent(addButton)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(133, 133, 133))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
-    }//GEN-LAST:event_backBtnActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -258,8 +268,14 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
         String name = nameField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (systemAdmin.userExistsInSystem(username) == false) {
-            Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+
+        if (!Validator.validateName(this, name) || !Validator.validateUserName(this, username)
+                || !Validator.validatePassword(this, password)) {
+            return;
+        }
+
+        if (!systemAdmin.userExistsInSystem(username)) {
+
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
 
@@ -277,8 +293,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Physician");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Physician");
+                                JOptionPane.showMessageDialog(this, "Successfully added Physician organization");
                                 return;
                             }
                         }
@@ -294,8 +310,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Trainer");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Trainer");
+                                JOptionPane.showMessageDialog(this, "Successfully added Trainer organization");
                                 return;
                             }
                         }
@@ -311,8 +327,8 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                                 row[4] = username;
                                 row[5] = password;
                                 model.addRow(row);
-                                systemAdmin.addUser(username, "Therapist");
-                                JOptionPane.showMessageDialog(this, " Organisation Manager added successfully");
+                                systemAdmin.addUser(username, password, "Therapist");
+                                JOptionPane.showMessageDialog(this, "Successfully added Therapist organization");
                                 return;
                             }
                         }
@@ -325,8 +341,9 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
+        orgName.removeAllItems();
         String orgType = orgCombo.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkType.getSelectedItem().toString());
+
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<HealthClub> list = enterpriseDirec.getListOfHealthClub();
         for (int i = 0; i < list.size(); i++) {
@@ -353,11 +370,7 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_orgComboActionPerformed
 
-    private void networkTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkTypeActionPerformed
-
-    }//GEN-LAST:event_networkTypeActionPerformed
-
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int selectedRowIndex = jTable1.getSelectedRow();
         if (selectedRowIndex < 0) {
@@ -412,13 +425,92 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
                 }
             }
         }
-    }//GEN-LAST:event_deleteBtnActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String city = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String orgType = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String oName = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String managerName = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        String managerUsername = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        String managerPassword = model.getValueAt(jTable1.getSelectedRow(), 5).toString();
+
+        nameField.setText(managerName);
+        usernameField.setText(managerUsername);
+        passwordField.setText(managerPassword);
+        usernameField.setEnabled(false);
+        orgCombo.setSelectedItem(orgType);
+        orgName.setSelectedItem(oName);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRowCount() == 1) {
+
+            String orgType = orgCombo.getSelectedItem().toString();
+            String orgname = orgName.getSelectedItem().toString();
+            String userName = usernameField.getText();
+            String password = passwordField.getText();
+
+            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+            for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
+                if (orgType.equals("Physician") && club.getListOfPhysicianOrg() != null) {
+                    for (PhysicianOrg phy : club.getListOfPhysicianOrg()) {
+                        for (Manager man : phy.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Therapist") && club.getListOfTherapistOrg() != null) {
+                    for (TherapistOrg thera : club.getListOfTherapistOrg()) {
+                        for (Manager man : thera.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                } else if (orgType.equals("Trainer") && club.getListOfTrainerOrg() != null) {
+                    for (TrainerOrg trainer : club.getListOfTrainerOrg()) {
+                        for (Manager man : trainer.getListOfManager()) {
+                            if (man.getUsername().equals(usernameField.getText())) {
+                                man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
+                                JOptionPane.showMessageDialog(this, "Updated successfully");
+                                populateTable();
+                                return;
+                            }
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid organization");
+                }
+            }
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton backBtn;
-    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -428,10 +520,11 @@ public class OrganizationAdminPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
-    private javax.swing.JComboBox<String> networkType;
+    private javax.swing.JTextField networkName;
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 

@@ -14,6 +14,13 @@ public class HealthClubManagerPanel extends javax.swing.JPanel {
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.callOnCreateMethod2 = callOnCreateMethod2;
         this.callOnCreateMethod3 = callOnCreateMethod3;
+       setBackground(new java.awt.Color(255, 204, 204));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setOpaque(true);
+        orgBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgBtn.setOpaque(true);
+        orgAdminBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgAdminBtn.setOpaque(true);
 
     }
 
@@ -26,12 +33,9 @@ public class HealthClubManagerPanel extends javax.swing.JPanel {
         orgBtn = new javax.swing.JButton();
         orgAdminBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel1.setText("HEALTH CLUB MANAGER PANEL ");
 
-        viewTask.setBackground(new java.awt.Color(255, 255, 255));
         viewTask.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         viewTask.setText("VIEW TASK");
         viewTask.addActionListener(new java.awt.event.ActionListener() {
@@ -40,7 +44,6 @@ public class HealthClubManagerPanel extends javax.swing.JPanel {
             }
         });
 
-        orgBtn.setBackground(new java.awt.Color(255, 255, 255));
         orgBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         orgBtn.setText("MANAGE ORGANIZATION");
         orgBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -49,7 +52,6 @@ public class HealthClubManagerPanel extends javax.swing.JPanel {
             }
         });
 
-        orgAdminBtn.setBackground(new java.awt.Color(255, 255, 255));
         orgAdminBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         orgAdminBtn.setText("MANAGE ORGANISATION ADMIN");
         orgAdminBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -73,19 +75,19 @@ public class HealthClubManagerPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(203, 203, 203))
+                .addGap(206, 206, 206))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel1)
-                .addGap(69, 69, 69)
-                .addComponent(viewTask)
-                .addGap(66, 66, 66)
-                .addComponent(orgBtn)
-                .addGap(62, 62, 62)
-                .addComponent(orgAdminBtn)
+                .addGap(116, 116, 116)
+                .addComponent(viewTask, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(orgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(orgAdminBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(345, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
