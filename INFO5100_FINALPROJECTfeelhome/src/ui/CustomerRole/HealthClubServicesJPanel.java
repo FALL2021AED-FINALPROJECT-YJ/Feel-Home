@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import model.Booking;
 import model.HealthClub;
 import model.SystemAdmin;
-import model.service.HealthClubService;
+import model.services.HealthClubService;
 import ui.main.DateUtils;
 
 public class HealthClubServicesJPanel extends javax.swing.JPanel {
@@ -26,6 +26,11 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         for (HealthClub healthClub : booking.getNetwork().getEnterpriseDirectory().getListOfHealthClub()) {
             healthClubCombo.addItem(healthClub);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        addServiceBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addServiceBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,12 +51,9 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         healthClubCombo = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         lblbookservices.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblbookservices.setText("HEALTH CLUB SERVICES");
 
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backBtn.setText("BACK");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +86,6 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
             }
         });
 
-        addServiceBtn.setBackground(new java.awt.Color(255, 255, 255));
         addServiceBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addServiceBtn.setText("ADD SERVICE");
         addServiceBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -114,41 +115,45 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(backBtn)
-                .addContainerGap(903, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(backBtn)
+                        .addGap(155, 155, 155)
+                        .addComponent(lblbookservices))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yogaBtn)
-                            .addComponent(jLabel7)
                             .addComponent(massageBtn)
                             .addComponent(medicalServiceBtn)
-                            .addComponent(jLabel4))
-                        .addGap(59, 59, 59)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4)
+                                .addComponent(yogaBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel7)))
+                        .addGap(86, 86, 86)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
-                            .addComponent(healthClubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(229, 229, 229))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addServiceBtn)
-                        .addGap(416, 416, 416))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblbookservices)
-                        .addGap(275, 275, 275))))
+                            .addComponent(healthClubCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(380, 380, 380)
+                        .addComponent(addServiceBtn)))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(lblbookservices)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(lblbookservices)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -169,9 +174,9 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(medicalServiceBtn)
                     .addComponent(jLabel6))
-                .addGap(96, 96, 96)
+                .addGap(101, 101, 101)
                 .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(177, 177, 177))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -228,7 +233,7 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void yogaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yogaBtnActionPerformed
- 
+
     }//GEN-LAST:event_yogaBtnActionPerformed
 
     private void massageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_massageBtnActionPerformed

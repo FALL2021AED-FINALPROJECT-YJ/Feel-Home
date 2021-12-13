@@ -7,8 +7,8 @@ import model.SystemAdmin;
 public class AddServicePanel extends javax.swing.JPanel {
 
     private SystemAdmin systems;
-    private Consumer<Booking> callOnEventBooking;    
-    private Consumer<Booking> callOnOrderBooking;    
+    private Consumer<Booking> callOnEventBooking;
+    private Consumer<Booking> callOnOrderBooking;
     private Consumer<Booking> callOnHealthClubBooking;
     private Consumer<Booking> callOnHotelServiceBooking;
     private Runnable backButton4;
@@ -16,8 +16,8 @@ public class AddServicePanel extends javax.swing.JPanel {
     private String hotelName;
     private Booking booking;
 
-    public AddServicePanel(SystemAdmin systems, Consumer<Booking> callOnEventBooking,Consumer<Booking> callOnOrderBooking,
-         Consumer<Booking> callOnHealthClubBooking,Consumer<Booking> callOnHotelServiceBooking,Runnable backButton, String username,Booking booking) {
+    public AddServicePanel(SystemAdmin systems, Consumer<Booking> callOnEventBooking, Consumer<Booking> callOnOrderBooking,
+            Consumer<Booking> callOnHealthClubBooking, Consumer<Booking> callOnHotelServiceBooking, Runnable backButton, String username, Booking booking) {
         initComponents();
         this.systems = systems;
         this.callOnEventBooking = callOnEventBooking;
@@ -27,6 +27,17 @@ public class AddServicePanel extends javax.swing.JPanel {
         this.backButton4 = backButton;
         this.username = username;
         this.booking = booking;
+        setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        eventBtn.setBackground(new java.awt.Color(244, 120, 140));
+        eventBtn.setOpaque(true);
+        orderBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orderBtn.setOpaque(true);
+        healthClubBtn.setBackground(new java.awt.Color(244, 120, 140));
+        healthClubBtn.setOpaque(true);
+        otherService.setBackground(new java.awt.Color(244, 120, 140));
+        otherService.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,23 +45,20 @@ public class AddServicePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        backButton = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         eventBtn = new javax.swing.JButton();
         orderBtn = new javax.swing.JButton();
         healthClubBtn = new javax.swing.JButton();
         otherService = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel1.setText("ADD SERVICES ");
 
-        backButton.setBackground(new java.awt.Color(255, 255, 255));
-        backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        backButton.setText("BACK");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        backBtn.setText("BACK");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -62,7 +70,6 @@ public class AddServicePanel extends javax.swing.JPanel {
             }
         });
 
-        orderBtn.setBackground(new java.awt.Color(255, 255, 255));
         orderBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         orderBtn.setText("PLACE ORDER ");
         orderBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +78,6 @@ public class AddServicePanel extends javax.swing.JPanel {
             }
         });
 
-        healthClubBtn.setBackground(new java.awt.Color(255, 255, 255));
         healthClubBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         healthClubBtn.setText("HEALTH CLUB ");
         healthClubBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +86,6 @@ public class AddServicePanel extends javax.swing.JPanel {
             }
         });
 
-        otherService.setBackground(new java.awt.Color(255, 255, 255));
         otherService.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         otherService.setText("OTHER SERVICES");
         otherService.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +100,7 @@ public class AddServicePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(backButton)
+                .addComponent(backBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(299, Short.MAX_VALUE)
@@ -116,7 +121,7 @@ public class AddServicePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1)
                 .addGap(55, 55, 55)
@@ -132,28 +137,28 @@ public class AddServicePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eventBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventBtnActionPerformed
-    callOnEventBooking.accept(booking);
+        callOnEventBooking.accept(booking);
     }//GEN-LAST:event_eventBtnActionPerformed
 
     private void orderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderBtnActionPerformed
-       callOnOrderBooking.accept(booking);
+        callOnOrderBooking.accept(booking);
     }//GEN-LAST:event_orderBtnActionPerformed
 
     private void healthClubBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_healthClubBtnActionPerformed
-       callOnHealthClubBooking.accept(booking);
+        callOnHealthClubBooking.accept(booking);
     }//GEN-LAST:event_healthClubBtnActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         backButton4.run();
-    }//GEN-LAST:event_backButtonActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void otherServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otherServiceActionPerformed
-       callOnHotelServiceBooking.accept(booking);
+        callOnHotelServiceBooking.accept(booking);
     }//GEN-LAST:event_otherServiceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backButton;
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton eventBtn;
     private javax.swing.JButton healthClubBtn;
     private javax.swing.JLabel jLabel1;

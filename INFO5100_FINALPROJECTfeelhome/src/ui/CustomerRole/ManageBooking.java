@@ -26,6 +26,13 @@ public class ManageBooking extends javax.swing.JPanel {
         this.username = username;
 
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        addServiceBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addServiceBtn.setOpaque(true);
+        viewOrder.setBackground(new java.awt.Color(244, 120, 140));
+        viewOrder.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -39,12 +46,9 @@ public class ManageBooking extends javax.swing.JPanel {
         addServiceBtn = new javax.swing.JButton();
         viewOrder = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("BOOKING DETAILS");
 
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backBtn.setText("BACK");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +76,6 @@ public class ManageBooking extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        addServiceBtn.setBackground(new java.awt.Color(255, 255, 255));
         addServiceBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         addServiceBtn.setText("ADD SERVICES");
         addServiceBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +84,6 @@ public class ManageBooking extends javax.swing.JPanel {
             }
         });
 
-        viewOrder.setBackground(new java.awt.Color(255, 255, 255));
         viewOrder.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         viewOrder.setText("VIEW SERVICE DETAILS");
         viewOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -109,9 +111,9 @@ public class ManageBooking extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
+                        .addGap(173, 173, 173)
                         .addComponent(addServiceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(67, 67, 67)
                         .addComponent(viewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -201,9 +203,9 @@ public class ManageBooking extends javax.swing.JPanel {
         Customer customer = customDirec.findCustomerUsername(username);
         System.out.println("customer found is " + customer.getName() + " username is " + username);
         for (Booking bookingList : customer.getBookingList()) {
-            row[0] = bookingList.getHotel().getName();
+            row[0] = bookingList.getHotelService().getEnterprise();
             row[1] = bookingList.getId();
-            row[2] = bookingList.getCost();
+            row[2] = bookingList.getTotalCost();
             row[3] = bookingList.getStatus();
             row[4] = bookingList.getCheckin();
             row[5] = bookingList.getCheckout();

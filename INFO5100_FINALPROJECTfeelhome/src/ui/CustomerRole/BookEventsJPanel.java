@@ -7,10 +7,9 @@ import model.Booking;
 import model.BusinessEvent;
 import model.CateringService.CateringType;
 import model.DecorServices.DecorType;
-import model.PhotographyService;
 import model.PhotographyService.PhotographyType;
 import model.SystemAdmin;
-import model.service.BusinessEventService;
+import model.services.BusinessEventService;
 import ui.main.DateUtils;
 
 public class BookEventsJPanel extends javax.swing.JPanel {
@@ -27,9 +26,17 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         this.username = username;
         this.booking = booking;
 
+        orgComboBox.addItem(null);
         for (BusinessEvent eventOrg : booking.getNetwork().getEnterpriseDirectory().getListOfEvents()) {
             orgComboBox.addItem(eventOrg);
         }
+        setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        totalPrice.setBackground(new java.awt.Color(244, 120, 140));
+        totalPrice.setOpaque(true);
+        bookEventBtn.setBackground(new java.awt.Color(244, 120, 140));
+        bookEventBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -59,9 +66,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         backBtn.setText("BACK");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +93,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             }
         });
 
-        bookEventBtn.setBackground(new java.awt.Color(255, 255, 255));
         bookEventBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bookEventBtn.setText("BOOK EVENT");
         bookEventBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -98,9 +101,9 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             }
         });
 
-        decorCombo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        decorCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
-        photgraphyCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        photgraphyCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("TYPE OF PACKAGE ");
@@ -147,33 +150,43 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(backBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
-                        .addComponent(lblbookservices))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
+                        .addGap(193, 193, 193)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(photoRadioBtn)
-                                .addComponent(jLabel5)
-                                .addComponent(cateringRadioBtn)
-                                .addComponent(jLabel1)
-                                .addComponent(decorRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(totalPrice))
-                        .addGap(72, 72, 72)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(decorRadioBtn)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addComponent(cateringRadioBtn)
+                            .addComponent(photoRadioBtn)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(totalPrice)
+                                .addGap(110, 110, 110))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(81, 81, 81)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(orgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cateringCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(decorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bookEventBtn))))
+                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(344, 344, 344)
+                        .addComponent(bookEventBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(241, 241, 241)
+                        .addComponent(lblbookservices)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -181,13 +194,13 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(backBtn)
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
                 .addComponent(lblbookservices)
-                .addGap(57, 57, 57)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(orgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,7 +210,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(photgraphyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(cateringRadioBtn)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -209,18 +222,19 @@ public class BookEventsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(decorCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(totalPrice)
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalPrice))
+                .addGap(45, 45, 45)
                 .addComponent(bookEventBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
+                .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void photoRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoRadioBtnActionPerformed
         if (photoRadioBtn.isSelected()) {
+            photgraphyCombo.removeAllItems();
             for (PhotographyType photo : PhotographyType.values()) {
                 photgraphyCombo.addItem(photo);
             }
@@ -230,7 +244,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     private void bookEventBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookEventBtnActionPerformed
 
         BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
-        int totalPrice = 0;
 
         if (businessEvent == null) {
             JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
@@ -255,32 +268,30 @@ public class BookEventsJPanel extends javax.swing.JPanel {
             return;
         }
 
+        int price = 0;
         BusinessEventService service = new BusinessEventService(businessEvent, date);
         if (photoRadioBtnSelected) {
             PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
-            totalPrice = photography.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += photography.getRate();
         }
 
         if (decorRadioBtnSelected) {
             DecorType decor = (DecorType) decorCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
-            totalPrice = decor.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += decor.getRate();
         }
 
         if (cateringRadioBtnSelected) {
             CateringType catering = (CateringType) cateringCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
-            totalPrice = catering.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += catering.getRate();
         }
 
+        priceField.setText(String.valueOf(price));
         booking.addService(service);
 
         JOptionPane.showMessageDialog(this, "Business event service added successfully.");
-
         callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_bookEventBtnActionPerformed
 
@@ -294,6 +305,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
 
     private void cateringRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cateringRadioBtnActionPerformed
         if (cateringRadioBtn.isSelected()) {
+            cateringCombo.removeAllItems();
             for (CateringType catering : CateringType.values()) {
                 cateringCombo.addItem(catering);
             }
@@ -303,6 +315,7 @@ public class BookEventsJPanel extends javax.swing.JPanel {
 
     private void decorRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decorRadioBtnActionPerformed
         if (decorRadioBtn.isSelected()) {
+            decorCombo.removeAllItems();
             for (DecorType decor : DecorType.values()) {
                 decorCombo.addItem(decor);
             }
@@ -312,7 +325,6 @@ public class BookEventsJPanel extends javax.swing.JPanel {
     private void totalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPriceActionPerformed
 
         BusinessEvent businessEvent = (BusinessEvent) orgComboBox.getSelectedItem();
-        int totalPrice = 0;
 
         if (businessEvent == null) {
             JOptionPane.showMessageDialog(this, "Please select a Business Event organization from the dropdown.");
@@ -321,30 +333,29 @@ public class BookEventsJPanel extends javax.swing.JPanel {
         boolean photoRadioBtnSelected = photoRadioBtn.isSelected();
         boolean decorRadioBtnSelected = decorRadioBtn.isSelected();
         boolean cateringRadioBtnSelected = cateringRadioBtn.isSelected();
-       Date date = DateUtils.formatDate(dateField.getDate());
+        Date date = DateUtils.formatDate(dateField.getDate());
 
+        int price = 0;
         BusinessEventService service = new BusinessEventService(businessEvent, date);
         if (photoRadioBtnSelected) {
             PhotographyType photography = (PhotographyType) photgraphyCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.PHOTOGRAPHY, photography.getRate());
-            totalPrice = photography.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += photography.getRate();
         }
 
         if (decorRadioBtnSelected) {
             DecorType decor = (DecorType) decorCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.DECOR, decor.getRate());
-            totalPrice += decor.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += decor.getRate();
         }
 
         if (cateringRadioBtnSelected) {
             CateringType catering = (CateringType) cateringCombo.getSelectedItem();
             service.addService(BusinessEventService.BusinessEventServiceType.CATERING, catering.getRate());
-            totalPrice += catering.getRate();
-            priceField.setText(String.valueOf(totalPrice));
+            price += catering.getRate();
         }
 
+        priceField.setText(String.valueOf(price));
     }//GEN-LAST:event_totalPriceActionPerformed
 
 

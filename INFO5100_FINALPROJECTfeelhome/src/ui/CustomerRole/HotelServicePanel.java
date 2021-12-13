@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import model.Booking;
-import model.Hotel;
 import model.SystemAdmin;
-import model.service.HotelService;
+import model.services.HotelService;
 import ui.main.DateUtils;
 
 public class HotelServicePanel extends javax.swing.JPanel {
@@ -15,15 +14,18 @@ public class HotelServicePanel extends javax.swing.JPanel {
     private Consumer<Booking> callOnCreateMethod1;
     private String username;
     private Booking booking;
-    private Hotel hotel;
 
-    public HotelServicePanel(SystemAdmin systems, Consumer<Booking> callOnCreateMethod1, String username, Booking booking, Hotel hotel) {
+    public HotelServicePanel(SystemAdmin systems, Consumer<Booking> callOnCreateMethod1, String username, Booking booking) {
         initComponents();
         this.systems = systems;
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.username = username;
         this.booking = booking;
-        this.hotel = hotel;
+        setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        placeRequest.setBackground(new java.awt.Color(244, 120, 140));
+        placeRequest.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,17 +37,12 @@ public class HotelServicePanel extends javax.swing.JPanel {
         laundaryBtn = new javax.swing.JRadioButton();
         transportationBtn = new javax.swing.JRadioButton();
         placeRequest = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        priceField = new javax.swing.JTextField();
         dateField = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-
-        setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         jLabel1.setText("HOTEL SERVICE PANEL");
 
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
         backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backBtn.setText("BACK");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -55,12 +52,11 @@ public class HotelServicePanel extends javax.swing.JPanel {
         });
 
         laundaryBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        laundaryBtn.setText("LAUNDARY SERVICE");
+        laundaryBtn.setText("LAUNDARY SERVICE ($10)");
 
         transportationBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        transportationBtn.setText("TRANSPORTATION SERVICE");
+        transportationBtn.setText("TRANSPORTATION SERVICE ($20)");
 
-        placeRequest.setBackground(new java.awt.Color(255, 255, 255));
         placeRequest.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         placeRequest.setText("PLACE REQUEST");
         placeRequest.addActionListener(new java.awt.event.ActionListener() {
@@ -69,9 +65,6 @@ public class HotelServicePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel2.setText("TOTAL PRICE ");
-
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel3.setText("DATE");
 
@@ -79,57 +72,49 @@ public class HotelServicePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(backBtn)
-                .addContainerGap(713, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(196, 196, 196))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(7, 7, 7)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(transportationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(laundaryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(187, 187, 187))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(90, 90, 90)
-                                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(207, 207, 207)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(placeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(290, 290, 290))))
+                    .addComponent(transportationBtn)
+                    .addComponent(laundaryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(201, 201, 201))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(261, 261, 261)
+                        .addComponent(placeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(backBtn)
-                .addGap(36, 36, 36)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGap(66, 66, 66)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(laundaryBtn)
-                .addGap(56, 56, 56)
+                .addGap(61, 61, 61)
                 .addComponent(transportationBtn)
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(93, 93, 93)
+                .addGap(68, 68, 68)
                 .addComponent(placeRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110))
+                .addGap(224, 224, 224))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -149,22 +134,17 @@ public class HotelServicePanel extends javax.swing.JPanel {
             return;
         }
 
-        HotelService hotelService = new HotelService(hotel, dateField.getDate());
-        System.out.println("hotelservice added is " +hotelService);
-        int price = 0;
+        HotelService hotelService = booking.getHotelService();
         if (laundaryBtnSelected) {
             hotelService.addService(HotelService.HotelServiceType.LAUNDARY);
-            price = HotelService.HotelServiceType.LAUNDARY.getPrice();
         }
         if (transportationBtnSelected) {
             hotelService.addService(HotelService.HotelServiceType.TRANSPORTATION);
-            price += HotelService.HotelServiceType.TRANSPORTATION.getPrice();
         }
 
-        priceField.setText(String.valueOf(price));
-        booking.addService(hotelService);
+        hotelService.setDate(date);
         JOptionPane.showMessageDialog(this, "Your hotel services are been added.");
-//        callOnCreateMethod1.accept(booking);
+        callOnCreateMethod1.accept(booking);
     }//GEN-LAST:event_placeRequestActionPerformed
 
 
@@ -172,11 +152,9 @@ public class HotelServicePanel extends javax.swing.JPanel {
     private javax.swing.JButton backBtn;
     private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton laundaryBtn;
     private javax.swing.JButton placeRequest;
-    private javax.swing.JTextField priceField;
     private javax.swing.JRadioButton transportationBtn;
     // End of variables declaration//GEN-END:variables
 }
