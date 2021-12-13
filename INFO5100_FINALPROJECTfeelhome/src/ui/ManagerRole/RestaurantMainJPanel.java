@@ -32,20 +32,15 @@ public class RestaurantMainJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("MANAGE EMPLOYEES");
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("RESTAURANT MANAGER");
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("CONFIRM BOOKINGS & ASSIGN ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -54,7 +49,6 @@ public class RestaurantMainJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton4.setText("MANAGE MENU");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -76,28 +70,28 @@ public class RestaurantMainJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblsysadmin)
-                        .addGap(266, 266, 266))
+                        .addGap(274, 274, 274))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3))
-                        .addGap(345, 345, 345))))
+                        .addGap(332, 332, 332))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButton2)
-                .addGap(85, 85, 85)
+                .addGap(37, 37, 37)
                 .addComponent(lblsysadmin)
-                .addGap(95, 95, 95)
+                .addGap(63, 63, 63)
                 .addComponent(jButton4)
-                .addGap(60, 60, 60)
+                .addGap(38, 38, 38)
                 .addComponent(jButton1)
-                .addGap(61, 61, 61)
+                .addGap(36, 36, 36)
                 .addComponent(jButton3)
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

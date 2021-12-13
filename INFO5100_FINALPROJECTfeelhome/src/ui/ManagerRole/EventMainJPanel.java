@@ -31,16 +31,12 @@ public class EventMainJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("EVENT MANAGER");
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("CONFIRM BOOKINGS & ASSIGN ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -49,7 +45,6 @@ public class EventMainJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("MANAGE EMPLOYEES");
 

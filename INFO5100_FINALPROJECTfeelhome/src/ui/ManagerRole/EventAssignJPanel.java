@@ -39,8 +39,6 @@ public class EventAssignJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("CONFIRM AND ASSIGN EVENTS");
 

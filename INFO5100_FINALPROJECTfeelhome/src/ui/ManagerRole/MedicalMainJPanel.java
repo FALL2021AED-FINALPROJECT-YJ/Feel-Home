@@ -31,20 +31,15 @@ public class MedicalMainJPanel extends javax.swing.JPanel {
         lblsysadmin = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("MANAGE HOSPITALS");
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("MEDICAL SERVICE MANAGER");
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("CONFIRM BOOKINGS & ASSIGN ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -65,15 +60,14 @@ public class MedicalMainJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblsysadmin)
-                        .addGap(234, 234, 234))
+                        .addComponent(jButton1)
+                        .addGap(412, 412, 412))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(50, 50, 50))
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(374, 374, 374))))
+                        .addComponent(jButton3)
+                        .addGap(362, 362, 362))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblsysadmin)
+                        .addGap(254, 254, 254))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,11 +76,11 @@ public class MedicalMainJPanel extends javax.swing.JPanel {
                 .addComponent(jButton2)
                 .addGap(42, 42, 42)
                 .addComponent(lblsysadmin)
-                .addGap(82, 82, 82)
+                .addGap(56, 56, 56)
                 .addComponent(jButton1)
                 .addGap(43, 43, 43)
                 .addComponent(jButton3)
-                .addContainerGap(467, Short.MAX_VALUE))
+                .addContainerGap(493, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

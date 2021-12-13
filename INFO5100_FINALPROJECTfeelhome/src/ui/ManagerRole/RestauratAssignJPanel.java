@@ -35,8 +35,6 @@ public class RestauratAssignJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
-
         tblviewdetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -57,11 +55,9 @@ public class RestauratAssignJPanel extends javax.swing.JPanel {
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("CONFIRM AND ASSIGN EVENTS");
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("BACK");
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton3.setText("CONFIRM ORDER");
 
@@ -71,7 +67,6 @@ public class RestauratAssignJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("DELIVERYMAN");
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton4.setText("ASSIGN");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
