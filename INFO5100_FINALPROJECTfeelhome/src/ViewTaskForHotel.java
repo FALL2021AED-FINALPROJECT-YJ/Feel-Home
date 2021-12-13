@@ -5,25 +5,15 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Booking;
-import model.CateringService;
 import model.Customer;
 import model.CustomerDirectory;
-import model.DecorServices;
-import model.HealthClub;
 import model.Hotel;
 import model.LaundaryOrg;
-import model.Network;
 import model.Organization;
-import model.PhotographyService;
-import model.PhysicianOrg;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
 import model.TransportationOrg;
-import model.service.BusinessEventService;
-import model.service.HealthClubService;
-import model.service.HotelService;
-import model.service.Service;
+import model.services.HotelService;
+import model.services.Service;
 
 public class ViewTaskForHotel extends javax.swing.JPanel {
 
@@ -42,6 +32,11 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         this.hotel = hotel;
         populateComboBox();
         populateTable();
+        setBackground(new java.awt.Color(255, 204, 204));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -50,16 +45,13 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         laundaryOrg = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         transportationOrg = new javax.swing.JComboBox<>();
-        assignTask = new javax.swing.JButton();
+        viewTask = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-
-        setBackground(new java.awt.Color(255, 204, 204));
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -80,10 +72,6 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton1.setText("DELETE");
-
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("SELECT A LAUNDARY ORG");
 
@@ -97,16 +85,14 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("SELECT A TRANSPORTATION ORG");
 
-        assignTask.setBackground(new java.awt.Color(255, 255, 255));
-        assignTask.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        assignTask.setText("ASSIGN AND CONFIRM TASK");
-        assignTask.addActionListener(new java.awt.event.ActionListener() {
+        viewTask.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        viewTask.setText("ASSIGN AND CONFIRM TASK");
+        viewTask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignTaskActionPerformed(evt);
+                viewTaskActionPerformed(evt);
             }
         });
 
-        backButton.setBackground(new java.awt.Color(255, 255, 255));
         backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backButton.setText("BACK");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -123,15 +109,15 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,16 +125,15 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(719, 719, 719))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(164, 164, 164))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(assignTask)
-                        .addGap(280, 280, 280))))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(164, 164, 164))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(276, 276, 276)
+                .addComponent(viewTask)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,19 +144,17 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(42, 42, 42)
+                .addGap(89, 89, 89)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addGap(6, 6, 6)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(laundaryOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(transportationOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
-                .addComponent(assignTask, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addComponent(viewTask, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -179,7 +162,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         callOnCreateMethod.run();
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void assignTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignTaskActionPerformed
+    private void viewTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTaskActionPerformed
         int selectedRowIndex = jTable1.getSelectedRow();
         if (selectedRowIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please select a booking to assign tasks.");
@@ -199,6 +182,12 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
         if (hotelService == null) {
             JOptionPane.showMessageDialog(this, "Cannot find hotel");
+            return;
+        }
+
+        if (!hotelService.getStatus().equals(Service.Status.PENDING)) {
+            JOptionPane.showMessageDialog(this, String.format("Booking '%s' should be 'PENDING' state to be accepted.",
+                    booking.getId()));
             return;
         }
 
@@ -232,10 +221,8 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
         }
         hotelService.setStatus(Service.Status.CONFIRMED);
         JOptionPane.showMessageDialog(this, "Assigned all hotel services to the booking: " + booking.getId());
-        return;
-
-
-    }//GEN-LAST:event_assignTaskActionPerformed
+        populateTable();
+    }//GEN-LAST:event_viewTaskActionPerformed
 
     private void laundaryOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laundaryOrgActionPerformed
         // TODO add your handling code here:
@@ -243,8 +230,8 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
-        Object row[] = new Object[10];
         CustomerDirectory customerDirec = systemAdmin.getCustomerDirec(); //get all customers
         for (Customer customer : customerDirec.getListOfCustomer()) {
             for (Booking booking : customer.getBookingList()) {      //get booking details each customer
@@ -253,6 +240,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                     if (hotel.getName().equals(service.getEnterprise().getName())) {
                         HotelService hotelService = (HotelService) service;
 
+                        Object row[] = new Object[10];
                         row[0] = booking;
                         row[1] = customer;
                         row[2] = hotelService.getStatus();
@@ -269,6 +257,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
                                     break;
                             }
                         }
+                        model.addRow(row);
                     }
                 }
             }
@@ -277,9 +266,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton assignTask;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -287,6 +274,7 @@ public class ViewTaskForHotel extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<LaundaryOrg> laundaryOrg;
     private javax.swing.JComboBox<TransportationOrg> transportationOrg;
+    private javax.swing.JButton viewTask;
     // End of variables declaration//GEN-END:variables
 
     private void populateComboBox() {
