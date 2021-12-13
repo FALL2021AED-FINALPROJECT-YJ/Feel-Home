@@ -27,7 +27,17 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         for (Network network : systemAdmin.getListOfNetwork()) {
             networkCombo.addItem(network.getName());
         }
-
+        setBackground(new java.awt.Color(255, 204, 204));
+        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addBtn.setOpaque(true);
+        updateBtn.setBackground(new java.awt.Color(244, 120, 140));
+        updateBtn.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
+        viewBtn.setBackground(new java.awt.Color(244, 120, 140));
+        viewBtn.setOpaque(true);
     }
 
     public boolean validateName() {
@@ -38,15 +48,15 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             return false;
         }
     }
-       public boolean validateContactNum() {
+
+    public boolean validateContactNum() {
         if (contactField.getText().matches("[0-9]{10}")) {
             return true;
         } else {
-              JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
+            JOptionPane.showMessageDialog(this, "Invalid contcat: contact should contain only 10 digits");
             return false;
         }
     }
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -69,18 +79,19 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         networkCombo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         viewBtn = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
-
-        setBackground(new java.awt.Color(255, 204, 204));
+        backButton = new javax.swing.JButton();
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblsysadmin.setText("MANAGE ENTERPRISES");
 
-        updateBtn.setBackground(new java.awt.Color(255, 255, 255));
         updateBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         updateBtn.setText("UPDATE");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
-        deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         deleteBtn.setText("DELETE");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +117,13 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        addBtn.setBackground(new java.awt.Color(255, 255, 255));
         addBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         addBtn.setText("ADD");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -163,12 +178,11 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             }
         });
 
-        backBtn.setBackground(new java.awt.Color(255, 255, 255));
-        backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        backBtn.setText("BACK");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -206,24 +220,25 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(viewBtn))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 935, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(324, 324, 324)
                         .addComponent(lblsysadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(deleteBtn)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 935, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addComponent(deleteBtn)
+                .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblsysadmin)
                 .addGap(34, 34, 34)
@@ -231,11 +246,11 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                     .addComponent(networkCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(viewBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(deleteBtn)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(networkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,7 +311,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                     populateTable();
                 }
             }
-        } else if (enterpriseType.equals("Transportation") && enterpriseDirec.getListOfHealthClub() != null) {
+        } else if (enterpriseType.equals("Health Club") && enterpriseDirec.getListOfHealthClub() != null) {
             for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
                 if (club.getName().equals(enterpriseName)) {
                     enterpriseDirec.deleteEnterpriseHealthClub(club);
@@ -324,12 +339,17 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         String name = nameField.getText();
         String networkName = networkType.getSelectedItem().toString();
         String enterpriseType1 = enterpriseType.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkName);  //finiding network
+        Network network = systemAdmin.findNetwork(networkName);
+
+        if (name == null || name.length() < 2) {
+            JOptionPane.showMessageDialog(this, "Invalid input: Enterprise name should be atleast 2 characters long.");
+            return;
+        }
+
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
             enterpriseDirec.addHealthClub(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
-
             return;
         } else if (enterpriseType1.equals("Restaurant") && enterpriseDirec != null) {
             enterpriseDirec.addRestaurant(name, contact);
@@ -346,22 +366,95 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
             return;
         }
-
-
+        nameField.setText("");
+        contactField.setText("");
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
         populateTable();
     }//GEN-LAST:event_viewBtnActionPerformed
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         callOnCreateMethod.run();
-    }//GEN-LAST:event_backBtnActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        if (jTable1.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(this, "Please select 1 row to update");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        String networkName = networkType.getSelectedItem().toString();
+        String enterpriseType1 = enterpriseType.getSelectedItem().toString();
+        String enterpriseName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+
+        Network network = systemAdmin.findNetwork(networkName);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+
+        Enterprise enterpriseToUpdate = null;
+        if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
+
+            for (HealthClub list : enterpriseDirec.getListOfHealthClub()) {
+                if (list.getName().equals(enterpriseName)) {  //if enterprise name matches 
+                    enterpriseToUpdate = list;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
+            return;
+        } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
+            for (BusinessEvent list : enterpriseDirec.getListOfEvents()) {
+                if (list.getName().equals(enterpriseName)) {
+                    enterpriseToUpdate = list;
+                }
+            }
+        } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
+            for (Hotel list : enterpriseDirec.getListOfHotel()) {
+                if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
+                    enterpriseToUpdate = list;
+                }
+            }
+        } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
+            for (Restaurant list : enterpriseDirec.getListOfRestaurants()) {
+                if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
+                    enterpriseToUpdate = list;
+                }
+            }
+        }
+
+        if (enterpriseToUpdate == null) {
+            JOptionPane.showMessageDialog(this, "Unknown enterprise.");
+            return;
+        }
+
+        enterpriseToUpdate.setName(nameField.getText());
+        enterpriseToUpdate.setContact(contactField.getText());
+        populateTable();
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+        if (jTable1.getSelectedRowCount() != 1) {
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        String networkName = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String enterpriseName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String enterpriseType1 = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String enterpriseContact = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
+
+        networkType.setSelectedItem(networkName);
+        enterpriseType.setSelectedItem(enterpriseType1);
+        nameField.setText(enterpriseName);
+        contactField.setText(enterpriseContact);
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
-    private javax.swing.JButton backBtn;
+    private javax.swing.JButton backButton;
     private javax.swing.JTextField contactField;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JComboBox<String> enterpriseType;
