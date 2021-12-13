@@ -1,23 +1,27 @@
-
 package ui.CustomerRole;
 
 import model.SystemAdmin;
 
-
 public class CustomerStartingJPanel extends javax.swing.JPanel {
- private SystemAdmin systemAdmin;
- private Runnable callOnCreateMethod1;
- private Runnable callOnCreateMethod2;
- private String user;
- 
-    public CustomerStartingJPanel(SystemAdmin systemAdmin,Runnable callOnCreateMethod1,Runnable callOnCreateMethod2) {
+
+    private SystemAdmin systemAdmin;
+    private Runnable callOnCreateMethod1;
+    private Runnable callOnCreateMethod2;
+    private String user;
+
+    public CustomerStartingJPanel(SystemAdmin systemAdmin, Runnable callOnCreateMethod1, Runnable callOnCreateMethod2) {
         initComponents();
         this.systemAdmin = systemAdmin;
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.callOnCreateMethod2 = callOnCreateMethod2;
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        roombookButton.setBackground(new java.awt.Color(244, 120, 140));
+        roombookButton.setOpaque(true);
+        manageBooking.setBackground(new java.awt.Color(244, 120, 140));
+        manageBooking.setOpaque(true);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -25,7 +29,7 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         roombookButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         manageBooking = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -39,8 +43,8 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("BACK");
+        backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        backBtn.setText("BACK");
 
         manageBooking.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         manageBooking.setText("MANAGE BOOKING");
@@ -63,14 +67,14 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
                 .addGap(332, 332, 332))
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jButton2)
+                .addComponent(backBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(72, 72, 72)
@@ -82,7 +86,7 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBookingActionPerformed
-         callOnCreateMethod2.run();
+        callOnCreateMethod2.run();
     }//GEN-LAST:event_manageBookingActionPerformed
 
     private void roombookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roombookButtonActionPerformed
@@ -91,7 +95,7 @@ public class CustomerStartingJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton manageBooking;
     private javax.swing.JButton roombookButton;

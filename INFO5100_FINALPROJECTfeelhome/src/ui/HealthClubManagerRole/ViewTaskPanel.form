@@ -43,20 +43,11 @@
                               <Component id="jLabel4" min="-2" pref="213" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="therapistOrg" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="192" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="therapistOrg" min="-2" pref="218" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextField2" max="32767" attributes="0"/>
-                                  <Component id="physicianOrg" pref="198" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="physicianOrg" min="-2" pref="198" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="trainerOrg" min="-2" pref="215" max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="206" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="trainerOrg" min="-2" pref="215" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -69,7 +60,7 @@
               <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
               <Component id="assignWork" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -96,15 +87,9 @@
                   <Component id="physicianOrg" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="trainerOrg" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="84" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
               <Component id="assignWork" min="-2" pref="44" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -227,27 +212,6 @@
           <Font name="Lucida Grande" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="SELECT A TRAINER ORG"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="14" style="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="14" style="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField3">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="14" style="0"/>
-        </Property>
       </Properties>
     </Component>
   </SubComponents>

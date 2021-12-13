@@ -20,7 +20,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="backBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
@@ -72,7 +72,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
-                      <Component id="bookroomBtn" min="-2" pref="151" max="-2" attributes="0"/>
+                      <Component id="bookRoomBtn" min="-2" pref="151" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="523" max="32767" attributes="0"/>
@@ -83,7 +83,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="backBtn" min="-2" pref="38" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="bookroomBtn" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="bookRoomBtn" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -139,7 +139,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="backBtn">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
@@ -147,7 +147,7 @@
         <Property name="text" type="java.lang.String" value="BACK"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbldate">
@@ -192,7 +192,7 @@
         <Property name="text" type="java.lang.String" value="NO OF ROOMS"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="bookroomBtn">
+    <Component class="javax.swing.JButton" name="bookRoomBtn">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="0"/>
@@ -200,7 +200,7 @@
         <Property name="text" type="java.lang.String" value="BOOK ROOM"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookroomBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookRoomBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblbookservices">

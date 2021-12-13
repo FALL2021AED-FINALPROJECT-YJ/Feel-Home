@@ -6,7 +6,7 @@ public class PhotographyService extends Organization {
     public static enum PhotographyType {
         STANDARD(50, "Standard", "Includes 1 candid photograher"),
         GOLD(100, "Gold", "Includes 1 candid photograher and 1 videographer"),
-        PLATINUM(200, "Premium", "Includes 2 candid photograhers and 2 videographers");
+        PLATINUM(200, "Platinum", "Includes 2 candid photograhers and 2 videographers");
 
         private final int rate;
         private final String name;

@@ -1,7 +1,6 @@
 package ui.HotelManagerRole;
 
 import java.util.List;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.EnterpriseDirectory;
@@ -35,12 +34,12 @@ public class ManageRoomPanel extends javax.swing.JPanel {
             roomTypeComboBox.addItem(type);
         }
         setBackground(new java.awt.Color(255, 204, 204));
-        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
-        deleteBtn.setOpaque(true);
+
         addButton.setBackground(new java.awt.Color(244, 120, 140));
         addButton.setOpaque(true);
         backButton.setBackground(new java.awt.Color(244, 120, 140));
         backButton.setOpaque(true);
+        populateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -51,7 +50,6 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         roomTypeComboBox = new javax.swing.JComboBox<>();
-        deleteBtn = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
@@ -86,9 +84,6 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         jLabel1.setText("ROOM TYPE");
 
         roomTypeComboBox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-
-        deleteBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        deleteBtn.setText("DELETE");
 
         backButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         backButton.setText("BACK");
@@ -130,13 +125,12 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                                 .addComponent(roomTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
                                 .addComponent(addButton)
-                                .addGap(0, 153, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addGap(0, 153, Short.MAX_VALUE)))))
                 .addGap(145, 145, 145))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,9 +141,7 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn)
-                .addGap(33, 33, 33)
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(roomTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,7 +159,7 @@ public class ManageRoomPanel extends javax.swing.JPanel {
         RoomType selectedItem = (RoomType) roomTypeComboBox.getSelectedItem();
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<Hotel> list = enterpriseDirec.getListOfHotel();
-        
+
         for (int i = 0; i < list.size(); i++) {
             List<Manager> manager = list.get(i).getListOfManager();
             for (int j = 0; j < manager.size(); j++) {
@@ -176,16 +168,7 @@ public class ManageRoomPanel extends javax.swing.JPanel {
                     roomList.createRoom(selectedItem);
                     JOptionPane.showMessageDialog(this, "Room added successfully");
 
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    model.setRowCount(0);
-
-                    for (Room room : roomList.getListOfRooms()) {
-                        Object row[] = new Object[10];
-                        row[0] = room.getRoomNo();
-                        row[1] = room.getRoomType().getName();
-                        row[2] = room.getRoomType().getRate();
-                        model.addRow(row);
-                    }
+                    populateTable();
                     return;
                 }
             }
@@ -196,11 +179,30 @@ public class ManageRoomPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<RoomType> roomTypeComboBox;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        for (Hotel hotel : enterpriseDirec.getListOfHotel()) {
+            for (Manager man : hotel.getListOfManager()) {
+                if (man.getUsername().equals(user)) {
+                    RoomList roomDirec = hotel.getRoomListDirec();
+                    for (Room room : roomDirec.getListOfRooms()) {
+                        Object row[] = new Object[10];
+                        row[0] = room.getRoomNo();
+                        row[1] = room.getRoomType().getName();
+                        row[2] = room.getRoomType().getRate();
+                        model.addRow(row);
+                    }
+                }
+            }
+        }
+    }
 }

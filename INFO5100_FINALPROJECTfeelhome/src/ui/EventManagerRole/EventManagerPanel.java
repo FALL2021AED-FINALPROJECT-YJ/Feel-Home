@@ -15,7 +15,14 @@ public class EventManagerPanel extends javax.swing.JPanel {
         this.callOnCreateMethod1 = callOnCreateMethod1;
         this.callOnCreateMethod2 = callOnCreateMethod2;
         this.callOnCreateMethod3 = callOnCreateMethod3;
-setBackground(new java.awt.Color(255, 204, 204));
+        setBackground(new java.awt.Color(255, 204, 204));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setOpaque(true);
+        orgBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgBtn.setOpaque(true);
+        orgadmin.setBackground(new java.awt.Color(244, 120, 140));
+        orgadmin.setOpaque(true);
+
     }
 
     @SuppressWarnings("unchecked")

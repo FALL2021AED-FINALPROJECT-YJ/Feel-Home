@@ -37,7 +37,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         backButton.setBackground(new java.awt.Color(244, 120, 140));
         backButton.setOpaque(true);
         viewBtn.setBackground(new java.awt.Color(244, 120, 140));
-         viewBtn.setOpaque(true);
+        viewBtn.setOpaque(true);
     }
 
     public boolean validateName() {
@@ -311,7 +311,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                     populateTable();
                 }
             }
-        } else if (enterpriseType.equals("Transportation") && enterpriseDirec.getListOfHealthClub() != null) {
+        } else if (enterpriseType.equals("Health Club") && enterpriseDirec.getListOfHealthClub() != null) {
             for (HealthClub club : enterpriseDirec.getListOfHealthClub()) {
                 if (club.getName().equals(enterpriseName)) {
                     enterpriseDirec.deleteEnterpriseHealthClub(club);
@@ -339,12 +339,17 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         String name = nameField.getText();
         String networkName = networkType.getSelectedItem().toString();
         String enterpriseType1 = enterpriseType.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(networkName);  //finiding network
+        Network network = systemAdmin.findNetwork(networkName);
+
+        if (name == null || name.length() < 2) {
+            JOptionPane.showMessageDialog(this, "Invalid input: Enterprise name should be atleast 2 characters long.");
+            return;
+        }
+
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
             enterpriseDirec.addHealthClub(name, contact);
             JOptionPane.showMessageDialog(this, "Enterprise added successfully");
-
             return;
         } else if (enterpriseType1.equals("Restaurant") && enterpriseDirec != null) {
             enterpriseDirec.addRestaurant(name, contact);
@@ -363,8 +368,6 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         }
         nameField.setText("");
         contactField.setText("");
-
-
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
@@ -376,80 +379,76 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-
-        if (jTable1.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Please select a row to update");
+        if (jTable1.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(this, "Please select 1 row to update");
             return;
         }
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        if (jTable1.getSelectedRowCount() == 1) {
 
-            String networkName = networkType.getSelectedItem().toString();
-            String enterpriseType1 = enterpriseType.getSelectedItem().toString();
-            String enterpriseName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String networkName = networkType.getSelectedItem().toString();
+        String enterpriseType1 = enterpriseType.getSelectedItem().toString();
+        String enterpriseName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
 
-            Network network = systemAdmin.findNetwork(networkName);  //finiding network
-            EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
+        Network network = systemAdmin.findNetwork(networkName);
+        EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
 
-            if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
+        Enterprise enterpriseToUpdate = null;
+        if (enterpriseType1.equals("Health Club") && enterpriseDirec != null) {
 
-                for (HealthClub list : enterpriseDirec.getListOfHealthClub()) {
-                    if (list.getName().equals(enterpriseName)) {  //if enterprise name matches 
-
-                        list.setName(nameField.getText());
-
-                        list.setContact(contactField.getText());
-                        populateTable();
-                    }
+            for (HealthClub list : enterpriseDirec.getListOfHealthClub()) {
+                if (list.getName().equals(enterpriseName)) {  //if enterprise name matches 
+                    enterpriseToUpdate = list;
                 }
-                JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
-                return;
-            } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
-                for (BusinessEvent list : enterpriseDirec.getListOfEvents()) {
-                    if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
-                        list.setName(nameField.getText());
-                        list.setContact(contactField.getText());
-                        populateTable();
-                    }
-                }
-                JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
-                return;
-            } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
-                for (Hotel list : enterpriseDirec.getListOfHotel()) {
-                    if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
-                        list.setName(nameField.getText());
-                        list.setContact(contactField.getText());
-                        populateTable();
-                    }
-                }
-                JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
-                return;
-            } else {
-                for (Restaurant list : enterpriseDirec.getListOfRestaurants()) {
-                    if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
-                        list.setName(nameField.getText());
-                        System.out.println(nameField.getText());
-                        list.setContact(contactField.getText());
-                        populateTable();
-                    }
-                }
-                JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
-                return;
             }
-
+            JOptionPane.showMessageDialog(this, "Enterprise updated successfully");
+            return;
+        } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
+            for (BusinessEvent list : enterpriseDirec.getListOfEvents()) {
+                if (list.getName().equals(enterpriseName)) {
+                    enterpriseToUpdate = list;
+                }
+            }
+        } else if (enterpriseType1.equals("Hotel") && enterpriseDirec != null) {
+            for (Hotel list : enterpriseDirec.getListOfHotel()) {
+                if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
+                    enterpriseToUpdate = list;
+                }
+            }
+        } else if (enterpriseType1.equals("Business Event") && enterpriseDirec != null) {
+            for (Restaurant list : enterpriseDirec.getListOfRestaurants()) {
+                if (list.getName().equals(enterpriseName)) {           //if enterprise name matches 
+                    enterpriseToUpdate = list;
+                }
+            }
         }
+
+        if (enterpriseToUpdate == null) {
+            JOptionPane.showMessageDialog(this, "Unknown enterprise.");
+            return;
+        }
+
+        enterpriseToUpdate.setName(nameField.getText());
+        enterpriseToUpdate.setContact(contactField.getText());
+        populateTable();
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+        if (jTable1.getSelectedRowCount() != 1) {
+            return;
+        }
+
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
         String networkName = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
         String enterpriseName = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
         String enterpriseType1 = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
         String enterpriseContact = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
 
+        networkType.setSelectedItem(networkName);
+        enterpriseType.setSelectedItem(enterpriseType1);
         nameField.setText(enterpriseName);
         contactField.setText(enterpriseContact);
-
     }//GEN-LAST:event_jTable1MouseClicked
 
 

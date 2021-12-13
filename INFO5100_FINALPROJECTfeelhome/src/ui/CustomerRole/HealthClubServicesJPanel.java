@@ -27,6 +27,10 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
             healthClubCombo.addItem(healthClub);
         }
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        addServiceBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addServiceBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -229,7 +233,7 @@ public class HealthClubServicesJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void yogaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yogaBtnActionPerformed
- 
+
     }//GEN-LAST:event_yogaBtnActionPerformed
 
     private void massageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_massageBtnActionPerformed

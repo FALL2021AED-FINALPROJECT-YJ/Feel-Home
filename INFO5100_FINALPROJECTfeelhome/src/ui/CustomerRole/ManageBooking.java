@@ -27,6 +27,12 @@ public class ManageBooking extends javax.swing.JPanel {
 
         populateTable();
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        addServiceBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addServiceBtn.setOpaque(true);
+        viewOrder.setBackground(new java.awt.Color(244, 120, 140));
+        viewOrder.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -199,7 +205,7 @@ public class ManageBooking extends javax.swing.JPanel {
         for (Booking bookingList : customer.getBookingList()) {
             row[0] = bookingList.getHotelService().getEnterprise();
             row[1] = bookingList.getId();
-            row[2] = bookingList.getCost();
+            row[2] = bookingList.getTotalCost();
             row[3] = bookingList.getStatus();
             row[4] = bookingList.getCheckin();
             row[5] = bookingList.getCheckout();

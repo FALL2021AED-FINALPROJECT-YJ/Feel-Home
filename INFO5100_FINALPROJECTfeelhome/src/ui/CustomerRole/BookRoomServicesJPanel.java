@@ -30,20 +30,26 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
             roomtypeComboBox.addItem(type);
         }
         setBackground(new java.awt.Color(255, 204, 204));
+        backBtn.setBackground(new java.awt.Color(244, 120, 140));
+        backBtn.setOpaque(true);
+        priceBtn.setBackground(new java.awt.Color(244, 120, 140));
+        priceBtn.setOpaque(true);
+        bookRoomBtn.setBackground(new java.awt.Color(244, 120, 140));
+        bookRoomBtn.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         lbldate = new javax.swing.JLabel();
         lblcity = new javax.swing.JLabel();
         lblhotel = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
         btnnoofpeople = new javax.swing.JLabel();
         lblroom = new javax.swing.JLabel();
-        bookroomBtn = new javax.swing.JButton();
+        bookRoomBtn = new javax.swing.JButton();
         lblbookservices = new javax.swing.JLabel();
         peopleField = new javax.swing.JTextField();
         roomField = new javax.swing.JTextField();
@@ -55,11 +61,11 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         roomtypeComboBox = new javax.swing.JComboBox<>();
         priceBtn = new javax.swing.JButton();
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("BACK");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        backBtn.setText("BACK");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -78,11 +84,11 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         lblroom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblroom.setText("NO OF ROOMS");
 
-        bookroomBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        bookroomBtn.setText("BOOK ROOM");
-        bookroomBtn.addActionListener(new java.awt.event.ActionListener() {
+        bookRoomBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        bookRoomBtn.setText("BOOK ROOM");
+        bookRoomBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bookroomBtnActionPerformed(evt);
+                bookRoomBtnActionPerformed(evt);
             }
         });
 
@@ -124,7 +130,7 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(jButton2))
+                        .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(350, 350, 350)
                         .addComponent(lblbookservices))
@@ -162,14 +168,14 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
                                     .addComponent(peopleField, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(347, 347, 347)
-                        .addComponent(bookroomBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bookRoomBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
@@ -207,12 +213,12 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
                         .addGap(249, 249, 249))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bookroomBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bookRoomBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(161, 161, 161))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bookroomBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookroomBtnActionPerformed
+    private void bookRoomBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookRoomBtnActionPerformed
         Date checkinDate = checkin.getDate();
         Date checkoutdate = checkout.getDate();
         String city = cityCombo.getSelectedItem().toString();
@@ -223,12 +229,12 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Checkin and checkout dates cannot be in the past.");
             return;
         }
-        
+
         if (checkinDate.compareTo(checkoutdate) > 0) {
             JOptionPane.showMessageDialog(this, "Checkout date should be after checkin date.");
             return;
         }
-        
+
         Network network = systems.findNetwork(city);
 
         Hotel hotel = network.getEnterpriseDirectory().findHotel(hotelCombo.getSelectedItem().toString());
@@ -250,7 +256,7 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Room booked successfully. The total cost for your booking is "
                 + (roomCount * roomType.getRate()) + "$");
         callOnCreateMethod1.run();
-    }//GEN-LAST:event_bookroomBtnActionPerformed
+    }//GEN-LAST:event_bookRoomBtnActionPerformed
 
     private void cityComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityComboActionPerformed
         String city = cityCombo.getSelectedItem().toString();
@@ -267,9 +273,9 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_roomtypeComboBoxActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         callOnCreateMethod1.run();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void priceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceBtnActionPerformed
         final String roomNum = roomField.getText();
@@ -284,13 +290,13 @@ public class BookRoomServicesJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bookroomBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton bookRoomBtn;
     private javax.swing.JLabel btnnoofpeople;
     private com.toedter.calendar.JDateChooser checkin;
     private com.toedter.calendar.JDateChooser checkout;
     private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JComboBox<String> hotelCombo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblbookservices;
     private javax.swing.JLabel lblcity;

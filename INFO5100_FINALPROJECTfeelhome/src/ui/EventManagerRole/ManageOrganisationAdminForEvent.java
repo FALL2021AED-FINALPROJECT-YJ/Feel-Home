@@ -7,14 +7,11 @@ import model.BusinessEvent;
 import model.CateringService;
 import model.DecorServices;
 import model.EnterpriseDirectory;
-import model.HealthClub;
 import model.Manager;
 import model.Network;
 import model.PhotographyService;
-import model.PhysicianOrg;
 import model.SystemAdmin;
-import model.TherapistOrg;
-import model.TrainerOrg;
+import ui.main.Validator;
 
 public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
@@ -31,13 +28,22 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         this.user = user;
         this.type = type;
         this.network = network;
-        cityCombo.addItem(network.getName());
+        networkName.setText(network.getName());
+        networkName.setEditable(false);
         populateTable();
         setBackground(new java.awt.Color(255, 204, 204));
+        deleteBtn.setBackground(new java.awt.Color(244, 120, 140));
+        deleteBtn.setOpaque(true);
+        addBtn.setBackground(new java.awt.Color(244, 120, 140));
+        addBtn.setOpaque(true);
+        updateBtn.setBackground(new java.awt.Color(244, 120, 140));
+        updateBtn.setOpaque(true);
+        backButton.setBackground(new java.awt.Color(244, 120, 140));
+        backButton.setOpaque(true);
     }
 
     public boolean validateName() {
-        if (nameField.getText().matches("[a-zA-Z]{2,19}")) {
+        if (nameField.getText().matches("[a-zA-Z]{2,19}") && nameField.getText() != null) {
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Invalid input : name should contain only alphabets");
@@ -46,10 +52,10 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     }
 
     public boolean PasswordName() {
-        if (passwordField.getText().matches("[a-zA-Z]{3}")) {
+        if (passwordField.getText().matches("[a-zA-Z]{3,}") && passwordField.getText() != null) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid input : password should contain only 3 inputs");
+            JOptionPane.showMessageDialog(this, "Invalid input : password should contain more than 3 or more letters");
             return false;
         }
     }
@@ -67,7 +73,6 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cityCombo = new javax.swing.JComboBox<>();
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
@@ -77,6 +82,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         addBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         orgName = new javax.swing.JComboBox<>();
+        networkName = new javax.swing.JTextField();
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("NAME");
@@ -95,9 +101,6 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("ORGANIZATION NAME");
-
-        cityCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cityCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a network" }));
 
         deleteBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         deleteBtn.setText("DELETE");
@@ -143,7 +146,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         orgCombo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a organisation type", "Decor", "Photography", "Catering" }));
+        orgCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Decor", "Photography", "Catering" }));
         orgCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 orgComboActionPerformed(evt);
@@ -180,10 +183,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cityCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(orgCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(orgName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(orgCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(orgName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(networkName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,10 +235,10 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(31, 31, 31)
+                    .addComponent(jLabel6)
+                    .addComponent(networkName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(orgCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,7 +324,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
+        if (!Validator.validateName(this, name) || !Validator.validateUserName(this, username)
+                || !Validator.validatePassword(this, password)) {
+            return;
+        }
+        
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
         if (!systemAdmin.userExistsInSystem(username)) {
@@ -383,22 +391,19 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, " username already exists");
+            JOptionPane.showMessageDialog(this, "username already exists");
         }
-
-
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void orgComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgComboActionPerformed
         orgName.removeAllItems();
+
         String orgType = orgCombo.getSelectedItem().toString();
-        Network network = systemAdmin.findNetwork(cityCombo.getSelectedItem().toString());
         EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
         List<BusinessEvent> list = enterpriseDirec.getListOfEvents();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).findManager(user) != null) {
                 if (orgType.equals("Catering")) {
-                    System.out.println("catering type selected is true");
                     List<CateringService> org1 = list.get(i).getListOfCatering();
                     for (int j = 0; j < org1.size(); j++) {
                         orgName.addItem(org1.get(j).getName());
@@ -425,6 +430,9 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String city = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String orgType = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String oName = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
         String managerName = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
         String managerUsername = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
         String managerPassword = model.getValueAt(jTable1.getSelectedRow(), 5).toString();
@@ -432,6 +440,9 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
         nameField.setText(managerName);
         usernameField.setText(managerUsername);
         passwordField.setText(managerPassword);
+        usernameField.setEnabled(false);
+        orgCombo.setSelectedItem(orgType);
+        orgName.setSelectedItem(oName);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -443,8 +454,12 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         if (jTable1.getSelectedRowCount() == 1) {
+
             String orgType = orgCombo.getSelectedItem().toString();
             String orgname = orgName.getSelectedItem().toString();
+            String userName = usernameField.getText();
+            String password = passwordField.getText();
+
             EnterpriseDirectory enterpriseDirec = network.getEnterpriseDirectory();
             for (BusinessEvent event : enterpriseDirec.getListOfEvents()) {
                 if (orgType.equals("Catering") && event.getListOfCatering() != null) {
@@ -452,6 +467,8 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         for (Manager man : catering.getListOfManager()) {
                             if (man.getUsername().equals(usernameField.getText())) {
                                 man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
                                 JOptionPane.showMessageDialog(this, "Updated successfully");
                                 populateTable();
                                 return;
@@ -460,10 +477,11 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                     }
                 } else if (orgType.equals("Decor") && event.getListOfDecors() != null) {
                     for (DecorServices decor : event.getListOfDecors()) {
-
                         for (Manager man : decor.getListOfManager()) {
                             if (man.getUsername().equals(usernameField.getText())) {
                                 man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
                                 JOptionPane.showMessageDialog(this, "Updated successfully");
                                 populateTable();
                                 return;
@@ -475,12 +493,16 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         for (Manager man : photo.getListOfManager()) {
                             if (man.getUsername().equals(usernameField.getText())) {
                                 man.setName(nameField.getText());
+                                man.setPassword(passwordField.getText());
+                                systemAdmin.updateUser(userName, password);
                                 JOptionPane.showMessageDialog(this, "Updated successfully");
                                 populateTable();
                                 return;
                             }
                         }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid organization");
                 }
             }
         }
@@ -490,7 +512,6 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton backButton;
-    private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -502,6 +523,7 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField nameField;
+    private javax.swing.JTextField networkName;
     private javax.swing.JComboBox<String> orgCombo;
     private javax.swing.JComboBox<String> orgName;
     private javax.swing.JTextField passwordField;
@@ -563,7 +585,6 @@ public class ManageOrganisationAdminForEvent extends javax.swing.JPanel {
                         }
                     }
                 }
-
             }
         }
     }

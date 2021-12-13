@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Customer;
 import model.CustomerDirectory;
 import model.SystemAdmin;
+import ui.main.Validator;
 
 public class ManageCustomersJPanel extends javax.swing.JPanel {
 
@@ -277,6 +278,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
             for (Customer customer : customerDirec.getListOfCustomer()) {
                 if (customer.getUserName().equals(username)) {
                     systemAdmin.deleteCustomer(customer);
+                    populateTable();
                     JOptionPane.showMessageDialog(this, "Customer deleted successfully");
                     return;
                 }
@@ -291,6 +293,11 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         String address = addressField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        if (!Validator.validateName(this, name) || !Validator.validateUserName(this, username)
+                || !Validator.validatePassword(this, password)) {
+            return;
+        }
 
         if (systemAdmin.userExistsInSystem(username)) {
             JOptionPane.showMessageDialog(this, "Username already exists.");
@@ -313,6 +320,7 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         contactField.setText("");
         cityField.setText("");
         usernameField.setText("");
+        addressField.setText("");
         passwordField.setText("");
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -346,11 +354,14 @@ public class ManageCustomersJPanel extends javax.swing.JPanel {
         String customerContact = model.getValueAt(jTable1.getSelectedRow(), 1).toString();
         String customerCity = model.getValueAt(jTable1.getSelectedRow(), 2).toString();
         String customerAddress = model.getValueAt(jTable1.getSelectedRow(), 3).toString();
-
+        String username = model.getValueAt(jTable1.getSelectedRow(), 4).toString();
+        String password = model.getValueAt(jTable1.getSelectedRow(), 5).toString();
         nameField.setText(customerName);
         contactField.setText(customerContact);
         cityField.setText(customerCity);
         addressField.setText(customerAddress);
+        usernameField.setText(username);
+        passwordField.setText(password);
         usernameField.setEnabled(false);
         passwordField.setEnabled(false);
     }//GEN-LAST:event_jTable1MouseClicked
