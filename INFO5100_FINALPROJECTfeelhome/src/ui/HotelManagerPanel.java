@@ -17,6 +17,15 @@ public class HotelManagerPanel extends javax.swing.JPanel {
         this.callOnCreateMethod2 = callOnCreateMethod2;
         this.callOnCreateMethod3 = callOnCreateMethod3;
         this.callOnCreateMethod4 = callOnCreateMethod4;
+        setBackground(new java.awt.Color(255, 204, 204));
+        viewTask.setBackground(new java.awt.Color(244, 120, 140));
+        viewTask.setOpaque(true);
+        orgBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgBtn.setOpaque(true);
+        orgAdminBtn.setBackground(new java.awt.Color(244, 120, 140));
+        orgAdminBtn.setOpaque(true);
+        manageRooms.setBackground(new java.awt.Color(244, 120, 140));
+        manageRooms.setOpaque(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,10 +38,12 @@ public class HotelManagerPanel extends javax.swing.JPanel {
         viewTask = new javax.swing.JButton();
         manageRooms = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setLayout(null);
 
         lblsysadmin.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblsysadmin.setText("HOTEL MANAGER");
+        add(lblsysadmin);
+        lblsysadmin.setBounds(320, 40, 317, 44);
 
         orgAdminBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         orgAdminBtn.setText("MANAGE ORGANIZATION ADMIN");
@@ -41,6 +52,8 @@ public class HotelManagerPanel extends javax.swing.JPanel {
                 orgAdminBtnActionPerformed(evt);
             }
         });
+        add(orgAdminBtn);
+        orgAdminBtn.setBounds(320, 290, 312, 40);
 
         orgBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         orgBtn.setText("MANAGE ORGANIZATION ");
@@ -49,6 +62,8 @@ public class HotelManagerPanel extends javax.swing.JPanel {
                 orgBtnActionPerformed(evt);
             }
         });
+        add(orgBtn);
+        orgBtn.setBounds(320, 220, 312, 40);
 
         viewTask.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         viewTask.setText("VIEW TASK");
@@ -57,6 +72,8 @@ public class HotelManagerPanel extends javax.swing.JPanel {
                 viewTaskActionPerformed(evt);
             }
         });
+        add(viewTask);
+        viewTask.setBounds(320, 150, 312, 40);
 
         manageRooms.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         manageRooms.setText("MANAGE ROOMS");
@@ -65,37 +82,8 @@ public class HotelManagerPanel extends javax.swing.JPanel {
                 manageRoomsActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(363, 363, 363)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblsysadmin)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(viewTask, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                        .addComponent(manageRooms, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(orgAdminBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(orgBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(375, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(lblsysadmin)
-                .addGap(108, 108, 108)
-                .addComponent(viewTask)
-                .addGap(43, 43, 43)
-                .addComponent(orgBtn)
-                .addGap(48, 48, 48)
-                .addComponent(orgAdminBtn)
-                .addGap(45, 45, 45)
-                .addComponent(manageRooms)
-                .addContainerGap(286, Short.MAX_VALUE))
-        );
+        add(manageRooms);
+        manageRooms.setBounds(330, 360, 294, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void orgAdminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgAdminBtnActionPerformed
