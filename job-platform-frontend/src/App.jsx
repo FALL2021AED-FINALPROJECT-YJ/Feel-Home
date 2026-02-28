@@ -1,0 +1,26 @@
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Profile from "./pages/Profile.jsx";
+import ResultsPage from "./pages/ResultsPage.jsx";
+import Resume from "./pages/Resume.jsx";
+import "./auth.css"; // shared styles
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/register" replace />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path = "/profile" element = {<Profile />} />
+        <Route path="/results" element={<ResultsPage />} />  // render JobListing UI component
+        <Route path ="/custom-resume" element={<Resume/>} />
+        <Route path="*" element={<Navigate to="/register" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
